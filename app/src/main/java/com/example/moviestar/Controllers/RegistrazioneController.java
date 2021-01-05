@@ -3,39 +3,78 @@ package com.example.moviestar.Controllers;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserAttributes;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserCodeDeliveryDetails;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.SignUpHandler;
 import com.example.moviestar.DAO.UtenteDAO;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
-import com.example.moviestar.ui.RegistrazioneActivity;
+import com.example.moviestar.View.VerificationActivity;
 
-public class RegistrazioneController {
+public class RegistrazioneController extends AppCompatActivity {
+    static Utente myUtente;
+    Button registratiButton=findViewById(R.id.button_registrati);
+    final static CognitoUserAttributes userAttributes = new CognitoUserAttributes();
+    static SignUpHandler signupCallback;
+
+
+    private static void  registerUser(String idUtente, String email, String password, final Context mContext) {
+
+       signupCallback = new SignUpHandler() {
+            @Override
+            public void onSuccess(CognitoUser user, boolean signUpConfirmationState, CognitoUserCodeDeliveryDetails cognitoUserCodeDeliveryDetails) {
+                Log.i("login", "sign up confirmed " + signUpConfirmationState);
+                if (!signUpConfirmationState) {
+                    Log.i("login", "not verified"+cognitoUserCodeDeliveryDetails.getDestination());
+                    Intent intent = new Intent(mContext, VerificationActivity.class);
+                    mContext.startActivity(intent);
+                } else {
+                    Log.i("login", "verified");
+                }
+            }
+
+            @Override
+            public void onFailure(Exception exception) {
+                Log.i("login", "failed"+exception.getLocalizedMessage());
+            }
+        };
+    }
+
+
+
 
 
     public static void registraUtente(String email, String password1, String password2, String idUtente, Context myContext) {
         if(checkCampiNonVuoti(idUtente, password1, password2, email)) {
             if (checkCampiValidi(idUtente, password1, password2, email)) {
-                Utente myUtente = new Utente (idUtente, password1, email);
+                myUtente = new Utente (idUtente, password1, email);
+                userAttributes.addAttribute("given_name", idUtente);
+                userAttributes.addAttribute("email", email);
+                userAttributes.addAttribute("nickname", idUtente);
+
+                CognitoSettings cognitoSettings=new CognitoSettings(myContext);
+
+                cognitoSettings.getUserPool().signUpInBackground(idUtente, password1,
+                        userAttributes, null, signupCallback);
+
+                registerUser(idUtente, email, password1, myContext);
                 VerificaController.sendCodice(idUtente);
             }
         }
         if(!checkCampiNonVuoti(idUtente, password1, password2, email)){
                 String errorMessage="Errore, compilare tutti i campi!";
-            Toast.makeText(myContext, errorMessage, Toast.LENGTH_SHORT).show();
-            AlertDialog alertDialog = new AlertDialog.Builder(myContext).create(); //Read Update
-            alertDialog.setTitle("hi");
-            alertDialog.setMessage("this is my app");
+                PopupController.mostraPopup("Errore", errorMessage, myContext);
 
-            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // here you can add functions
-                }
-            });
-
-            alertDialog.show();  //<-- See This!
-            //new SchermataPopupErrore(errorMessage);
         }
 
     }
@@ -47,9 +86,9 @@ public class RegistrazioneController {
     }
 
     static boolean checkCampiValidi(String idUtente, String password, String password2, String email) {
-        if( checkId(idUtente) && checkPassword(password, password2) && checkEmail(email) )
+        //if( checkId(idUtente) && checkPassword(password, password2) && checkEmail(email) )
         return true;
-        else return false;
+        //else return false;
     }
 
     private static boolean checkEmail(String email) {

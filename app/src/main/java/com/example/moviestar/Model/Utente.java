@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Utente {
     String idUtente;
     String nomeUtenteMostrato;
+    String password;
     String emailUtente;
     boolean isVerified;
     File immagineProfilo;
@@ -34,6 +35,11 @@ public class Utente {
     }
 
     public Utente(String idUtente, String password1, String email) {
+    }
+
+    public Utente(String idUtente, String password) {
+        this.idUtente=idUtente;
+        this.password=password;
     }
 
     public String getIdUtente() {
@@ -106,5 +112,9 @@ public class Utente {
 
     public void setListaAmici(ArrayList<Utente> listaAmici) {
         this.listaAmici = listaAmici;
+    }
+
+    public String getPassword() {
+        return this.password;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.moviestar.ui.dashboard;
+package com.example.moviestar.View.dashboard;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
