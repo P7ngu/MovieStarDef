@@ -30,31 +30,13 @@ public class RegistrazioneController extends AppCompatActivity {
 
     private static void  registerUser(String idUtente, String email, String password, final Context mContext) {
 
-       signupCallback = new SignUpHandler() {
-            @Override
-            public void onSuccess(CognitoUser user, boolean signUpConfirmationState, CognitoUserCodeDeliveryDetails cognitoUserCodeDeliveryDetails) {
-                Log.i("login", "sign up confirmed " + signUpConfirmationState);
-                if (!signUpConfirmationState) {
-                    Log.i("login", "not verified"+cognitoUserCodeDeliveryDetails.getDestination());
-                    Intent intent = new Intent(mContext, VerificationActivity.class);
-                    mContext.startActivity(intent);
-                } else {
-                    Log.i("login", "verified");
-                }
-            }
-
-            @Override
-            public void onFailure(Exception exception) {
-                Log.i("login", "failed"+exception.getLocalizedMessage());
-            }
-        };
     }
 
 
 
 
 
-    public static void registraUtente(String email, String password1, String password2, String idUtente, Context myContext) {
+    public static void registraUtente(String email, String password1, String password2, String idUtente, final Context myContext) {
         if(checkCampiNonVuoti(idUtente, password1, password2, email)) {
             if (checkCampiValidi(idUtente, password1, password2, email)) {
                 myUtente = new Utente (idUtente, password1, email);
@@ -64,11 +46,29 @@ public class RegistrazioneController extends AppCompatActivity {
 
                 CognitoSettings cognitoSettings=new CognitoSettings(myContext);
 
+
+
+                signupCallback = new SignUpHandler() {
+                    @Override
+                    public void onSuccess(CognitoUser user, boolean signUpConfirmationState, CognitoUserCodeDeliveryDetails cognitoUserCodeDeliveryDetails) {
+                        Log.i("login", "sign up confirmed " + signUpConfirmationState);
+                        if (!signUpConfirmationState) {
+                            Log.i("login", "not verified"+cognitoUserCodeDeliveryDetails.getDestination());
+                            Intent intent = new Intent(myContext, VerificationActivity.class);
+                            myContext.startActivity(intent);
+                        } else {
+                            Log.i("login", "verified");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Exception exception) {
+                        Log.i("login", "failed"+exception.getLocalizedMessage());
+                    }
+                };
                 cognitoSettings.getUserPool().signUpInBackground(idUtente, password1,
                         userAttributes, null, signupCallback);
-
-                registerUser(idUtente, email, password1, myContext);
-                VerificaController.sendCodice(idUtente);
+                //VerificaController.sendCodice(idUtente);
             }
         }
         if(!checkCampiNonVuoti(idUtente, password1, password2, email)){

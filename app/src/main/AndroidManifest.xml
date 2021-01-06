@@ -21,6 +21,9 @@
         </activity>
         <activity android:name=".View.RegistrazioneActivity"/>
         <activity android:name=".View.LoginActivity"/>
+        <activity android:name=".View.VerificationActivity"/>
+        <activity android:name=".View.ForgotPasswordActivity"/>
+
     </application>
 
 </manifest>
