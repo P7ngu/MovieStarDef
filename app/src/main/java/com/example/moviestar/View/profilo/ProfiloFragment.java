@@ -1,4 +1,4 @@
-package com.example.moviestar.View.notifications;
+package com.example.moviestar.View.profilo;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,15 +14,15 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.moviestar.R;
 
-public class NotificationsFragment extends Fragment {
+public class ProfiloFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private ProfiloViewModel notificationsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
+                ViewModelProviders.of(this).get(ProfiloViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_profilo, container, false);
         final TextView textView = root.findViewById(R.id.text_notifications);
         notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
