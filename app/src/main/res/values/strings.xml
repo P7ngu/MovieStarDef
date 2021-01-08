@@ -2,7 +2,7 @@
     <string name="app_name">Movie Star</string>
     <string name="title_home">Film</string>
     <string name="title_dashboard">Social</string>
-    <string name="title_notifications">Profilo</string>
+    <string name="title_profilo">Profilo</string>
     <string name="error_missing_credentials">Errore, compilare i campi richiesti!</string>
     <string name="error_missing_username">Errore, inserire un nome utente!</string>
     <string name="error_missing_password">Errore, inserire un password!</string>

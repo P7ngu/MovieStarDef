@@ -1,4 +1,4 @@
-package com.example.moviestar.View.dashboard;
+package com.example.moviestar.View.social;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,15 +14,15 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.moviestar.R;
 
-public class DashboardFragment extends Fragment {
+public class SocialFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+    private SocialViewModel dashboardViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+                ViewModelProviders.of(this).get(SocialViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_social, container, false);
         final TextView textView = root.findViewById(R.id.text_dashboard);
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

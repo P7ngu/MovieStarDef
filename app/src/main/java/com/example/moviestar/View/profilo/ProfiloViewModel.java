@@ -1,16 +1,16 @@
-package com.example.moviestar.View.dashboard;
+package com.example.moviestar.View.profilo;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class DashboardViewModel extends ViewModel {
+public class ProfiloViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public DashboardViewModel() {
+    public ProfiloViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is Social fragment");
+        mText.setValue("This is notifications fragment");
     }
 
     public LiveData<String> getText() {
