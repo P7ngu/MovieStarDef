@@ -17,15 +17,20 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.Mult
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler;
 import com.example.moviestar.Controllers.CognitoSettings;
 import com.example.moviestar.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity {
-    boolean isUserLogged=false;
+    boolean isUserLogged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Context mContext=this;
+        final Context mContext=this;
         SharedPreferences prefs;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -42,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(CognitoUserSession userSession, CognitoDevice newDevice) {
                 isUserLogged=true;
                 Log.i("Test", "auto login: "+username+password);
+
             }
 
             @Override
@@ -64,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Exception exception) {
+                Intent intent = new Intent(mContext, RegistrazioneActivity.class);
+                startActivity(intent);
             Log.d("Test", "login fallito");
             }
         };
@@ -73,24 +81,16 @@ public class MainActivity extends AppCompatActivity {
         CognitoUser thisUser=cognitoSettings.getUserPool().getUser(username);
         thisUser.getSessionInBackground(authenticationHandler);
 
-        if (!isUserLogged) {
-            Log.d("Test", "Main");
 
-            Intent intent = new Intent(this, RegistrazioneActivity.class);
-            //startActivity(intent);
-
-        }
-
-
-        //BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        //Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        // AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-        //   R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-        //    .build();
-        //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        //NavigationUI.setupWithNavController(navView, navController);
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+      R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+          .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navView, navController);
 
     }
 

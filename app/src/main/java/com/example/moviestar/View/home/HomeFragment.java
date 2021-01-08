@@ -2,12 +2,15 @@ package com.example.moviestar.View.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,21 +44,43 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     static RecyclerView recyclerView;
+    View root;
     List<Film> movieList;
     Context mContext;
+    static ImageButton searchButton;
+    String paroleCercate;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-
-
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        root = inflater.inflate(R.layout.fragment_home, container, false);
 
        final RecyclerView recyclerView1= root.findViewById(R.id.recycler_view);
        recyclerView=recyclerView1;
+       final ImageButton searchButton1 = root.findViewById(R.id.imageButton_search_home);
+       searchButton=searchButton1;
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String URL_ForSearching = "";
+                movieList.clear();
+                EditText searchbarET = root.findViewById(R.id.ET_searchbar_home);
+                paroleCercate = searchbarET.getText().toString().trim();
+                URL_ForSearching = "https://api.themoviedb.org/3/search/movie?api_key=89d40cd46523243c6d553bb54b2ca47e&language=it-IT&query=" + paroleCercate;
+                Log.i("Test", URL_ForSearching);
+                try {
+                    GetData getData1 = new GetData(URL_ForSearching);
+                    getData1.execute();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            });
+
 
 
 
@@ -75,6 +100,10 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
        String urlJSON="https://api.themoviedb.org/3/discover/movie?api_key=89d40cd46523243c6d553bb54b2ca47e&language=it-IT&sort_by=popularity.desc";
         movieList=new ArrayList<>();
+
+
+
+
         try {
             GetData getData = new GetData(urlJSON);
             getData.execute();
