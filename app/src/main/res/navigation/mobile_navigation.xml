@@ -20,6 +20,6 @@
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.moviestar.View.profilo.ProfiloFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_profilo"
         tools:layout="@layout/fragment_profilo" />
 </navigation>
