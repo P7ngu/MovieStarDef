@@ -17,18 +17,22 @@ public class Connessione {
     private static Connection dbConnection = null;
     public static final String username = "admin";
     public static final String password = "password";
-    static String dbName = System.getenv("db");
-    static String userName = System.getenv("admin");
-    static String hostname = System.getenv("db-5.cnwn7xaokcqa.us-east-2.rds.amazonaws.com");
-    static String port = System.getenv("3306");
+    static String dbName = "db";
+    static String userName = "admin";
+    static String hostname = "db-5.cnwn7xaokcqa.us-east-2.rds.amazonaws.com";
+    static String port = "3306";
 
-    static String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
+    static String jdbcUrl = System.getenv().get("jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password);
 
     public static Connection getConnection() {
         if (dbConnection == null){
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                dbConnection = DriverManager.getConnection(jdbcUrl);
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                String Url2="jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
+                String URL1= "jdbc:mysql://db-5.cnwn7xaokcqa.us-east-2.rds.amazonaws.com:3306/db?user=admin&password=password&useUnicode=true"+
+                        "&characterEncoding=UTF"+
+                        "-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=GMT";
+                dbConnection = DriverManager.getConnection(URL1);
             }
             catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -42,7 +46,7 @@ public class Connessione {
 
 
     public static Connection getDBConnection2()throws SQLException{
-        String url = "jdbc:postgresql://database-4.cnwn7xaokcqa.us-east-2.rds.amazonaws.com";
+        String url = "jdbc:postgresql://database-4.cnwn7xaokcqa.us-east-2.rds.amazonaws.com:5432/";
         Properties props = new Properties();
         props.setProperty("user","postgres");
         props.setProperty("password","password");
@@ -74,9 +78,10 @@ public class Connessione {
     }
 
     public static ResultSet crea() throws SQLException, ClassNotFoundException {
+        String url = "jdbc:postgresql://database-4.cnwn7xaokcqa.us-east-2.rds.amazonaws.com:3306/";
         Class.forName("com.mysql.jdbc.Driver");
         System.out.println("ok");
-        Connection connection = DriverManager.getConnection(jdbcUrl);
+        Connection connection = DriverManager.getConnection(url);
         Log.d("connessione", "connesso.");
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery("select * from utente");

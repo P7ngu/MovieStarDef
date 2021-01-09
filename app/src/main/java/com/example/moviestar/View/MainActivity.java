@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         try {
-            //connessione = Connessione.getConnection();
-            ResultSet rs=Connessione.crea();
+            connessione = Connessione.getConnection();
+            //ResultSet rs=Connessione.crea();
         } catch (Exception e) {
             e.printStackTrace();
         }
