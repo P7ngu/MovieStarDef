@@ -1,0 +1,16 @@
+{
+  "trigger": true,
+  "modules": [
+    "captcha-create-challenge"
+  ],
+  "parentResource": "moviestar098bf0f4",
+  "functionName": "moviestar098bf0f4CreateAuthChallenge",
+  "resourceName": "moviestar098bf0f4CreateAuthChallenge",
+  "parentStack": "auth",
+  "triggerEnvs": [],
+  "triggerDir": "C:\\snapshot\\node_modules\\amplify-category-auth\\provider-utils\\awscloudformation\\triggers\\CreateAuthChallenge",
+  "triggerTemplate": "CreateAuthChallenge.json.ejs",
+  "roleName": "moviestar098bf0f4CreateAuthChallenge",
+  "skipEdit": true,
+  "enableCors": false
+}

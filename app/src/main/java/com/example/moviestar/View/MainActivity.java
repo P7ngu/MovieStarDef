@@ -16,6 +16,7 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.Chal
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.MultiFactorAuthenticationContinuation;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler;
 import com.example.moviestar.Controllers.CognitoSettings;
+import com.example.moviestar.Controllers.Connessione;
 import com.example.moviestar.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,6 +25,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class MainActivity extends AppCompatActivity {
     boolean isUserLogged;
@@ -35,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        try {
+            Connection connessione = Connessione.getDBConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
         prefs = mContext.getSharedPreferences("myPrefsKeys", Context.MODE_PRIVATE);

@@ -16,6 +16,7 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserAttributes;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserCodeDeliveryDetails;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.SignUpHandler;
+import com.amazonaws.services.cognitoidentityprovider.model.SignUpResult;
 import com.example.moviestar.DAO.UtenteDAO;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
@@ -33,19 +34,15 @@ public class RegistrazioneController extends AppCompatActivity {
     }
 
 
-
-
-
     public static void registraUtente(String email, String password1, String password2, String idUtente, final Context myContext) {
         if(checkCampiNonVuoti(idUtente, password1, password2, email)) {
             if (checkCampiValidi(idUtente, password1, password2, email)) {
-                myUtente = new Utente (idUtente, password1, email);
+                myUtente = new Utente(idUtente, password1, email);
                 userAttributes.addAttribute("given_name", idUtente);
                 userAttributes.addAttribute("email", email);
                 userAttributes.addAttribute("nickname", idUtente);
 
-                CognitoSettings cognitoSettings=new CognitoSettings(myContext);
-
+                CognitoSettings cognitoSettings = new CognitoSettings(myContext);
 
 
                 signupCallback = new SignUpHandler() {
@@ -72,12 +69,13 @@ public class RegistrazioneController extends AppCompatActivity {
             }
         }
         if(!checkCampiNonVuoti(idUtente, password1, password2, email)){
-                String errorMessage="Errore, compilare tutti i campi!";
-                PopupController.mostraPopup("Errore", errorMessage, myContext);
+            String errorMessage="Errore, compilare tutti i campi!";
+            PopupController.mostraPopup("Errore", errorMessage, myContext);
 
         }
 
     }
+
 
     private static boolean checkCampiNonVuoti(String idUtente, String password1, String password2, String email) {
         if(idUtente.length() > 0 && password1.length() > 0 && password2.length() > 0 && email.length() > 0) return true;

@@ -1,0 +1,16 @@
+{
+  "trigger": true,
+  "modules": [
+    "captcha-define-challenge"
+  ],
+  "parentResource": "moviestar098bf0f4",
+  "functionName": "moviestar098bf0f4DefineAuthChallenge",
+  "resourceName": "moviestar098bf0f4DefineAuthChallenge",
+  "parentStack": "auth",
+  "triggerEnvs": [],
+  "triggerDir": "C:\\snapshot\\node_modules\\amplify-category-auth\\provider-utils\\awscloudformation\\triggers\\DefineAuthChallenge",
+  "triggerTemplate": "DefineAuthChallenge.json.ejs",
+  "roleName": "moviestar098bf0f4DefineAuthChallenge",
+  "skipEdit": true,
+  "enableCors": false
+}
