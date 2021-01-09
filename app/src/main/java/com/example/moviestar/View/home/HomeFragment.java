@@ -1,8 +1,6 @@
 package com.example.moviestar.View.home;
 
 import android.content.Context;
-import android.content.Intent;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,8 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.moviestar.Controllers.TmdbAPIController;
 import com.example.moviestar.Model.Film;
 import com.example.moviestar.R;
-import com.example.moviestar.View.Recycler.Adaptery;
-import com.example.moviestar.View.RegistrazioneActivity;
+import com.example.moviestar.View.home.Recycler.Adaptery;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -54,8 +50,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         root = inflater.inflate(R.layout.fragment_home, container, false);
 
        final RecyclerView recyclerView1= root.findViewById(R.id.recycler_view);
@@ -82,8 +77,6 @@ public class HomeFragment extends Fragment {
             });
 
 
-
-
         mContext = container.getContext();
 
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -100,10 +93,6 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
        String urlJSON="https://api.themoviedb.org/3/discover/movie?api_key=89d40cd46523243c6d553bb54b2ca47e&language=it-IT&sort_by=popularity.desc";
         movieList=new ArrayList<>();
-
-
-
-
         try {
             GetData getData = new GetData(urlJSON);
             getData.execute();
@@ -111,7 +100,6 @@ public class HomeFragment extends Fragment {
             e.printStackTrace();
         }
     }
-
 
 
     public class GetData extends AsyncTask<String, String, String> {
@@ -142,7 +130,6 @@ public class HomeFragment extends Fragment {
 
                     return current;
 
-
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -155,9 +142,6 @@ public class HomeFragment extends Fragment {
             } catch (Exception e){
                 e.printStackTrace();
             }
-
-
-
             return current;
         }
 
@@ -176,25 +160,14 @@ public class HomeFragment extends Fragment {
                     model.setImg(jsonObject1.getString("poster_path"));
                     model.setOverview(jsonObject1.getString("overview"));
                     movieList.add(model);
-
                 }
 
 
             } catch (Exception e){
                 e.printStackTrace();
             }
-
-
             PutDataIntoRecyclerView(movieList);
         }
-
-
-
-    }
-
-    private String formattaStringaPerQuery(String url_forSearching) throws UnsupportedEncodingException {
-        String result = url_forSearching.replaceAll(" ","%20");
-        return result;
     }
 
     private void PutDataIntoRecyclerView(List<Film> movieList){
@@ -206,4 +179,13 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(adaptery);
 
     }
+
+
+
+    private String formattaStringaPerQuery(String url_forSearching) throws UnsupportedEncodingException {
+        String result = url_forSearching.replaceAll(" ","%20");
+        return result;
+    }
+
+
 }

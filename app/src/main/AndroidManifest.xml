@@ -23,6 +23,8 @@
         <activity android:name=".View.VerificationActivity"/>
         <activity android:name=".View.ForgotPasswordActivity"/>
         <activity android:name=".View.MostraDettagliFilm"/>
+        <activity android:name=".View.ChangePasswordActivity"/>
+
 
     </application>
 

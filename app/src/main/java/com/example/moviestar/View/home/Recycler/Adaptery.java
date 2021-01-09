@@ -1,4 +1,4 @@
-package com.example.moviestar.View.Recycler;
+package com.example.moviestar.View.home.Recycler;
 
 import android.content.Context;
 import android.util.Log;
@@ -80,8 +80,6 @@ public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder>{
             vote = itemView.findViewById(R.id.vote_text);
             name = itemView.findViewById(R.id.name_text);
             img = itemView.findViewById(R.id.imageView_film);
-
-
         }
     }
 }
