@@ -27,10 +27,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MainActivity extends AppCompatActivity {
     boolean isUserLogged;
+    Connection connessione=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +41,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+
         try {
-            Connection connessione = Connessione.getDBConnection();
-        } catch (SQLException e) {
+            //connessione = Connessione.getConnection();
+            ResultSet rs=Connessione.crea();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
