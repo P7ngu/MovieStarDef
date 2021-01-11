@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.moviestar.Model.Film;
-import com.example.moviestar.View.MostraDettagliFilm;
+import com.example.moviestar.View.home.MostraDettagliFilm;
 
 public class MostraDettagliFilmController {
     public static void openFilm(Film filmCliccato, Context context){

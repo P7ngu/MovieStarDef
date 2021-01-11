@@ -1,4 +1,4 @@
-package com.example.moviestar.View;
+package com.example.moviestar.View.login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,9 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.RegistrazioneController;
 import com.example.moviestar.R;
+import com.example.moviestar.View.login.LoginActivity;
 
 public class RegistrazioneActivity extends AppCompatActivity {
 

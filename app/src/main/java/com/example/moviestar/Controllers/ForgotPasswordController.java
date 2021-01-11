@@ -7,8 +7,7 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserCodeDeliveryDetails;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.ForgotPasswordContinuation;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.ForgotPasswordHandler;
-import com.example.moviestar.View.ForgotPasswordActivity;
-import com.example.moviestar.View.LoginActivity;
+import com.example.moviestar.View.login.LoginActivity;
 
 public class ForgotPasswordController {
     static Context mContext;

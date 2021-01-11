@@ -18,12 +18,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.RegistrazioneActivity"/>
-        <activity android:name=".View.LoginActivity"/>
-        <activity android:name=".View.VerificationActivity"/>
-        <activity android:name=".View.ForgotPasswordActivity"/>
-        <activity android:name=".View.MostraDettagliFilm"/>
-        <activity android:name=".View.ChangePasswordActivity"/>
+        <activity android:name=".View.login.RegistrazioneActivity"/>
+        <activity android:name=".View.login.LoginActivity"/>
+        <activity android:name=".View.login.VerificationActivity"/>
+        <activity android:name=".View.login.ForgotPasswordActivity"/>
+        <activity android:name=".View.home.MostraDettagliFilm"/>
+        <activity android:name=".View.profilo.ChangePasswordActivity"/>
+
+        <activity android:name=".View.profilo.EditProfiloActivity"/>
+        <activity android:name=".View.profilo.EditProfiloFotoActivity"/>
+        <activity android:name=".View.profilo.EditProfiloNomeActivity"/>
 
 
     </application>

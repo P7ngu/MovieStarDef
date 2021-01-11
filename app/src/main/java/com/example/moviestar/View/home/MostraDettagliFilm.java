@@ -1,4 +1,4 @@
-package com.example.moviestar.View;
+package com.example.moviestar.View.home;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -46,6 +46,7 @@ public class SocialFragment extends Fragment {
         socialViewModel =
                 ViewModelProviders.of(this).get(SocialViewModel.class);
         View root = inflater.inflate(R.layout.fragment_social, container, false);
+ social-fragment
         //final TextView textView = root.findViewById(R.id.text_dashboard);
 
         //recycleview
@@ -64,6 +65,10 @@ public class SocialFragment extends Fragment {
         mContext = container.getContext(); //CONTEXT
 
         socialViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+
+       // final TextView textView = root.findViewById(R.id.text_dashboard);
+        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+ main
             @Override
             public void onChanged(@Nullable String s) {
                 //textView.setText(s);

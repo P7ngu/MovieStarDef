@@ -1,9 +1,13 @@
 package com.example.moviestar.View.profilo;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,21 +17,69 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.moviestar.R;
+import com.example.moviestar.View.login.RegistrazioneActivity;
 
 public class ProfiloFragment extends Fragment {
 
     private ProfiloViewModel notificationsViewModel;
+    static ImageButton editProfiloButton;
+    Button vediAmiciButton, vediFilmPreferitiButton, vediFilmVistiButton;
+   Context mContext;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         notificationsViewModel =
                 ViewModelProviders.of(this).get(ProfiloViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profilo, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
+        //final TextView textView = root.findViewById();
+
+        final Button vediAmici=root.findViewById(R.id.button_showallamici_profilo);
+        vediAmiciButton=vediAmici;
+        vediAmiciButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent = new Intent(mContext, EditProfiloActivity.class);
+                //startActivity(intent);
+            }
+        });
+        final Button vediFilmPreferiti=root.findViewById(R.id.button_showallfilmpreferiti_profilo);
+        vediFilmPreferitiButton=vediFilmPreferiti;
+        vediFilmPreferitiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent = new Intent(mContext, EditProfiloActivity.class);
+                //startActivity(intent);
+            }
+        });
+
+        final Button vediFilmVisti=root.findViewById(R.id.button_showallfilmvisti_profilo2);
+        vediFilmVistiButton=vediFilmVisti;
+        vediFilmPreferiti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent = new Intent(mContext, EditProfiloActivity.class);
+                //startActivity(intent);
+            }
+        });
+
+        final ImageButton editProfilo1 = root.findViewById(R.id.imageButton_editprofilo_profilo);
+        editProfiloButton=editProfilo1;
+
+        editProfiloButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, EditProfiloActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mContext = container.getContext();
+
         notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+                //textView.setText(s);
             }
         });
         return root;

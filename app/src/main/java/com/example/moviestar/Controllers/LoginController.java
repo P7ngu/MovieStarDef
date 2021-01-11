@@ -15,11 +15,7 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.Mult
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
-import com.example.moviestar.View.LoginActivity;
 import com.example.moviestar.View.MainActivity;
-
-import static android.provider.Settings.System.getString;
-import static com.example.moviestar.View.LoginActivity.*;
 
 public class LoginController {
     private static Utente myUtente;

@@ -1,4 +1,4 @@
-package com.example.moviestar.View;
+package com.example.moviestar.View.login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moviestar.Controllers.VerificaController;
 import com.example.moviestar.R;
+import com.example.moviestar.View.login.ForgotPasswordActivity;
+import com.example.moviestar.View.login.LoginActivity;
 
 public class VerificationActivity extends AppCompatActivity {
 
