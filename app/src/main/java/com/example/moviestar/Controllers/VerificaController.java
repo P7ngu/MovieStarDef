@@ -7,8 +7,7 @@ import android.util.Log;
 
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GenericHandler;
-import com.example.moviestar.View.LoginActivity;
-import com.example.moviestar.View.VerificationActivity;
+import com.example.moviestar.View.login.LoginActivity;
 
 public class VerificaController {
     static Context mContext;

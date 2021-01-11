@@ -1,4 +1,4 @@
-package com.example.moviestar.View;
+package com.example.moviestar.View.profilo;
 
 import android.content.Context;
 import android.os.Bundle;

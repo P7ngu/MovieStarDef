@@ -5,7 +5,6 @@ import android.util.Log;
 import android.widget.EditText;
 
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GenericHandler;
-import com.example.moviestar.View.ChangePasswordActivity;
 
 import static android.content.ContentValues.TAG;
 

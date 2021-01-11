@@ -1,4 +1,4 @@
-package com.example.moviestar.View;
+package com.example.moviestar.View.login;
 
 import android.content.Context;
 import android.content.Intent;

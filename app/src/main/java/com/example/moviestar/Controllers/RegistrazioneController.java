@@ -1,14 +1,9 @@
 package com.example.moviestar.Controllers;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,11 +11,10 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserAttributes;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserCodeDeliveryDetails;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.SignUpHandler;
-import com.amazonaws.services.cognitoidentityprovider.model.SignUpResult;
 import com.example.moviestar.DAO.UtenteDAO;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
-import com.example.moviestar.View.VerificationActivity;
+import com.example.moviestar.View.login.VerificationActivity;
 
 public class RegistrazioneController extends AppCompatActivity {
     static Utente myUtente;
