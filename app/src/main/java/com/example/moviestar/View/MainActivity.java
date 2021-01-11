@@ -42,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         try {
- social-fragment
+
             //connessione = Connessione.getConnection();
 
              // connessione = Connessione.getConnection();
- main
+
             //ResultSet rs=Connessione.crea();
         } catch (Exception e) {
             e.printStackTrace();
