@@ -18,7 +18,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.moviestar.Controllers.TmdbAPIController;
 import com.example.moviestar.Model.Film;
 import com.example.moviestar.R;
 import com.example.moviestar.View.home.Recycler.Adaptery;
@@ -55,7 +54,7 @@ public class HomeFragment extends Fragment {
 
        final RecyclerView recyclerView1= root.findViewById(R.id.recycler_view);
        recyclerView=recyclerView1;
-       final ImageButton searchButton1 = root.findViewById(R.id.imageButton_search_home);
+       final ImageButton searchButton1 = root.findViewById(R.id.search_user_button);
        searchButton=searchButton1;
 
         searchButton.setOnClickListener(new View.OnClickListener() {
