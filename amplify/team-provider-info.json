@@ -1,0 +1,15 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-moviestar-staging-105428-authRole",
+      "UnauthRoleArn": "arn:aws:iam::605030877611:role/amplify-moviestar-staging-105428-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::605030877611:role/amplify-moviestar-staging-105428-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-moviestar-staging-105428-deployment",
+      "UnauthRoleName": "amplify-moviestar-staging-105428-unauthRole",
+      "StackName": "amplify-moviestar-staging-105428",
+      "StackId": "arn:aws:cloudformation:us-east-2:605030877611:stack/amplify-moviestar-staging-105428/8b6d6e60-54c4-11eb-8e8a-02d9600aa3f6",
+      "AmplifyAppId": "d1777ooy9slybf"
+    }
+  }
+}

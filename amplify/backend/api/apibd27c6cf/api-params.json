@@ -1,0 +1,35 @@
+{
+    "paths": [
+        {
+            "name": "/items",
+            "lambdaFunction": "moviestarca1a04b0",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/items"
+        }
+    ],
+    "resourceName": "apibd27c6cf",
+    "apiName": "apibd27c6cf",
+    "functionArns": [
+        {
+            "lambdaFunction": "moviestarca1a04b0"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-moviestar-staging-105428-authRole",
+        "unAuthRoleName": "amplify-moviestar-staging-105428-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "moviestarca1a04b0",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}
