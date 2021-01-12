@@ -3,12 +3,10 @@ package com.example.moviestar.View.social;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,17 +16,13 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.moviestar.Model.Film;
+import com.example.moviestar.Controllers.UtenteDAO1;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
-import com.example.moviestar.View.home.HomeFragment;
-import com.example.moviestar.View.home.Recycler.Adaptery;
 import com.example.moviestar.View.social.recycler.AdapteryUtente;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,6 +98,11 @@ public class SocialFragment extends Fragment {
         protected void onPostExecute(String s) {
 
             try{
+                ResultSet temporaryUsersRS= UtenteDAO1.getUtentiFromDB();
+                while(temporaryUsersRS.next()){
+                    Utente userTemp=new Utente(temporaryUsersRS.getString(1), temporaryUsersRS.getString(2));
+                    UtenteList.add(userTemp);
+                }
                 Utente u1 = new Utente("user1", "password");
                 u1.setNomeUtenteMostrato("user1");
                 Utente u2 = new Utente("user2", "password");

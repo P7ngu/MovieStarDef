@@ -30,7 +30,7 @@ android {
 
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
@@ -45,8 +45,9 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
 
-    implementation files('libs/mysql-connector.jar')
+
     implementation 'com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.6.30'
     implementation 'com.amazonaws:aws-android-sdk-core:2.6.30'
+    compile 'mysql:mysql-connector-java:5.1.48'
 
 }

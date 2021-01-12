@@ -24,11 +24,10 @@ public class Connessione {
     public static Connection getConnection() {
         if (dbConnection == null){
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                String URL1= "jdbc:mysql://db-5.cnwn7xaokcqa.us-east-2.rds.amazonaws.com:3306/db?user=admin&password=password&useUnicode=true"+
-                "&characterEncoding=UTF"+
-                        "-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=GMT";
-               dbConnection = DriverManager.getConnection(URL1);
+                Class.forName("com.mysql.jdbc.Driver");
+                String URL1= "jdbc:mysql://db-5.cnwn7xaokcqa.us-east-2.rds.amazonaws.com:3306/db?user=admin&password=password"
+                        +"&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true";
+                dbConnection = DriverManager.getConnection(URL1);
             }
             catch (ClassNotFoundException e) {
                 e.printStackTrace();

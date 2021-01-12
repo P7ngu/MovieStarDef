@@ -16,6 +16,8 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.Chal
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.MultiFactorAuthenticationContinuation;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler;
 import com.example.moviestar.Controllers.CognitoSettings;
+import com.example.moviestar.Controllers.Connessione;
+import com.example.moviestar.Controllers.UtenteDAO1;
 import com.example.moviestar.R;
 import com.example.moviestar.View.login.RegistrazioneActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,8 +29,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 
 public class MainActivity extends AppCompatActivity {
+    ResultSet UsersRS;
+
+
     boolean isUserLogged;
     Connection connessione=null;
 
@@ -42,12 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         try {
-
-            //connessione = Connessione.getConnection();
-
-             // connessione = Connessione.getConnection();
-
-            //ResultSet rs=Connessione.crea();
+            connessione = Connessione.getConnection();
+            UsersRS=Connessione.getUtentiDB();
+            UtenteDAO1.setUtentiFromDB(UsersRS);
         } catch (Exception e) {
             e.printStackTrace();
         }
