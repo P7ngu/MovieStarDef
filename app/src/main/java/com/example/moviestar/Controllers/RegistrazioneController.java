@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
@@ -14,16 +15,56 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.SignUpHan
 import com.example.moviestar.DAO.UtenteDAO;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
+import com.example.moviestar.View.MainActivity;
 import com.example.moviestar.View.login.VerificationActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegistrazioneController extends AppCompatActivity {
     static Utente myUtente;
+
     Button registratiButton=findViewById(R.id.button_registrati);
-    final static CognitoUserAttributes userAttributes = new CognitoUserAttributes();
-    static SignUpHandler signupCallback;
+    private static FirebaseAuth firebaseAuth;
+    private static FirebaseAuth.AuthStateListener authStateListener;
+    private static FirebaseUser currentUser;
+
+    //Firestore connection
+    private static FirebaseFirestore db=FirebaseFirestore.getInstance();
+    private static CollectionReference collectionReference=db.collection("Users");
 
 
-    private static void  registerUser(String idUtente, String email, String password, final Context mContext) {
+    public static void registerOnCreate(){
+       authStateListener=new FirebaseAuth.AuthStateListener() {
+           @Override
+           public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+               currentUser = firebaseAuth.getCurrentUser();
+               if(currentUser!=null){
+                   //user is logged in
+               }else{
+                   //not logged
+
+               }
+           }
+       };
+    }
+
+    public static void  registerOnStart() {
+        firebaseAuth=FirebaseAuth.getInstance();
+
+        currentUser = firebaseAuth.getCurrentUser();
+        firebaseAuth.addAuthStateListener(authStateListener);
 
     }
 
@@ -32,34 +73,8 @@ public class RegistrazioneController extends AppCompatActivity {
         if(checkCampiNonVuoti(idUtente, password1, password2, email)) {
             if (checkCampiValidi(idUtente, password1, password2, email)) {
                 myUtente = new Utente(idUtente, password1, email);
-                userAttributes.addAttribute("given_name", idUtente);
-                userAttributes.addAttribute("email", email);
-                userAttributes.addAttribute("nickname", idUtente);
-
-                CognitoSettings cognitoSettings = new CognitoSettings(myContext);
 
 
-                signupCallback = new SignUpHandler() {
-                    @Override
-                    public void onSuccess(CognitoUser user, boolean signUpConfirmationState, CognitoUserCodeDeliveryDetails cognitoUserCodeDeliveryDetails) {
-                        Log.i("login", "sign up confirmed " + signUpConfirmationState);
-                        if (!signUpConfirmationState) {
-                            Log.i("login", "not verified"+cognitoUserCodeDeliveryDetails.getDestination());
-                            Intent intent = new Intent(myContext, VerificationActivity.class);
-                            myContext.startActivity(intent);
-                        } else {
-                            Log.i("login", "verified");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Exception exception) {
-                        Log.i("login", "failed"+exception.getLocalizedMessage());
-                    }
-                };
-                cognitoSettings.getUserPool().signUpInBackground(idUtente, password1,
-                        userAttributes, null, signupCallback);
-                //VerificaController.sendCodice(idUtente);
             }
         }
         if(!checkCampiNonVuoti(idUtente, password1, password2, email)){
@@ -100,6 +115,61 @@ public class RegistrazioneController extends AppCompatActivity {
     }
 
 
+    public static void createUserEmailAccount(String email, String password1, String username, Context mContext) {
+        Log.d("Firebase", email+password1+username+mContext);
+    firebaseAuth.createUserWithEmailAndPassword(email, password1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        @Override
+        public void onComplete(@NonNull Task<AuthResult> task) {
+        if(task.isSuccessful()){
+            currentUser=firebaseAuth.getCurrentUser();
+            assert currentUser!=null;
+            String currentUserID=currentUser.getUid();
+
+            Map<String, String> userObj=new HashMap<>();
+            userObj.put("userID", currentUserID);
+            userObj.put("username", username);
+            collectionReference.add(userObj)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    documentReference.get()
+                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if(task.getResult().exists()){
+                                String name=task.getResult()
+                                        .getString("username");
+
+                                Intent intent = new Intent(mContext, MainActivity.class);
+                                intent.putExtra("username", name);
+                                intent.putExtra("userID", currentUserID);
+                                mContext.startActivity(intent);
+
+                            }else{
+
+                            }
+                        }
+                    });
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+        }else{
+
+        }
+        }
+    }).addOnFailureListener(new OnFailureListener() {
+        @Override
+        public void onFailure(@NonNull Exception e) {
+
+        }
+    });
+
+    }
 }
 
 

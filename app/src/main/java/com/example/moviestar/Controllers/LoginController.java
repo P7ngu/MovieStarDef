@@ -1,89 +1,48 @@
 package com.example.moviestar.Controllers;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoDevice;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserSession;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.AuthenticationContinuation;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.AuthenticationDetails;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.ChallengeContinuation;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.MultiFactorAuthenticationContinuation;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
-import com.example.moviestar.View.MainActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginController {
     private static Utente myUtente;
     public static SharedPreferences prefs;
     private static String mpassword;
-    private static String midutente;
+    private static String memail;
     private static  Context myContext;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+    private FirebaseUser currentUser;
 
-    final static AuthenticationHandler authenticationHandler = new AuthenticationHandler() {
-
-        @Override
-        public void onSuccess(CognitoUserSession userSession, CognitoDevice newDevice) {
-            prefs = myContext.getSharedPreferences("myPrefsKeys", Context.MODE_PRIVATE);
-            //SharedPreferences sharedPref = SharedPreferences.getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("username", midutente);
-            editor.putString("password", mpassword);
-            editor.apply();
-            Intent intent=new Intent(myContext, MainActivity.class);
-            myContext.startActivity(intent);
-
-
-        }
+    //Firestore connection
+    private FirebaseFirestore db=FirebaseFirestore.getInstance();
 
 
 
-        @Override
-        public void getAuthenticationDetails(AuthenticationContinuation authenticationContinuation, String userId) {
-            AuthenticationDetails authenticationDetails=new AuthenticationDetails(midutente, mpassword, null);
-            authenticationContinuation.setAuthenticationDetails(authenticationDetails);
-            authenticationContinuation.continueTask();
-        }
-
-        @Override
-        public void getMFACode(MultiFactorAuthenticationContinuation continuation) {
-
-        }
-
-        @Override
-        public void authenticationChallenge(ChallengeContinuation continuation) {
-
-        }
-
-        @Override
-        public void onFailure(Exception exception) {
-            Log.d("Test", "not successful"+exception.getLocalizedMessage());
-
-        }
-    };
 
 
-    public static void login(final String idUtente, final String password, final Context mContext){
+
+    public static void login(final String email, final String password, final Context mContext){
         myContext=mContext;
-        if(checkCampiValidi(idUtente, password) == true) {
-            Log.d("Test", "username" + idUtente+password);
+        if(checkCampiValidi(email, password) == true) {
+            Log.d("Test", "username" + email+password);
             mpassword=password;
-            midutente=idUtente;
-            CognitoSettings cognitoSettings=new CognitoSettings(mContext);
-            CognitoUser thisUser=cognitoSettings.getUserPool().getUser(idUtente);
-            thisUser.getSessionInBackground(authenticationHandler);
-            setMyUtente(new Utente(idUtente, password));
+            memail =email;
+
+            setMyUtente(new Utente(email, password));
 
         }
         else {
-            if(checkCampiVuoti(idUtente,password) == true){
+            if(checkCampiVuoti(email,password) == true){
                 String errorMessage1 = mContext.getString(R.string.error_missing_credentials);
                 PopupController.mostraPopup("Errore", errorMessage1, myContext);
-            }else if(checkId(idUtente) == false){
+            }else if(checkId(email) == false){
                     String errorMessage2 = mContext.getString(R.string.error_missing_username);
                     PopupController.mostraPopup("Errore", errorMessage2, myContext);
                 }else if(checkPassword(password) == false){

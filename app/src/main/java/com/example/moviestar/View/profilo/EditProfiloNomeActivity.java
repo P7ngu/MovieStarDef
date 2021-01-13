@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.R;
 
 public class EditProfiloNomeActivity extends AppCompatActivity {
@@ -20,12 +21,16 @@ public class EditProfiloNomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        String currentUserID= CurrentUser.getUserId();
+        String currentUsername=CurrentUser.getUsername();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editprofilonome);
 
         newNameET=findViewById(R.id.editText_newname_ep);
         oldNameTV=findViewById(R.id.nomeutente_ep);
-        oldNameTV.setText("TODO");
+        oldNameTV.setText(currentUsername);
 
         updateNameButton=findViewById(R.id.button_changename_ep);
         propicImg=findViewById(R.id.propic_ep_imageview);

@@ -17,10 +17,17 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.Mult
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler;
 import com.example.moviestar.Controllers.CognitoSettings;
 import com.example.moviestar.Controllers.Connessione;
+import com.example.moviestar.Controllers.CurrentUser;
+import com.example.moviestar.Controllers.RegistrazioneController;
 import com.example.moviestar.Controllers.UtenteDAO1;
 import com.example.moviestar.R;
 import com.example.moviestar.View.login.RegistrazioneActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.StorageReference;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -33,10 +40,9 @@ import java.sql.ResultSet;
 
 public class MainActivity extends AppCompatActivity {
     ResultSet UsersRS;
+    boolean isUserLogged=false;
 
 
-    boolean isUserLogged;
-    Connection connessione=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +53,15 @@ public class MainActivity extends AppCompatActivity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
 
+        Bundle bundle = getIntent().getExtras();
+        if(bundle !=null){
+            CurrentUser.setUserId(bundle.getString("userId"));
+            CurrentUser.setUsername(bundle.getString("username"));
+        }
+
+
         try {
-            connessione = Connessione.getConnection();
-            UsersRS=Connessione.getUtentiDB();
-            UtenteDAO1.setUtentiFromDB(UsersRS);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,45 +72,10 @@ public class MainActivity extends AppCompatActivity {
         final String password = prefs.getString("password", "");
         Log.i("Test", "saved data: "+username+password);
 
-        final AuthenticationHandler authenticationHandler=new AuthenticationHandler() {
-            @Override
-            public void onSuccess(CognitoUserSession userSession, CognitoDevice newDevice) {
-                isUserLogged=true;
-                Log.i("Test", "auto login: "+username+password);
-
-            }
-
-            @Override
-            public void getAuthenticationDetails(AuthenticationContinuation authenticationContinuation, String userId) {
-                AuthenticationDetails authenticationDetails=new AuthenticationDetails(userId, password, null);
-
-                authenticationContinuation.setAuthenticationDetails(authenticationDetails);
-                authenticationContinuation.continueTask();
-            }
-
-            @Override
-            public void getMFACode(MultiFactorAuthenticationContinuation continuation) {
-
-            }
-
-            @Override
-            public void authenticationChallenge(ChallengeContinuation continuation) {
-
-            }
-
-            @Override
-            public void onFailure(Exception exception) {
-                Intent intent = new Intent(mContext, RegistrazioneActivity.class);
-                startActivity(intent);
-            Log.d("Test", "login fallito");
-            }
-        };
-
-        CognitoSettings cognitoSettings=new CognitoSettings(MainActivity.this);
-
-        CognitoUser thisUser=cognitoSettings.getUserPool().getUser(username);
-        thisUser.getSessionInBackground(authenticationHandler);
-
+        if(!isUserLogged){
+            Intent intent = new Intent(this, RegistrazioneActivity.class);
+            startActivity(intent);
+        }
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(

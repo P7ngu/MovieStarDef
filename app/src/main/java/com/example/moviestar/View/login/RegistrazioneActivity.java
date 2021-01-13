@@ -26,10 +26,17 @@ TextView disclaimer;
     final Context context= this;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        RegistrazioneController.registerOnStart();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          setContentView(R.layout.registrazione);
         Intent intent = getIntent();
+        RegistrazioneController.registerOnCreate();
 
         emailEditText= findViewById(R.id.editTextTextEmailAddress);
         nomeUtenteEditText=findViewById(R.id.editText_NomeUtente);
@@ -61,7 +68,9 @@ TextView disclaimer;
                 String password1=password1EditText.getText().toString().trim();
                 String password2= password2EditText.getText().toString().trim();
                 String nomeUtente=nomeUtenteEditText.getText().toString().trim();
-
+                //check vuoto etc TODO
+                Log.d("Firebase", email+password1+nomeUtente+context);
+                RegistrazioneController.createUserEmailAccount(email, password1, nomeUtente, context);
                 RegistrazioneController.registraUtente(email, password1, password2, nomeUtente, context);
 
 

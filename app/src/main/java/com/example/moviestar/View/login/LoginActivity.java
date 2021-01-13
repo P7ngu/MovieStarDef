@@ -24,6 +24,7 @@ public class LoginActivity extends AppCompatActivity  {
     ImageView logo;
 
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

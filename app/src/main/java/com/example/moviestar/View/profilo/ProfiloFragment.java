@@ -16,8 +16,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.R;
 import com.example.moviestar.View.login.RegistrazioneActivity;
+
+import org.w3c.dom.Text;
 
 public class ProfiloFragment extends Fragment {
 
@@ -25,6 +28,7 @@ public class ProfiloFragment extends Fragment {
     static ImageButton editProfiloButton;
     Button vediAmiciButton, vediFilmPreferitiButton, vediFilmVistiButton;
    Context mContext;
+   TextView usernameTV;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -33,6 +37,14 @@ public class ProfiloFragment extends Fragment {
                 ViewModelProviders.of(this).get(ProfiloViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profilo, container, false);
         //final TextView textView = root.findViewById();
+        String currentUserID= CurrentUser.getUserId();
+        String currentUsername=CurrentUser.getUsername();
+
+        final TextView usernameTV1=root.findViewById(R.id.textView_nomeutente_profilo);
+        usernameTV=usernameTV1;
+        usernameTV.setText(currentUsername);
+
+
 
         final Button vediAmici=root.findViewById(R.id.button_showallamici_profilo);
         vediAmiciButton=vediAmici;

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.R;
 
 public class EditProfiloActivity extends AppCompatActivity {
@@ -22,8 +23,11 @@ public class EditProfiloActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editprofilo);
+
+        String currentUserID= CurrentUser.getUserId();
+        String currentUsername=CurrentUser.getUsername();
         nomeVisualizzatoTV=findViewById(R.id.nomeutente_ep);
-        nomeVisualizzatoTV.setText("TODO metodo");
+        nomeVisualizzatoTV.setText(currentUsername);
 
         cambiaFotoButton=findViewById(R.id.button_ep_cambiafoto);
         cambiaNomeButton=findViewById(R.id.button_changename_ep);
