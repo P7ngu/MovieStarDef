@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "343239065340",
+    "project_id": "movie-star-caf74",
+    "storage_bucket": "movie-star-caf74.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343239065340:android:c12228bdd8a005dfe32179",
+        "android_client_info": {
+          "package_name": "com.example.moviestar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343239065340-2koibciaa32plkfpfu21ge23kci919jg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOnATo61Ga314fthsV-xCIHMBF0rGa6Hw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343239065340-2koibciaa32plkfpfu21ge23kci919jg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
