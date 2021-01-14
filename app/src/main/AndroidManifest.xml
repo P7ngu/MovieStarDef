@@ -22,12 +22,17 @@
         <activity android:name=".View.login.LoginActivity"/>
         <activity android:name=".View.login.VerificationActivity"/>
         <activity android:name=".View.login.ForgotPasswordActivity"/>
-        <activity android:name=".View.home.MostraDettagliFilm"/>
+        <activity android:name=".View.home.MostraDettagliFilmActivity"/>
         <activity android:name=".View.profilo.ChangePasswordActivity"/>
 
         <activity android:name=".View.profilo.EditProfiloActivity"/>
         <activity android:name=".View.profilo.EditProfiloFotoActivity"/>
         <activity android:name=".View.profilo.EditProfiloNomeActivity"/>
+
+        <activity android:name=".View.home.CommentiFilmActivity"/>
+        <activity android:name=".View.profilo.ListaFilmActivity"/>
+        <activity android:name=".View.profilo.ListaAmiciActivity"/>
+
 
 
     </application>

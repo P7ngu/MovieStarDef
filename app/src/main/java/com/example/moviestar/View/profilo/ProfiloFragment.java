@@ -3,6 +3,7 @@ package com.example.moviestar.View.profilo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +23,13 @@ import com.example.moviestar.View.login.RegistrazioneActivity;
 
 import org.w3c.dom.Text;
 
+import java.util.List;
+
 public class ProfiloFragment extends Fragment {
 
     private ProfiloViewModel notificationsViewModel;
     static ImageButton editProfiloButton;
-    Button vediAmiciButton, vediFilmPreferitiButton, vediFilmVistiButton;
+    static Button vediAmiciButton, vediFilmPreferitiButton, vediFilmVistiButton;
    Context mContext;
    TextView usernameTV;
 
@@ -55,23 +58,30 @@ public class ProfiloFragment extends Fragment {
                 //startActivity(intent);
             }
         });
-        final Button vediFilmPreferiti=root.findViewById(R.id.button_showallfilmpreferiti_profilo);
+
+
+        final Button vediFilmPreferiti=root.findViewById(R.id.button_filmpref);
         vediFilmPreferitiButton=vediFilmPreferiti;
         vediFilmPreferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(mContext, EditProfiloActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(mContext, ListaFilmActivity.class);
+                intent.putExtra("tipologia", "filmpreferiti");
+                mContext.startActivity(intent);
             }
         });
 
+
+
+
         final Button vediFilmVisti=root.findViewById(R.id.button_showallfilmvisti_profilo2);
         vediFilmVistiButton=vediFilmVisti;
-        vediFilmPreferiti.setOnClickListener(new View.OnClickListener() {
+        vediFilmVistiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(mContext, EditProfiloActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(mContext, ListaFilmActivity.class);
+                intent.putExtra("tipologia", "filmvisti");
+                mContext.startActivity(intent);
             }
         });
 

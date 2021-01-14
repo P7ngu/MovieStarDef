@@ -116,7 +116,7 @@
         app:layout_constraintVertical_bias="0.704" />
 
     <Button
-        android:id="@+id/button_showallfilmpreferiti_profilo"
+        android:id="@+id/button_filmpref"
         android:layout_width="110dp"
         android:layout_height="37dp"
         android:layout_marginEnd="20dp"

@@ -20,6 +20,11 @@ public class Film {
         this.overview=overview;
     }
 
+    public Film(String lorem, String autore_di_prova) {
+        this.name=lorem;
+        this.vote=autore_di_prova;
+    }
+
     public String getOverview() {
         return overview;
     }

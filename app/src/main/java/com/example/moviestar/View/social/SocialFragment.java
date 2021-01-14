@@ -98,11 +98,11 @@ public class SocialFragment extends Fragment {
         protected void onPostExecute(String s) {
 
             try{
-                ResultSet temporaryUsersRS= UtenteDAO1.getUtentiFromDB();
-                while(temporaryUsersRS.next()){
-                    Utente userTemp=new Utente(temporaryUsersRS.getString(1), temporaryUsersRS.getString(2));
-                    UtenteList.add(userTemp);
-                }
+                //ResultSet temporaryUsersRS= UtenteDAO1.getUtentiFromDB();
+                //while(temporaryUsersRS.next()){
+                  //  Utente userTemp=new Utente(temporaryUsersRS.getString(1), temporaryUsersRS.getString(2));
+                    //UtenteList.add(userTemp);
+                //}
                 Utente u1 = new Utente("user1", "password");
                 u1.setNomeUtenteMostrato("user1");
                 Utente u2 = new Utente("user2", "password");
