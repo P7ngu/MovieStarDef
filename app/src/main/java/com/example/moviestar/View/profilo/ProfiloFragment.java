@@ -48,8 +48,9 @@ public class ProfiloFragment extends Fragment {
         vediAmiciButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(mContext, EditProfiloActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(mContext, ListaAmiciActivity.class);
+                intent.putExtra("tipologia", "listaAmici");
+                startActivity(intent);
             }
         });
 

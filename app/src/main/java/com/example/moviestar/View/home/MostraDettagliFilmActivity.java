@@ -43,5 +43,13 @@ public class MostraDettagliFilmActivity extends AppCompatActivity {
             }
         });
 
+        Button aggiungiCommentoButton = findViewById(R.id.button_addcomment);
+        aggiungiCommentoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MostraDettagliFilmController.onClickAggiungiCommento(filmName, mContext);
+            }
+        });
+
     }
 }

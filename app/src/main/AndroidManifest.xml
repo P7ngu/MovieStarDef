@@ -32,7 +32,7 @@
         <activity android:name=".View.home.CommentiFilmActivity"/>
         <activity android:name=".View.profilo.ListaFilmActivity"/>
         <activity android:name=".View.profilo.ListaAmiciActivity"/>
-
+        <activity android:name=".View.home.AggiungiCommentoActivity"/>
 
 
     </application>

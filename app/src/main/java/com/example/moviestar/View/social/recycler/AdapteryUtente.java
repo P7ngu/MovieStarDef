@@ -17,16 +17,20 @@ import com.example.moviestar.Model.Film;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
 import com.example.moviestar.View.home.Recycler.Adaptery;
+import com.example.moviestar.View.profilo.ProfiloFragment;
+import com.example.moviestar.View.social.SocialFragment;
 
 import java.util.List;
 
 public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHolder>{
     private static Context mContext;
     private static List<Utente> mData;
+    private static String tipologiaSchermata;
 
-    public AdapteryUtente(Context mContext, List<Utente> mData) {
+    public AdapteryUtente(Context mContext, List<Utente> mData, String tipologiaSchermata) {
         this.mContext = mContext;
         this.mData = mData;
+        this.tipologiaSchermata=tipologiaSchermata;
     }
 
     @NonNull
@@ -35,7 +39,10 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
         View v;
         LayoutInflater inflater = LayoutInflater.from(mContext);
         //v=inflater.inflate(R.layout.movie_item, parent, false);
+        if(tipologiaSchermata.equals("social"))
         v = View.inflate(mContext, R.layout.utente_item, null);
+        else
+            v=View.inflate(mContext, R.layout.amico_item, null);
 
         return new AdapteryUtente.MyViewHolder(v);
     }
@@ -44,15 +51,6 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
     public void onBindViewHolder(@NonNull AdapteryUtente.MyViewHolder holder, int position) {
 
         holder.nomeutentemostrato.setText(mData.get(position).getNomeUtenteMostrato());
-//        holder.name.setText((mData.get(position).getName()));
-
-        //Glide for the image + https://image.tmdb.org/t/p/w500 + poster_path
-//        try {
-//            Glide.with(mContext).load("https://image.tmdb.org/t/p/w500" + mData.get(position).getImg()).into(holder.img);
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-
 
     }
 

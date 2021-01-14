@@ -16,13 +16,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.moviestar.Controllers.UtenteDAO1;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
 import com.example.moviestar.View.social.recycler.AdapteryUtente;
 
 import java.io.UnsupportedEncodingException;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,7 +145,7 @@ public class SocialFragment extends Fragment {
     }
 
     private void PutDataIntoRecyclerView(List<Utente> utenteList){
-        AdapteryUtente adaptery =new AdapteryUtente(mContext, utenteList);
+        AdapteryUtente adaptery =new AdapteryUtente(mContext, utenteList, "social");
 //        Log.d("TestU", ""+mContext.toString()+recyclerView.toString());
 //        Log.d("TestU1", recyclerView.toString());
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
