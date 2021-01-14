@@ -116,7 +116,6 @@ public class RegistrazioneController extends AppCompatActivity {
 
 
     public static void createUserEmailAccount(String email, String password1, String username, Context mContext) {
-        Log.d("Firebase", email+password1+username+mContext);
     firebaseAuth.createUserWithEmailAndPassword(email, password1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -139,6 +138,7 @@ public class RegistrazioneController extends AppCompatActivity {
                             if(task.getResult().exists()){
                                 String name=task.getResult()
                                         .getString("username");
+                                String userid=task.getResult().getString("uid");
 
                                 Intent intent = new Intent(mContext, MainActivity.class);
                                 intent.putExtra("username", name);

@@ -1,22 +1,35 @@
 package com.example.moviestar.Controllers;
 
-public class CurrentUser {
+import android.app.Application;
+
+public class CurrentUser extends Application {
+    private static String username;
+    private static String userId;
+    private static CurrentUser instance;
+
+    public static CurrentUser getInstance() {
+        if (instance == null)
+            instance = new CurrentUser();
+        return instance;
+
+    }
+
+    public CurrentUser(){}
+
+
     public static String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public static String getUserId() {
         return userId;
     }
 
-    static String username;
-    static String userId;
-
-    public static void setUsername(String username) {
-        CurrentUser.username = username;
-    }
-
-    public static void setUserId(String userId) {
-        CurrentUser.userId = userId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

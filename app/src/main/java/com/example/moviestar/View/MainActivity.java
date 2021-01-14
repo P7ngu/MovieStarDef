@@ -7,35 +7,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoDevice;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserSession;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.AuthenticationContinuation;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.AuthenticationDetails;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.ChallengeContinuation;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.MultiFactorAuthenticationContinuation;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler;
-import com.example.moviestar.Controllers.CognitoSettings;
-import com.example.moviestar.Controllers.Connessione;
 import com.example.moviestar.Controllers.CurrentUser;
-import com.example.moviestar.Controllers.RegistrazioneController;
-import com.example.moviestar.Controllers.UtenteDAO1;
 import com.example.moviestar.R;
 import com.example.moviestar.View.login.RegistrazioneActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.StorageReference;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import com.example.moviestar.Controllers.CurrentUser;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle !=null){
-            CurrentUser.setUserId(bundle.getString("userId"));
-            CurrentUser.setUsername(bundle.getString("username"));
+            CurrentUser currentUser= CurrentUser.getInstance();
+            currentUser.setUserId(bundle.getString("userID"));
+            currentUser.setUsername(bundle.getString("username"));
         }
 
 

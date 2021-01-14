@@ -3,6 +3,7 @@ package com.example.moviestar.View.profilo;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,18 +14,23 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moviestar.Controllers.CurrentUser;
+import com.example.moviestar.Controllers.PopupController;
+import com.example.moviestar.DAO.UtenteDAO;
 import com.example.moviestar.R;
-import com.example.moviestar.View.MainActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import org.w3c.dom.Text;
+import com.google.firebase.storage.UploadTask;
 
 public class EditProfiloFotoActivity extends AppCompatActivity {
     Button selectPicButton, updatePicButton;
+    String currentUserID, currentUsername;
     ImageView  propicImg;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -69,19 +75,22 @@ public class EditProfiloFotoActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editprofilofoto);
+        storageReference = FirebaseStorage.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
-        String currentUserID = CurrentUser.getUserId();
-        String currentUsername = CurrentUser.getUsername();
+
+        currentUserID = CurrentUser.getInstance().getUserId();
+        currentUsername = CurrentUser.getInstance().getUsername();
+
 
         selectPicButton = findViewById(R.id.button_changename_ep);
         updatePicButton = findViewById(R.id.button_changepassword_ep);
         filenameTV = findViewById(R.id.textView_nomefile_ep);
-        propicImg=findViewById(R.id.propic_ep_imageview);
+        propicImg = findViewById(R.id.propic_ep_imageview);
 
         selectPicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent galleryIntent=new Intent(Intent.ACTION_GET_CONTENT);
+                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 galleryIntent.setType("image/*");
                 startActivityForResult(galleryIntent, GALLERY_CODE);
             }
@@ -90,23 +99,74 @@ public class EditProfiloFotoActivity extends AppCompatActivity {
         updatePicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
+                clickOnUpdatePicButton();
             }
         });
+
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-            user=firebaseAuth.getCurrentUser();
-            if(user!=null){
+                user = firebaseAuth.getCurrentUser();
+                if (user != null) {
 
-            }else{
+                } else {
 
-            }
+                }
             }
 
         };
 
-
     }
+
+    public void clickOnUpdatePicButton() {
+        if(imageUri!=null&&currentUserID!=null){
+            final StorageReference filepath=storageReference //.../profile_pictures/image_jpeg
+                    .child("profile_pictures")
+                    .child(currentUserID);
+            filepath.putFile(imageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String imageUrl=uri.toString();
+                                    UtenteDAO utenteDAO=new UtenteDAO();
+                                    utenteDAO.setCurrentID(currentUserID);
+                                    utenteDAO.setCurrentUsername(currentUsername);
+                                    utenteDAO.setImageURI(imageUrl);
+
+                                    collectionReference.add(utenteDAO).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            //Cambia activity
+                                            PopupController.mostraPopup("Foto aggiornata", "foto aggiornata", EditProfiloFotoActivity.this);
+                                            // finish();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+        }else{
+        PopupController.mostraPopup("Titoolo", currentUserID+imageUri, EditProfiloFotoActivity.this);
+        }
+    }
+
+
+
 }
+
+
+

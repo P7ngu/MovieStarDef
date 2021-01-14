@@ -3,7 +3,6 @@ package com.example.moviestar.View.profilo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +18,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.R;
-import com.example.moviestar.View.login.RegistrazioneActivity;
-
-import org.w3c.dom.Text;
-
-import java.util.List;
 
 public class ProfiloFragment extends Fragment {
 
