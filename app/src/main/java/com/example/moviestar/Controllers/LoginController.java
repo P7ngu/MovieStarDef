@@ -1,14 +1,28 @@
 package com.example.moviestar.Controllers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
+import com.example.moviestar.View.MainActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginController {
     private static Utente myUtente;
@@ -17,27 +31,69 @@ public class LoginController {
     private static String memail;
     private static  Context myContext;
 
-    private FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
-    private FirebaseUser currentUser;
+    static FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();;
+    static FirebaseAuth.AuthStateListener authStateListener;
+    private static FirebaseUser currentUser;
 
-    //Firestore connection
-    private FirebaseFirestore db=FirebaseFirestore.getInstance();
-
-
+    static FirebaseFirestore db=FirebaseFirestore.getInstance();
+    static CollectionReference collectionReference = db.collection("Users");
 
 
 
+    public static void Firebase_loginEmailPasswordUser(String email, String password, Context mContext) {
+        PopupController.mostraPopup("Debug", email+password, mContext);
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        assert user !=null;
+                        final String currentuserid= user.getUid();
 
-    public static void login(final String email, final String password, final Context mContext){
+                        collectionReference
+                                .whereEqualTo("userID", currentuserid)
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                        if(error!=null){
+                                            PopupController.mostraPopup("Errore durante il login", error.toString() , mContext);
+                                        }
+                                        assert value !=null;
+                                        if(!value.isEmpty()){
+                                            for(QueryDocumentSnapshot snapshot : value) {
+                                                CurrentUser currentUser = CurrentUser.getInstance();
+                                                currentUser.setUsername(snapshot.getString("username"));
+                                                currentUser.setUserId(currentuserid);
+                                                PopupController.mostraPopup("Dentro query", currentuserid+snapshot.getString("username") , mContext);
+
+                                                Intent intent=new Intent(mContext, MainActivity.class);
+                                                mContext.startActivity(intent);
+
+                                            }
+                                        }
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        PopupController.mostraPopup("Errore durante il login", e.toString() , mContext);
+
+                    }
+                });
+
+    }
+
+
+    public static boolean login(final String email, final String password, final Context mContext){
         myContext=mContext;
         if(checkCampiValidi(email, password) == true) {
             Log.d("Test", "username" + email+password);
             mpassword=password;
             memail =email;
-
             setMyUtente(new Utente(email, password));
-
+            return true;
         }
         else {
             if(checkCampiVuoti(email,password) == true){
@@ -51,6 +107,7 @@ public class LoginController {
                     PopupController.mostraPopup("Errore", errorMessage3, myContext);
                 }
         }
+        return false;
 
     }
 

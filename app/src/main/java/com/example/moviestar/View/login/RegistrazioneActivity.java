@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moviestar.Controllers.RegistrazioneController;
 import com.example.moviestar.R;
-import com.example.moviestar.View.login.LoginActivity;
 
 public class RegistrazioneActivity extends AppCompatActivity {
 
@@ -68,10 +67,9 @@ TextView disclaimer;
                 String password1=password1EditText.getText().toString().trim();
                 String password2= password2EditText.getText().toString().trim();
                 String nomeUtente=nomeUtenteEditText.getText().toString().trim();
-                //check vuoto etc TODO
-                Log.d("Firebase", email+password1+nomeUtente+context);
-                RegistrazioneController.createUserEmailAccount(email, password1, nomeUtente, context);
-                RegistrazioneController.registraUtente(email, password1, password2, nomeUtente, context);
+
+                RegistrazioneController.createUserEmailAccount(email, password1, password2, nomeUtente, context);
+                //RegistrazioneController.checkCampiPerRegistraUtente(email, password1, password2, nomeUtente, context);
 
 
 

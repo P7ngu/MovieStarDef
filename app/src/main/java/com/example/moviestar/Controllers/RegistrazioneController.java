@@ -69,19 +69,20 @@ public class RegistrazioneController extends AppCompatActivity {
     }
 
 
-    public static void registraUtente(String email, String password1, String password2, String idUtente, final Context myContext) {
+    public static boolean checkCampiPerRegistraUtente(String email, String password1, String password2, String idUtente, final Context myContext) {
         if(checkCampiNonVuoti(idUtente, password1, password2, email)) {
             if (checkCampiValidi(idUtente, password1, password2, email)) {
                 myUtente = new Utente(idUtente, password1, email);
-
-
+                return true;
             }
         }
         if(!checkCampiNonVuoti(idUtente, password1, password2, email)){
             String errorMessage="Errore, compilare tutti i campi!";
             PopupController.mostraPopup("Errore", errorMessage, myContext);
+            return false;
 
         }
+        return false;
 
     }
 
@@ -98,24 +99,17 @@ public class RegistrazioneController extends AppCompatActivity {
         //else return false;
     }
 
-    private static boolean checkEmail(String email) {
-        return UtenteDAO.checkEmailNonPresente(email);
 
-    }
-
-    private static boolean checkPassword(String password1, String password2) {
+    private static boolean checkPasswordMatching(String password1, String password2) {
         if(password1.equals(password2) && password1.length()>= 6) return true;
         else return false;
 
     }
 
-    private static boolean checkId(String idUtente) {
-        return UtenteDAO.checkIdUtenteNonPresente(idUtente);
-
-    }
 
 
-    public static void createUserEmailAccount(String email, String password1, String username, Context mContext) {
+    public static void createUserEmailAccount(String email, String password1, String password2, String username, Context mContext) {
+        if(checkCampiPerRegistraUtente(email, password1, password2, username, mContext))
     firebaseAuth.createUserWithEmailAndPassword(email, password1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -139,7 +133,7 @@ public class RegistrazioneController extends AppCompatActivity {
                                 String name=task.getResult()
                                         .getString("username");
                                 String userid=task.getResult().getString("uid");
-                                VerificaController.sendCodice(currentUserID, mContext);
+                                VerificaController.sendEmailConLinkDiVerifica(currentUserID, mContext);
 
                                 Intent intent = new Intent(mContext, MainActivity.class);
                                 intent.putExtra("username", name);

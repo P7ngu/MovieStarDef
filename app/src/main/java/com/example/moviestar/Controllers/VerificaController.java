@@ -19,7 +19,7 @@ public class VerificaController {
     static Context mContext;
 
 
-    public static void sendVerifica (String idUtente, Context context) {
+    public static void sendEmailConLinkDiVerifica(String idUtente, Context context) {
         mContext = context;
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();

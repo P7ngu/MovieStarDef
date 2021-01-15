@@ -50,7 +50,7 @@ public class VerificationActivity extends AppCompatActivity {
         verificaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VerificaController.verificaCodice(codiceText.getText().toString().trim(), idText.getText().toString().trim(), mContext);
+                VerificaController.sendEmailConLinkDiVerifica(idText.getText().toString().trim(), mContext);
 
             }
         });

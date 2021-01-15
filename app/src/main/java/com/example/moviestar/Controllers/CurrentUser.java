@@ -1,10 +1,21 @@
 package com.example.moviestar.Controllers;
 
 import android.app.Application;
+import android.net.Uri;
 
 public class CurrentUser extends Application {
     private static String username;
     private static String userId;
+    private static Uri imageUri;
+
+    public static Uri getImageUri() {
+        return imageUri;
+    }
+
+    public static void setImageUri(Uri imageUri) {
+        CurrentUser.imageUri = imageUri;
+    }
+
     private static CurrentUser instance;
 
     public static CurrentUser getInstance() {

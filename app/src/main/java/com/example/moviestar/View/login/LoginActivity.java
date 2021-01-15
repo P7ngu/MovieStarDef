@@ -19,7 +19,6 @@ import com.example.moviestar.Controllers.LoginController;
 import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.R;
 import com.example.moviestar.View.MainActivity;
-import com.example.moviestar.View.home.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -72,7 +71,7 @@ public class LoginActivity extends AppCompatActivity  {
 
                 //LoginController.login(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim(), mContext);
                 //loginEmailPasswordUser(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim());
-                loginEmailPasswordUser("email@email.it", "password");
+                LoginController.Firebase_loginEmailPasswordUser("email@email.it", "password", mContext);
             }
         });
 
@@ -95,49 +94,7 @@ public class LoginActivity extends AppCompatActivity  {
 
     }
 
-    private void loginEmailPasswordUser(String email, String password) {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                    assert user !=null;
-                    final String currentuserid= user.getUid();
 
-                    collectionReference
-                            .whereEqualTo("userID", currentuserid)
-                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                @Override
-                                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                    if(error!=null){
-                                        PopupController.mostraPopup("Errore durante il login", error.toString() , mContext);
-                                    }
-                                    assert value !=null;
-                                    if(!value.isEmpty()){
-                                        for(QueryDocumentSnapshot snapshot : value) {
-                                            CurrentUser currentUser = CurrentUser.getInstance();
-                                            currentUser.setUsername(snapshot.getString("username"));
-                                            currentUser.setUserId(currentuserid);
-                                            PopupController.mostraPopup("Dentro query", currentuserid+snapshot.getString("username") , mContext);
-
-                                            Intent intent=new Intent(mContext, MainActivity.class);
-                                            mContext.startActivity(intent);
-
-                                        }
-                                    }
-                                }
-                            });
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        PopupController.mostraPopup("Errore durante il login", e.toString() , mContext);
-
-                    }
-                });
-
-    }
 
 
 }

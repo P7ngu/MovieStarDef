@@ -1,9 +1,9 @@
 package com.example.moviestar.View.profilo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moviestar.Controllers.CurrentUser;
+import com.example.moviestar.Controllers.EditProfiloController;
 import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.DAO.UtenteDAO;
 import com.example.moviestar.R;
@@ -28,6 +29,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import static com.example.moviestar.Controllers.EditProfiloController.clickOnUpdatePicButton_EditProfiloFotoActivity;
+
 public class EditProfiloFotoActivity extends AppCompatActivity {
     Button selectPicButton, updatePicButton;
     String currentUserID, currentUsername;
@@ -36,6 +39,7 @@ public class EditProfiloFotoActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser user;
     private Uri imageUri;
+    static Context mContext;
 
     private FirebaseFirestore db=FirebaseFirestore.getInstance();
     private StorageReference storageReference;
@@ -49,8 +53,10 @@ public class EditProfiloFotoActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==GALLERY_CODE && resultCode == RESULT_OK){
             if(data!=null){
+                CurrentUser.getInstance();
+                CurrentUser.setImageUri(data.getData());
                 imageUri = data.getData();
-                propicImg.setImageURI(imageUri);
+                propicImg.setImageURI(CurrentUser.getImageUri());
 
             }
         }
@@ -78,6 +84,7 @@ public class EditProfiloFotoActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
 
+        mContext=this;
         currentUserID = CurrentUser.getInstance().getUserId();
         currentUsername = CurrentUser.getInstance().getUsername();
 
@@ -99,7 +106,7 @@ public class EditProfiloFotoActivity extends AppCompatActivity {
         updatePicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickOnUpdatePicButton();
+                EditProfiloController.clickOnUpdatePicButton_EditProfiloFotoActivity(imageUri,currentUserID, currentUsername, mContext);
             }
         });
 
@@ -119,50 +126,7 @@ public class EditProfiloFotoActivity extends AppCompatActivity {
 
     }
 
-    public void clickOnUpdatePicButton() {
-        if(imageUri!=null&&currentUserID!=null){
-            final StorageReference filepath=storageReference //.../profile_pictures/image_jpeg
-                    .child("profile_pictures")
-                    .child(currentUserID);
-            filepath.putFile(imageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    String imageUrl=uri.toString();
-                                    UtenteDAO utenteDAO=new UtenteDAO();
-                                    utenteDAO.setCurrentID(currentUserID);
-                                    utenteDAO.setCurrentUsername(currentUsername);
-                                    utenteDAO.setImageURI(imageUrl);
 
-                                    collectionReference.add(utenteDAO).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                        @Override
-                                        public void onSuccess(DocumentReference documentReference) {
-                                            //Cambia activity
-                                            PopupController.mostraPopup("Foto aggiornata", "foto aggiornata", EditProfiloFotoActivity.this);
-                                            // finish();
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-
-                }
-            });
-        }else{
-        PopupController.mostraPopup("Titoolo", currentUserID+imageUri, EditProfiloFotoActivity.this);
-        }
-    }
 
 
 
