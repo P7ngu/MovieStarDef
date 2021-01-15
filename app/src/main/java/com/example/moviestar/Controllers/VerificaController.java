@@ -5,56 +5,50 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GenericHandler;
 import com.example.moviestar.View.login.LoginActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class VerificaController {
     static Context mContext;
 
 
-    public static void verificaCodice(String codice, String idUtente, Context context) {
-        mContext=context;
+    public static void sendVerifica (String idUtente, Context context) {
+        mContext = context;
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
 
-        new ConfirmTask().execute(codice,
-                idUtente);
-
-
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("FirebaseDebug", "Email sent.");
+                        }
+                    }
+                });
     }
 
-    private static class ConfirmTask extends AsyncTask<String, Void, String> {
 
-        @Override
-        protected String doInBackground(String... strings) {
-            final String[] result = new String[1];
 
-            //callback handler
-            final GenericHandler confirmationCallback = new GenericHandler() {
-                @Override
-                public void onSuccess() {
-                    result[0] = "Successo!";
-                    Intent intent = new Intent(mContext, LoginActivity.class);
-                    mContext.startActivity(intent);
-                }
+    public static  void IsEmailVerified() {
 
-                @Override
-                public void onFailure(Exception exception) {
-                    result[0] = "Fallimento!" + exception.getMessage();
-                }
-            };
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-            CognitoSettings cognitoSettings = new CognitoSettings(mContext);
-
-            CognitoUser thisUser = cognitoSettings.getUserPool().getUser(strings[1]);
-            thisUser.confirmSignUp(strings[0], false, confirmationCallback);
-            return result[0];
+        if (user.isEmailVerified()) {
+            Log.d("Firebase Debug", "Email is verified.");
+        } else {
+            Log.d("Firebase Debug", "Email is not verified !.");
         }
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            Log.i("Cognito", "result " + result);
-        }
     }
 }
+
+
 

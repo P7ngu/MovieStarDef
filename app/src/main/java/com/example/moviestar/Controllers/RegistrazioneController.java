@@ -139,6 +139,7 @@ public class RegistrazioneController extends AppCompatActivity {
                                 String name=task.getResult()
                                         .getString("username");
                                 String userid=task.getResult().getString("uid");
+                                VerificaController.sendCodice(currentUserID, mContext);
 
                                 Intent intent = new Intent(mContext, MainActivity.class);
                                 intent.putExtra("username", name);
