@@ -16,6 +16,7 @@ public class LoginController {
     private static String mpassword;
     private static String memail;
     private static  Context myContext;
+
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
