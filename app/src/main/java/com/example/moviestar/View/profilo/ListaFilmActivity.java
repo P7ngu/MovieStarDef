@@ -4,18 +4,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.moviestar.Controllers.CurrentUser;
+import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.Model.Commento;
 import com.example.moviestar.Model.Film;
 import com.example.moviestar.R;
 import com.example.moviestar.View.home.CommentiFilmActivity;
 import com.example.moviestar.View.home.Recycler.Adaptery;
 import com.example.moviestar.View.home.RecyclerCommenti.AdapteryCommenti;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -105,8 +116,9 @@ public class ListaFilmActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             Film model;
             try{
-                for (int i=0; i<15; i++) {
                     if(tipologiaLista.equals("filmpreferiti")){
+                        queryDB("FilmPreferiti");
+
                     model = new Film("Lorem prefe", "Autore di prova");
                         if (model != null) filmList.add(model);
                     }
@@ -114,11 +126,36 @@ public class ListaFilmActivity extends AppCompatActivity {
                         model = new Film("Lorem visti ", "Autore di prova");
                         if (model != null) filmList.add(model);
                     }
-                }
             } catch (Exception e){
                 e.printStackTrace();
             }
             PutDataIntoRecyclerView(filmList);
+        }
+
+        private void queryDB(String path) {
+            CurrentUser currentUser = CurrentUser.getInstance();
+            String userId=currentUser.getUserId();
+
+            FirebaseFirestore db=FirebaseFirestore.getInstance();
+            CollectionReference filmPreferiti = db.collection(path);
+
+            db.collection(path)
+                    .whereEqualTo("userID", userId)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    //data = document.getData();
+                                    Log.d("testFirebase", document.getId() + " => " + document.getData());
+                                    PopupController.mostraPopup("FIlm id", document.getData().get("filmID").toString(), mContext);
+                                }
+                            } else {
+                                Log.d("testFirebase", "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
         }
     }
 

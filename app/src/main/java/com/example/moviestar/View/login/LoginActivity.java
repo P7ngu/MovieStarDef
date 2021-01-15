@@ -71,7 +71,8 @@ public class LoginActivity extends AppCompatActivity  {
                 Log.d("Test", "bottone");
 
                 //LoginController.login(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim(), mContext);
-                loginEmailPasswordUser(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim());
+                //loginEmailPasswordUser(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim());
+                loginEmailPasswordUser("email@email.it", "password");
             }
         });
 

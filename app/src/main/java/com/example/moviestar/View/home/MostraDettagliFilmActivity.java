@@ -51,5 +51,13 @@ public class MostraDettagliFilmActivity extends AppCompatActivity {
             }
         });
 
+        Button addToPreferitiButton = findViewById(R.id.button_list_preferiti);
+        addToPreferitiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MostraDettagliFilmController.onClickAddToPreferiti(filmId, mContext);
+            }
+        });
+
     }
 }
