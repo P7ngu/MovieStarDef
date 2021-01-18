@@ -3,9 +3,60 @@ package com.example.moviestar.Controllers;
 import android.app.Application;
 import android.net.Uri;
 
+import com.example.moviestar.Model.Film;
+import com.example.moviestar.Model.Utente;
+
+import java.util.ArrayList;
+
 public class CurrentUser extends Application {
     private static String username;
     private static String userId;
+    private static ArrayList<Utente> listaAmici;
+
+    public static boolean aggiungiAmicoToUtente(Utente amicoDaAggiungere){
+        return listaAmici.add(amicoDaAggiungere);
+    }
+
+    public static ArrayList<Utente> getListaAmici() {
+        return listaAmici;
+    }
+
+    public static void setListaAmici(ArrayList<Utente> listaAmici) {
+        CurrentUser.listaAmici = listaAmici;
+    }
+
+    public static ArrayList<Film> getListaFilmPreferiti() {
+        return listaFilmPreferiti;
+    }
+
+    public static void setListaFilmPreferiti(ArrayList<Film> listaFilmPreferiti) {
+        CurrentUser.listaFilmPreferiti = listaFilmPreferiti;
+    }
+
+    public static ArrayList<Film> getListaFilmDaVedere() {
+        return listaFilmDaVedere;
+    }
+
+    public static void setListaFilmDaVedere(ArrayList<Film> listaFilmDaVedere) {
+        CurrentUser.listaFilmDaVedere = listaFilmDaVedere;
+    }
+
+    private static ArrayList<Film> listaFilmVisti;
+    private static ArrayList<Film> listaFilmPreferiti;
+    private static ArrayList<Film> listaFilmDaVedere;
+
+    public boolean addToSpecifiedList(Film filmDaAggiungere, ArrayList<Film> listaInCuiAggiungere){
+        return listaInCuiAggiungere.add(filmDaAggiungere);
+    }
+
+    public static ArrayList<Film> getListaFilmVisti() {
+        return listaFilmVisti;
+    }
+
+    public static void setListaFilmVisti(ArrayList<Film> listaFilmVisti) {
+        CurrentUser.listaFilmVisti = listaFilmVisti;
+    }
+
     private static Uri imageUri;
 
     public static Uri getImageUri() {

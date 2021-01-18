@@ -8,6 +8,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.moviestar.Model.Film;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
 import com.example.moviestar.View.MainActivity;
@@ -23,6 +24,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class LoginController {
     private static Utente myUtente;
@@ -65,7 +68,13 @@ public class LoginController {
                                                 currentUser.setUsername(snapshot.getString("username"));
                                                 currentUser.setUserId(currentuserid);
                                                 PopupController.mostraPopup("Dentro query", currentuserid+snapshot.getString("username") , mContext);
-
+                                                prefs = mContext.getSharedPreferences("myPrefsKeys", Context.MODE_PRIVATE);
+                                                SharedPreferences.Editor editor = prefs.edit();
+                                                editor.putString("email", email );
+                                                editor.putString("password", password);
+                                                editor.apply();
+                                                loadCurrentUserDetails();
+                                                MainActivity.setUserLogged(true);
                                                 Intent intent=new Intent(mContext, MainActivity.class);
                                                 mContext.startActivity(intent);
 
@@ -80,6 +89,48 @@ public class LoginController {
                     public void onFailure(@NonNull Exception e) {
                         PopupController.mostraPopup("Errore durante il login", e.toString() , mContext);
 
+                    }
+                });
+
+    }
+
+    public static void loadCurrentUserDetails() {
+        loadListaFromDB("FilmVisti");
+        loadListaFromDB("FilmPreferiti");
+        loadListaFromDB("FilmDaVedere");
+    }
+
+    private static void loadListaFromDB(String path) {
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId = currentUser.getUserId();
+        String idFilm, title, overview, fotoPath, voto;
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference filmPreferiti = db.collection(path);
+        ArrayList<Film> filmList = new ArrayList<>();
+
+        db.collection(path)
+                .whereEqualTo("userID", userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                //data = document.getData();
+                                String idFilm = document.getData().get("filmID").toString();
+                                String title = document.getData().get("filmName").toString();
+                                String overview = document.getData().get("filmOverview").toString();
+                                String fotoPath = document.getData().get("filmFotoPath").toString();
+                                String voto = document.getData().get("filmVoto").toString();
+                                Film filmTemp = new Film(idFilm, title, fotoPath, voto, overview);
+
+                                if (filmTemp != null) filmList.add(filmTemp);
+                            }
+                        } else Log.d("testFirebase", "Error getting documents: ", task.getException());
+                       if(path.equals("FilmVisti"))currentUser.setListaFilmVisti(filmList);
+                       if(path.equals("FilmPreferiti"))currentUser.setListaFilmPreferiti(filmList);
+                       if(path.equals("FilmDaVedere"))currentUser.setListaFilmDaVedere(filmList);
                     }
                 });
 

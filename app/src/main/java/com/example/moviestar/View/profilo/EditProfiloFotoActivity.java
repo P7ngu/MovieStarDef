@@ -2,6 +2,7 @@ package com.example.moviestar.View.profilo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -13,10 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.EditProfiloController;
 import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.DAO.UtenteDAO;
+import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,6 +43,7 @@ public class EditProfiloFotoActivity extends AppCompatActivity {
     private FirebaseUser user;
     private Uri imageUri;
     static Context mContext;
+    static SharedPreferences prefs;
 
     private FirebaseFirestore db=FirebaseFirestore.getInstance();
     private StorageReference storageReference;
@@ -84,6 +88,7 @@ public class EditProfiloFotoActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
 
+
         mContext=this;
         currentUserID = CurrentUser.getInstance().getUserId();
         currentUsername = CurrentUser.getInstance().getUsername();
@@ -93,6 +98,21 @@ public class EditProfiloFotoActivity extends AppCompatActivity {
         updatePicButton = findViewById(R.id.button_changepassword_ep);
         filenameTV = findViewById(R.id.textView_nomefile_ep);
         propicImg = findViewById(R.id.propic_ep_imageview);
+
+
+       UtenteDAO.getImageFromDatabase(currentUserID, mContext);
+
+        prefs = mContext.getSharedPreferences("myPrefsKeys", Context.MODE_PRIVATE);
+        final String uri_string = prefs.getString("uri", "");
+
+        PopupController.mostraPopup(uri_string, uri_string, mContext);
+
+       imageUri=CurrentUser.getInstance().getImageUri();
+        propicImg.setImageURI(Uri.parse(uri_string));
+
+
+        //Glide.with(mContext).load(imageUri).into(propicImg);
+
 
         selectPicButton.setOnClickListener(new View.OnClickListener() {
             @Override

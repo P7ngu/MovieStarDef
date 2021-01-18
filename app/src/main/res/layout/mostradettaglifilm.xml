@@ -128,7 +128,7 @@
             android:text="Aggiungi alla lista dei film preferiti" />
 
         <Button
-            android:id="@+id/button_list_davedere3"
+            android:id="@+id/button_list_visti"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

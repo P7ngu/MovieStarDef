@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import com.example.moviestar.Controllers.CurrentUser;
+import com.example.moviestar.Controllers.LoginController;
 import com.example.moviestar.R;
 import com.example.moviestar.View.login.RegistrazioneActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,8 +24,11 @@ import java.sql.ResultSet;
 
 public class MainActivity extends AppCompatActivity {
     ResultSet UsersRS;
-    boolean isUserLogged=false;
+    static boolean isUserLogged=false;
 
+    public static void setUserLogged(boolean b) {
+        isUserLogged=b;
+    }
 
 
     @Override
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             CurrentUser currentUser= CurrentUser.getInstance();
             currentUser.setUserId(bundle.getString("userID"));
             currentUser.setUsername(bundle.getString("username"));
+            isUserLogged=true;
         }
 
 
@@ -52,9 +57,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         prefs = mContext.getSharedPreferences("myPrefsKeys", Context.MODE_PRIVATE);
-        final String username = prefs.getString("username", "");
+        final String email = prefs.getString("email", "");
         final String password = prefs.getString("password", "");
-        Log.i("Test", "saved data: "+username+password);
+        Log.d("Stored Data", email+password);
+        if(!isUserLogged && email.length()>3 && password.length()>5) LoginController.Firebase_loginEmailPasswordUser(email, password, mContext);
+        //Log.i("Test", "saved data: "+email+password);
 
         if(!isUserLogged){
             Intent intent = new Intent(this, RegistrazioneActivity.class);

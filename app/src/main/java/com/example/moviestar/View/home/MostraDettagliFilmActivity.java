@@ -21,10 +21,12 @@ public class MostraDettagliFilmActivity extends AppCompatActivity {
         Context mContext=this;
 
         Intent intent = getIntent();
+        String activity_type=intent.getStringExtra("tipologia");
         String filmName = intent.getStringExtra("FilmName");
         String filmVoto = intent.getStringExtra("FilmVoto");
         String filmOverview = intent.getStringExtra("FilmOverview");
         String filmId = intent.getStringExtra("FilmId");
+        String filmFotoPath=intent.getStringExtra("FilmPicPath");
 
         TextView filmNameTextView = findViewById(R.id.title_text);
         filmNameTextView.setText(filmName);
@@ -55,7 +57,33 @@ public class MostraDettagliFilmActivity extends AppCompatActivity {
         addToPreferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickAddToPreferiti(filmId, mContext);
+                MostraDettagliFilmController.onClickAddToPreferiti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+            }
+        });
+
+        Button addToDaVedereButton = findViewById(R.id.button_list_davedere);
+        addToDaVedereButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MostraDettagliFilmController.onClickAddToDaVedere(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+            }
+        });
+        Button removeFromVistiButton=findViewById(R.id.button_list_visti);
+        Button addToVistiButton = findViewById(R.id.button_list_visti);
+        addToVistiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MostraDettagliFilmController.onClickAddToVisti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+                addToVistiButton.setVisibility(0);
+                removeFromVistiButton.setText("Rimuovi dai visti");
+                removeFromVistiButton.setVisibility(1);
+                removeFromVistiButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MostraDettagliFilmController.onClickRimuoviDaListaFilm("FilmVisti",
+                                filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+                    }
+                });
             }
         });
 
