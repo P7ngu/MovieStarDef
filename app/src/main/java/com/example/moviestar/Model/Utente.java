@@ -37,9 +37,13 @@ public class Utente {
     public Utente(String idUtente, String password1, String email) {
     }
 
-    public Utente(String idUtente, String password) {
+    public Utente(String idUtente, String username) {
         this.idUtente=idUtente;
-        this.password=password;
+        this.nomeUtenteMostrato=username;
+    }
+
+    public Utente(String idUtente) {
+        this.idUtente=idUtente;
     }
 
     public String getIdUtente() {

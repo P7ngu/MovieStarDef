@@ -59,6 +59,7 @@ public class ProfiloFragment extends Fragment {
                 Intent intent = new Intent(mContext, ListaAmiciActivity.class);
                 intent.putExtra("tipologia", "listaAmici");
                 startActivity(intent);
+               // ListaAmiciActivity.PutDataIntoRecyclerView(CurrentUser.getInstance().getListaAmici());
             }
         });
 

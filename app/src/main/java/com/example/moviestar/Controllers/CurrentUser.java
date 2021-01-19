@@ -12,6 +12,7 @@ public class CurrentUser extends Application {
     private static String username;
     private static String userId;
     private static ArrayList<Utente> listaAmici;
+    private static ArrayList<Utente> listaUtenti;
 
     public static boolean daVedereContainsFilm(Film filmDaCercare){
         boolean result=false;
@@ -47,7 +48,7 @@ public class CurrentUser extends Application {
     }
 
 
-    public int lengthOfSpecifiedList(ArrayList<Film> lista){
+    public int lengthOfSpecifiedListFilm(ArrayList<Film> lista){
         return lista.size();
     }
 
@@ -83,7 +84,7 @@ public class CurrentUser extends Application {
     private static ArrayList<Film> listaFilmPreferiti;
     private static ArrayList<Film> listaFilmDaVedere;
 
-    public boolean addToSpecifiedList(Film filmDaAggiungere, ArrayList<Film> listaInCuiAggiungere){
+    public boolean addToSpecifiedListFilm(Film filmDaAggiungere, ArrayList<Film> listaInCuiAggiungere){
         return listaInCuiAggiungere.add(filmDaAggiungere);
     }
 
@@ -131,5 +132,13 @@ public class CurrentUser extends Application {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public static void setListaUtenti(ArrayList<Utente> userList) {
+        CurrentUser.listaUtenti = userList;
+    }
+
+    public static ArrayList<Utente> getListaUtenti(){
+        return CurrentUser.listaUtenti;
     }
 }

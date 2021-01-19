@@ -12,6 +12,7 @@ import com.example.moviestar.Model.Film;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
 import com.example.moviestar.View.MainActivity;
+import com.example.moviestar.View.profilo.ListaAmiciActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -95,12 +96,13 @@ public class LoginController {
     }
 
     public static void loadCurrentUserDetails() {
-        loadListaFromDB("FilmVisti");
-        loadListaFromDB("FilmPreferiti");
-        loadListaFromDB("FilmDaVedere");
+        loadListaFilmFromDB("FilmVisti");
+        loadListaFilmFromDB("FilmPreferiti");
+        loadListaFilmFromDB("FilmDaVedere");
+        loadListaAmiciFromDB();
     }
 
-    private static void loadListaFromDB(String path) {
+    private static void loadListaFilmFromDB(String path) {
         CurrentUser currentUser = CurrentUser.getInstance();
         String userId = currentUser.getUserId();
         String idFilm, title, overview, fotoPath, voto;
@@ -131,6 +133,43 @@ public class LoginController {
                        if(path.equals("FilmVisti"))currentUser.setListaFilmVisti(filmList);
                        if(path.equals("FilmPreferiti"))currentUser.setListaFilmPreferiti(filmList);
                        if(path.equals("FilmDaVedere"))currentUser.setListaFilmDaVedere(filmList);
+                    }
+                });
+
+    }
+
+    public static void loadListaAmiciFromDB(){
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId = currentUser.getUserId();
+        String path="ListaAmici";
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference listaAmici = db.collection(path);
+        ArrayList<Utente> amiciList = new ArrayList<>();
+
+        db.collection(path)
+                .whereEqualTo("userID_mandante", userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                //data = document.getData();
+                                String idUtente = document.getData().get("userID_ricevente").toString();
+                                Utente utenteTemp = new Utente(idUtente);
+
+                                if (utenteTemp != null) amiciList.add(utenteTemp);
+                            }
+                           // ListaAmiciActivity.PutDataIntoRecyclerView(amiciList);
+                        } else Log.d("testFirebase", "Error getting documents: ", task.getException());
+                       currentUser.setListaAmici(amiciList);
+                       try {
+                          // ListaAmiciActivity.PutDataIntoRecyclerView(amiciList);
+                       } catch (Exception e){
+                           e.printStackTrace();
+                       }
+
                     }
                 });
 

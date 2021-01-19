@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.moviestar.Controllers.InviaRichiesteAmicoController;
+import com.example.moviestar.Controllers.RicercaUtentiController;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
 import com.example.moviestar.View.social.recycler.AdapteryUtente;
@@ -30,7 +33,8 @@ public class SocialFragment extends Fragment {
     private static RecyclerView recyclerView;
     private View root;
     private List<Utente> UtenteList;
-    private Context mContext;
+    private static EditText searchbarET;
+    private static Context mContext;
     private ImageButton deleteButton, addButton, searchButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -39,6 +43,10 @@ public class SocialFragment extends Fragment {
                 ViewModelProviders.of(this).get(SocialViewModel.class);
         View root = inflater.inflate(R.layout.fragment_social, container, false);
         //final TextView textView = root.findViewById(R.id.text_dashboard);
+
+        final EditText searchbar = root.findViewById(R.id.ET_searchbar_social);
+        searchbarET=searchbar;
+
 
         //recycleview
         final RecyclerView recyclerView1= root.findViewById(R.id.recycler_view);
@@ -49,7 +57,7 @@ public class SocialFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //RICERCA UTENTI
+                RicercaUtentiController.cercaAmicoByNome(searchbarET.getText().toString().trim());
             }
         });
 
@@ -72,8 +80,9 @@ public class SocialFragment extends Fragment {
 //        String urlJSON="https://api.themoviedb.org/3/discover/movie?api_key=89d40cd46523243c6d553bb54b2ca47e&language=it-IT&sort_by=popularity.desc";
         UtenteList=new ArrayList<>();
         try {
-            GetData getData = new GetData("");
-            getData.execute();
+            InviaRichiesteAmicoController.getRichiesteAmico();
+            //GetData getData = new GetData("");
+            //getData.execute();
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -96,11 +105,6 @@ public class SocialFragment extends Fragment {
         protected void onPostExecute(String s) {
 
             try{
-                //ResultSet temporaryUsersRS= UtenteDAO1.getUtentiFromDB();
-                //while(temporaryUsersRS.next()){
-                  //  Utente userTemp=new Utente(temporaryUsersRS.getString(1), temporaryUsersRS.getString(2));
-                    //UtenteList.add(userTemp);
-                //}
                 Utente u1 = new Utente("user1", "password");
                 u1.setNomeUtenteMostrato("user1");
                 Utente u2 = new Utente("user2", "password");
@@ -125,18 +129,7 @@ public class SocialFragment extends Fragment {
                 UtenteList.add(u6);
                 UtenteList.add(u7);
                 UtenteList.add(u8);
-//                JSONObject jsonObject = new JSONObject(s);
-//                JSONArray jsonArray=jsonObject.getJSONArray("results");
-//                for(int i=0; i<jsonArray.length(); i++){
-//                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-//                    Film model = new Film();
-//                    model.setVote(jsonObject1.getString("vote_average"));
-//                    model.setId(jsonObject1.getString("id"));
-//                    model.setName(jsonObject1.getString("title"));
-//                    model.setImg(jsonObject1.getString("poster_path"));
-//                    model.setOverview(jsonObject1.getString("overview"));
-//                    movieList.add(model);
-//                }
+
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -144,10 +137,8 @@ public class SocialFragment extends Fragment {
         }
     }
 
-    private void PutDataIntoRecyclerView(List<Utente> utenteList){
+    public static void PutDataIntoRecyclerView(List<Utente> utenteList){
         AdapteryUtente adaptery =new AdapteryUtente(mContext, utenteList, "social");
-//        Log.d("TestU", ""+mContext.toString()+recyclerView.toString());
-//        Log.d("TestU1", recyclerView.toString());
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
         recyclerView.setAdapter(adaptery);
