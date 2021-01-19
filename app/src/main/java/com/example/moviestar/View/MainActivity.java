@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.LoginController;
@@ -25,9 +27,18 @@ import java.sql.ResultSet;
 public class MainActivity extends AppCompatActivity {
     ResultSet UsersRS;
     static boolean isUserLogged=false;
+    static ProgressBar progBar;
 
     public static void setUserLogged(boolean b) {
         isUserLogged=b;
+    }
+
+    public static void hideProgressBar() {
+       progBar.setVisibility(View.GONE);
+    }
+
+    public static void showProgressBar(){
+        progBar.setVisibility(View.VISIBLE);
     }
 
 
@@ -37,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        progBar=findViewById(R.id.progressBar2);
+        progBar.setVisibility(0);
+
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
 
@@ -47,14 +62,6 @@ public class MainActivity extends AppCompatActivity {
             currentUser.setUsername(bundle.getString("username"));
             isUserLogged=true;
         }
-
-
-        try {
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
 
         prefs = mContext.getSharedPreferences("myPrefsKeys", Context.MODE_PRIVATE);
         final String email = prefs.getString("email", "");
@@ -67,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, RegistrazioneActivity.class);
             startActivity(intent);
         }
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
       R.id.navigation_home, R.id.navigation_social, R.id.navigation_profilo)

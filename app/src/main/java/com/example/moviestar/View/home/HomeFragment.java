@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviestar.Model.Film;
 import com.example.moviestar.R;
+import com.example.moviestar.View.MainActivity;
 import com.example.moviestar.View.home.Recycler.Adaptery;
 
 import org.json.JSONArray;
@@ -35,10 +37,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.moviestar.View.MainActivity.hideProgressBar;
+
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     static RecyclerView recyclerView;
+    static ProgressBar progBar;
     View root;
     List<Film> movieList;
     Context mContext;
@@ -92,6 +97,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
        String urlJSON="https://api.themoviedb.org/3/discover/movie?api_key=89d40cd46523243c6d553bb54b2ca47e&language=it-IT&sort_by=popularity.desc";
         movieList=new ArrayList<>();
         try {
@@ -107,6 +113,7 @@ public class HomeFragment extends Fragment {
         String URL1;
 
         public GetData(String url_forSearching) throws UnsupportedEncodingException {
+            MainActivity.showProgressBar();
             String ulr_updated = formattaStringaPerQuery(url_forSearching);
             this.URL1=ulr_updated;
         }
@@ -163,7 +170,7 @@ public class HomeFragment extends Fragment {
                     movieList.add(model);
                 }
 
-
+                MainActivity.hideProgressBar();
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -176,10 +183,11 @@ public class HomeFragment extends Fragment {
         Log.d("Test", ""+mContext.toString()+recyclerView.toString());
         Log.d("Test1", recyclerView.toString());
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-
         recyclerView.setAdapter(adaptery);
 
+
     }
+
 
 
 
