@@ -16,7 +16,7 @@ public class Film {
         this.id = id;
         this.name = name;
         this.img = img;
-        this.vote="Voto medio: "+vote;
+        this.vote=vote;
         this.overview=overview;
     }
 

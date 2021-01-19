@@ -12,12 +12,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moviestar.Controllers.MostraDettagliFilmController;
 import com.example.moviestar.R;
+import com.example.moviestar.View.MainActivity;
 
-public class MostraDettagliFilmActivity extends AppCompatActivity {
+public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatActivity {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mostradettaglifilm);
+        setContentView(R.layout.filmvistopreferitocliccato);
         Context mContext=this;
 
         Intent intent = getIntent();
@@ -53,37 +61,44 @@ public class MostraDettagliFilmActivity extends AppCompatActivity {
             }
         });
 
-        Button addToPreferitiButton = findViewById(R.id.button_list_preferiti);
-        addToPreferitiButton.setOnClickListener(new View.OnClickListener() {
+        Button removeFromPreferitiButton = findViewById(R.id.button_remove_list_preferiti);
+        removeFromPreferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickAddToPreferiti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+                MostraDettagliFilmController.onClickRemoveFromPreferiti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+                setContentView(R.layout.loadinglayout);
+                Intent intent = new Intent(mContext, MostraDettagliFilmVistoCliccatoActivity.class);
+                intent.putExtra("FilmName", filmName);
+                intent.putExtra("FilmVoto", filmVoto);
+                intent.putExtra("FilmOverview", filmOverview);
+                intent.putExtra("FilmId", filmId);
+                intent.putExtra("FilmPicPath", filmFotoPath);
+                startActivity(intent);
             }
         });
 
         Button addToDaVedereButton = findViewById(R.id.button_list_davedere);
+        addToDaVedereButton.setVisibility(0);
         addToDaVedereButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickAddToDaVedere(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+               //
             }
         });
-        Button removeFromVistiButton=findViewById(R.id.button_list_visti);
-        Button addToVistiButton = findViewById(R.id.button_list_visti);
-        addToVistiButton.setOnClickListener(new View.OnClickListener() {
+        Button removeFromVistiButton=findViewById(R.id.button_remove_list_visti);
+        removeFromVistiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickAddToVisti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
-                addToVistiButton.setVisibility(0);
-                removeFromVistiButton.setText("Rimuovi dai visti");
-                removeFromVistiButton.setVisibility(1);
-                removeFromVistiButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MostraDettagliFilmController.onClickRimuoviDaListaFilm("FilmVisti",
-                                filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
-                    }
-                });
+                MostraDettagliFilmController.onClickRemoveFromVisti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+                setContentView(R.layout.loadinglayout);
+                Intent intent = new Intent(mContext, MostraDettagliFilmCliccatoActivity.class);
+                intent.putExtra("FilmName", filmName);
+                intent.putExtra("FilmVoto", filmVoto);
+                intent.putExtra("FilmOverview", filmOverview);
+                intent.putExtra("FilmId", filmId);
+                intent.putExtra("FilmPicPath", filmFotoPath);
+                startActivity(intent);
+
             }
         });
 

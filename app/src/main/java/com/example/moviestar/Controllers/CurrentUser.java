@@ -13,6 +13,44 @@ public class CurrentUser extends Application {
     private static String userId;
     private static ArrayList<Utente> listaAmici;
 
+    public static boolean daVedereContainsFilm(Film filmDaCercare){
+        boolean result=false;
+        String id = filmDaCercare.getId();
+        for(int i=0; i< listaFilmDaVedere.size(); i++) {
+            if(!id.equals(listaFilmDaVedere.get(i).getId()))
+                result = false;
+            else result=true;
+        }
+        return result;
+    }
+
+    public static boolean vistiContainsFilm(Film filmDaCercare){
+        boolean result=false;
+        String id = filmDaCercare.getId();
+        for(int i=0; i< listaFilmVisti.size(); i++) {
+            if(!id.equals(listaFilmVisti.get(i).getId()))
+                result = false;
+            else result=true;
+        }
+        return result;
+    }
+
+    public static boolean preferitiContainsFilm(Film filmDaCercare){
+        boolean result=false;
+        String id = filmDaCercare.getId();
+        for(int i=0; i< listaFilmPreferiti.size(); i++) {
+            if(!id.equals(listaFilmPreferiti.get(i).getId()))
+                result = false;
+            else result=true;
+        }
+        return result;
+    }
+
+
+    public int lengthOfSpecifiedList(ArrayList<Film> lista){
+        return lista.size();
+    }
+
     public static boolean aggiungiAmicoToUtente(Utente amicoDaAggiungere){
         return listaAmici.add(amicoDaAggiungere);
     }
