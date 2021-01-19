@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.moviestar.Controllers.InviaRichiesteAmicoController;
+import com.example.moviestar.Controllers.ListaAmiciController;
 import com.example.moviestar.Controllers.MostraDettagliFilmController;
 import com.example.moviestar.Model.Film;
 import com.example.moviestar.Model.Utente;
@@ -39,7 +43,7 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
         View v;
         LayoutInflater inflater = LayoutInflater.from(mContext);
         //v=inflater.inflate(R.layout.movie_item, parent, false);
-        if(tipologiaSchermata.equals("social"))
+        if(tipologiaSchermata.equals("ricerca") || tipologiaSchermata.equals("richieste"))
         v = View.inflate(mContext, R.layout.utente_item, null);
         else
             v=View.inflate(mContext, R.layout.amico_item, null);
@@ -77,6 +81,15 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+            ImageButton addToListaAmiciButton = itemView.findViewById(R.id.add_imageButton);
+            if(tipologiaSchermata.equals("ricerca") || tipologiaSchermata.equals("richieste")) addToListaAmiciButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                  if(tipologiaSchermata.equals("ricerca"))  InviaRichiesteAmicoController.sendRichiestaAmico
+                          (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
+                  else ListaAmiciController.accettaRichiestaAmico(mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
+                }
+            });
 //            vote = itemView.findViewById(R.id.vote_text);
 //            name = itemView.findViewById(R.id.name_text);
 //            img = itemView.findViewById(R.id.imageView_film);

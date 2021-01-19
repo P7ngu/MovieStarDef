@@ -27,8 +27,8 @@ public class ListaAmiciController {
         richiesteamico.document(userId+idUtenteDaAggiungere).set(data4);
 
         Map<String, Object> data5 = new HashMap<>();
-        data4.put("userID_ricevente", userId);
-        data4.put("userID_mandante", idUtenteDaAggiungere);
+        data5.put("userID_ricevente", userId);
+        data5.put("userID_mandante", idUtenteDaAggiungere);
         richiesteamico.document(idUtenteDaAggiungere+userId).set(data5);
 
         LoginController.loadCurrentUserDetails();

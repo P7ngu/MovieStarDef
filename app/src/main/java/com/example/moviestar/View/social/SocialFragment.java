@@ -133,12 +133,12 @@ public class SocialFragment extends Fragment {
             } catch (Exception e){
                 e.printStackTrace();
             }
-            PutDataIntoRecyclerView(UtenteList);
+            PutDataIntoRecyclerView(UtenteList, "richieste");
         }
     }
 
-    public static void PutDataIntoRecyclerView(List<Utente> utenteList){
-        AdapteryUtente adaptery =new AdapteryUtente(mContext, utenteList, "social");
+    public static void PutDataIntoRecyclerView(List<Utente> utenteList, String tipologia){
+        AdapteryUtente adaptery =new AdapteryUtente(mContext, utenteList, tipologia);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
         recyclerView.setAdapter(adaptery);

@@ -55,13 +55,13 @@ public class InviaRichiesteAmicoController {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //data = document.getData();
-                                String idUtente = document.getData().get("userID").toString();
-                                String username = document.getData().get("username").toString();
-                                Utente utenteTemp = new Utente(idUtente, username);
+                                String idUtente = document.getData().get("userID_mandante").toString();
+                                //String username = document.getData().get("username").toString();
+                                Utente utenteTemp = new Utente(idUtente);
 
                                 if (utenteTemp != null) userList.add(utenteTemp);
                             }
-                            SocialFragment.PutDataIntoRecyclerView(userList);
+                            SocialFragment.PutDataIntoRecyclerView(userList, "richieste");
                         } else
                             Log.d("testFirebase", "Error getting documents: ", task.getException());
                     }

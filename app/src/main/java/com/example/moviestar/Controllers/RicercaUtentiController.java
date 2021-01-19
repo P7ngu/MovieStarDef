@@ -41,7 +41,7 @@ public class RicercaUtentiController {
 
                                 if (utenteTemp != null) userList.add(utenteTemp);
                             }
-                            SocialFragment.PutDataIntoRecyclerView(userList);
+                            SocialFragment.PutDataIntoRecyclerView(userList, "ricerca");
                         } else Log.d("testFirebase", "Error getting documents: ", task.getException());
                         //currentUser.setListaUtenti(userList);
 

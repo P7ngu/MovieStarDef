@@ -72,7 +72,8 @@ public class LoginActivity extends AppCompatActivity  {
 
                 //LoginController.login(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim(), mContext);
                 //loginEmailPasswordUser(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim());
-                LoginController.Firebase_loginEmailPasswordUser("email@email.it", "password", mContext);
+                LoginController.Firebase_loginEmailPasswordUser(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim(), mContext);
+                //LoginController.Firebase_loginEmailPasswordUser("email@email.it", "password", mContext);
             }
         });
 
