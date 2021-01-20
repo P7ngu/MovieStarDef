@@ -14,9 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.InviaRichiesteAmicoController;
 import com.example.moviestar.Controllers.ListaAmiciController;
 import com.example.moviestar.Controllers.MostraDettagliFilmController;
+import com.example.moviestar.DAO.UtenteDAO;
 import com.example.moviestar.Model.Film;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
@@ -24,6 +26,7 @@ import com.example.moviestar.View.home.Recycler.Adaptery;
 import com.example.moviestar.View.profilo.ProfiloFragment;
 import com.example.moviestar.View.social.SocialFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHolder>{
@@ -53,8 +56,12 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull AdapteryUtente.MyViewHolder holder, int position) {
+        ArrayList<Utente> tempList = new ArrayList<>();
+        UtenteDAO.getUtentiByID(mData.get(position).getIdUtente());
+        tempList = CurrentUser.getInstance().getListaUtenti();
 
-        holder.nomeutentemostrato.setText(mData.get(position).getNomeUtenteMostrato());
+        if(tempList!=null && tempList.size()>0) holder.nomeutentemostrato.setText(tempList.get(0).getNomeUtenteMostrato());
+        //holder.nomeutentemostrato.setText(mData.get(position).getIdUtente());
 
     }
 
@@ -88,6 +95,27 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
                   if(tipologiaSchermata.equals("ricerca"))  InviaRichiesteAmicoController.sendRichiestaAmico
                           (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
                   else ListaAmiciController.accettaRichiestaAmico(mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
+                }
+            });
+
+            ImageButton  respingiRichiestaAmicoButton = itemView.findViewById(R.id.delete_imageButton);
+            if(tipologiaSchermata.equals("ricerca") || tipologiaSchermata.equals("richieste"))
+                respingiRichiestaAmicoButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(tipologiaSchermata.equals("ricerca"))  ListaAmiciController.respingiRichiestaAmico
+                            (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
+                    else if(tipologiaSchermata.equals("richieste")) ListaAmiciController.respingiRichiestaAmico
+                            (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
+                    else ListaAmiciController.eliminaAmicoDaListaAmici
+                                (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
+                }
+            });
+            else respingiRichiestaAmicoButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ListaAmiciController.eliminaAmicoDaListaAmici
+                            (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
                 }
             });
 //            vote = itemView.findViewById(R.id.vote_text);

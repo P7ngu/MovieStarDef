@@ -31,8 +31,37 @@ public class ListaAmiciController {
         data5.put("userID_mandante", idUtenteDaAggiungere);
         richiesteamico.document(idUtenteDaAggiungere+userId).set(data5);
 
+        removeRichiestaAmico(idUtenteDaAggiungere, mContext);
+
         LoginController.loadCurrentUserDetails();
         PopupController.mostraPopup("Utente", "aggiunto alla lista", mContext);
+    }
+
+    private static void removeRichiestaAmico(String idUtenteDaAggiungere, Context mContext) {
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId=currentUser.getUserId();
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        CollectionReference listaAmici = db.collection("RichiesteAmico");
+
+        db.collection("RichiesteAmico").document(idUtenteDaAggiungere+userId)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //PopupController.mostraPopup("Richiesta respinta", "rimossa con successo.", mContext);
+                        
+                        //REFRESH SCHERMATA
+
+                        LoginController.loadCurrentUserDetails();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        PopupController.mostraPopup("Errore", idUtenteDaAggiungere+" non rimosso.", mContext);
+                    }
+                });
+
     }
 
 
