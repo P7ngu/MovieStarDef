@@ -3,6 +3,13 @@ package com.example.moviestar.Model;
 public class Commento {
     String testo;
     String nomeAutore;
+    String idAutore;
+
+    public Commento(String username, String userId, String commentoText) {
+        this.nomeAutore=username;
+        this.testo=commentoText;
+        this.idAutore=userId;
+    }
 
     public String getTesto() {
         return testo;

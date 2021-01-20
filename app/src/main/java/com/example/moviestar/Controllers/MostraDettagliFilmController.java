@@ -49,9 +49,12 @@ public class MostraDettagliFilmController {
     }
 
 
-    public static void onClickAggiungiCommento(String filmName, Context mContext) {
+    public static void onClickAggiungiCommento(String idFilm, String filmName, String overview, Context mContext) {
         Intent intent = new Intent(mContext, AggiungiCommentoActivity.class);
         intent.putExtra("film", filmName);
+        intent.putExtra("FilmName", filmName);
+        intent.putExtra("FilmId", idFilm);
+        intent.putExtra("FilmOverview", overview);
         mContext.startActivity(intent);
     }
 

@@ -10,11 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moviestar.Controllers.ControllerCommentiFilm;
 import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.R;
 
 public class AggiungiCommentoActivity extends AppCompatActivity {
-String titoloFilm;
+String titoloFilm, idfilm;
 TextView titoloTextview;
 EditText commentoText;
 Context mContext;
@@ -24,7 +25,7 @@ Context mContext;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aggiungicommento);
         mContext=this;
-
+        idfilm=getIntent().getStringExtra("FilmId");
         titoloFilm = getIntent().getStringExtra("film");
         titoloTextview=findViewById(R.id.textView5_filmtitle);
         titoloTextview.setText(titoloFilm);
@@ -36,6 +37,7 @@ Context mContext;
         inviaCommentoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ControllerCommentiFilm.inserisciCommentoFilm(idfilm, commentoText.getText().toString(), mContext);
                 PopupController.mostraPopup("Commento inviato", "Commento inviato con successo!", mContext);
             }
         });

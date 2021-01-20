@@ -53,13 +53,6 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
             }
         });
 
-        Button aggiungiCommentoButton = findViewById(R.id.button_addcomment);
-        aggiungiCommentoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MostraDettagliFilmController.onClickAggiungiCommento(filmName, mContext);
-            }
-        });
 
         Button addToPreferitiButton = findViewById(R.id.button_list_preferiti);
         addToPreferitiButton.setOnClickListener(new View.OnClickListener() {

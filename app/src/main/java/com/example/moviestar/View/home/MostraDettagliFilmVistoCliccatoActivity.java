@@ -5,16 +5,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.MostraDettagliFilmController;
 import com.example.moviestar.R;
 import com.example.moviestar.View.MainActivity;
 
 public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
+    ImageView star_1, star_2, star_3, star_4, star_5;
+    Context mContext;
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -26,7 +31,48 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.filmvistocliccato);
-        Context mContext=this;
+        mContext=this;
+        star_1 = findViewById(R.id.star_1);
+        star_2 = findViewById(R.id.star_2);
+        star_3 = findViewById(R.id.star_3);
+        star_4 = findViewById(R.id.star_4);
+        star_5 = findViewById(R.id.star_5);
+
+        star_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                riempiStelle(1);
+            }
+        });
+
+        star_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                riempiStelle(2);
+            }
+        });
+
+        star_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                riempiStelle(3);
+            }
+        });
+
+        star_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                riempiStelle(4);
+            }
+        });
+
+        star_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                riempiStelle(5);
+            }
+        });
+
 
         Intent intent = getIntent();
         String activity_type=intent.getStringExtra("tipologia");
@@ -57,7 +103,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
         aggiungiCommentoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickAggiungiCommento(filmName, mContext);
+                MostraDettagliFilmController.onClickAggiungiCommento(filmId, filmName, filmOverview, mContext);
             }
         });
 
@@ -101,4 +147,53 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
 
             }
         });
-}}
+}
+
+
+    private void riempiStelle(int numeroStelleDaRiempire) {
+        switch(numeroStelleDaRiempire) {
+            case 1:
+                Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_1);
+                Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_2);
+                Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_3);
+                Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_4);
+                Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
+                break;
+            case 2:
+                Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_1);
+                Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_2);
+                Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_3);
+                Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_4);
+                Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
+                break;
+            case 3:
+                Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_1);
+                Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_2);
+                Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_3);
+                Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_4);
+                Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
+
+                break;
+            case 4:
+                Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_1);
+                Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_2);
+                Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_3);
+                Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_4);
+                Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
+
+                break;
+            case 5:
+                Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_1);
+                Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_2);
+                Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_3);
+                Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_4);
+                Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_5);
+
+                break;
+
+            default:
+                // code block
+        }
+    }
+
+}

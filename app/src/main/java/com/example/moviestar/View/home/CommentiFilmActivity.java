@@ -46,13 +46,8 @@ public class CommentiFilmActivity extends AppCompatActivity {
         String filmID = intent.getStringExtra("filmCliccatoId");
         commentoList=new ArrayList<>();
 
-        URL = "https://api.themoviedb.org/3/movie/"+filmID+"?api_key=89d40cd46523243c6d553bb54b2ca47e&language=it-IT";
-        try {
-            ControllerCommentiFilm.GetData getData1 = new ControllerCommentiFilm.GetData(URL, mContext, commentoList, commentiRecycler);
-            getData1.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ControllerCommentiFilm.getListaCommentiFilm(filmID, mContext, commentiRecycler);
+
 
 
     }

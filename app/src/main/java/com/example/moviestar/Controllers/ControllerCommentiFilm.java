@@ -2,13 +2,24 @@ package com.example.moviestar.Controllers;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviestar.Model.Commento;
 import com.example.moviestar.Model.Film;
+import com.example.moviestar.Model.Utente;
 import com.example.moviestar.View.home.RecyclerCommenti.AdapteryCommenti;
+import com.example.moviestar.View.social.SocialFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,81 +28,65 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ControllerCommentiFilm {
 
-    public static class GetData extends AsyncTask<String, String, String> {
-        String URL1;
-        Context mContext;
-        public RecyclerView commentiRecycler;
-        static Film filmCliccato;
-        static String URL;
-        public List<Commento> commentoList;
+    public static void inserisciCommentoFilm(String idFilmCommentato, String commentoDaInserire, Context mContext){
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId=currentUser.getUserId();
+        String username= currentUser.getUsername();
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        CollectionReference richiesteamico = db.collection("Commenti");
 
-        public GetData(String url_forSearching, Context context, List<Commento> commentolist, RecyclerView commentirecycler) throws UnsupportedEncodingException {
-            this.URL1=url_forSearching;
-            this.mContext=context;
-            this.commentoList=commentolist;
-            this.commentiRecycler=commentirecycler;
+        Map<String, Object> data4 = new HashMap<>();
+        data4.put("userID", userId);
+        data4.put("commento", commentoDaInserire);
+        data4.put("filmID", idFilmCommentato);
+        data4.put("username", username);
+        richiesteamico.document(userId+idFilmCommentato+ Timestamp.now().getSeconds()).set(data4);
 
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            String current = "";
-            try {
-                java.net.URL url;
-                HttpURLConnection urlConnection = null;
-                try {
-                    url = new URL(URL1);
-                    urlConnection = (HttpURLConnection) url.openConnection();
-                    InputStream is = urlConnection.getInputStream();
-                    InputStreamReader isr = new InputStreamReader(is);
-
-                    int data = isr.read();
-                    while (data != -1) {
-                        current += (char) data;
-                        data = isr.read();
-                    }
-
-                    return current;
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (urlConnection != null) {
-                        urlConnection.disconnect();
-                    }
-                }
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-            return current;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            String Lorem="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dapibus augue a ex lobortis vehicula. Proin et convallis justo, et eleifend orci. Aliquam sodales dignissim ipsum a commodo. Phasellus scelerisque aliquam leo quis lobortis. Sed auctor, enim in auctor aliquam, tellus ligula convallis risus, sit amet rutrum mauris ante id augue. Pellentesque porttitor est sit amet luctus molestie. Nam nulla justo, pulvinar finibus elementum id, euismod venenatis velit.";
-
-            try{
-                for (int i=0; i<15; i++) {
-                    Commento model = new Commento(Lorem, "Autore di prova");
-                    commentoList.add(model);
-                }
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-            PutDataIntoRecyclerView(commentoList, commentiRecycler, mContext);
-        }
+        LoginController.loadCurrentUserDetails();
+        PopupController.mostraPopup("Commento", "aggiunto alla lista", mContext);
     }
 
+    public static void getListaCommentiFilm(String idFilm, Context mContext, RecyclerView recyclerView){
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId = currentUser.getUserId();
+        String path = "Commenti";
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference commentiCollection = db.collection(path);
+        ArrayList<Commento> commentiList = new ArrayList<>();
+
+        db.collection(path)
+                .whereEqualTo("filmID", idFilm)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                //data = document.getData();
+                                String commentoText = document.getData().get("commento").toString();
+                                String userid = document.getData().get("userID").toString();
+                                String username = document.getData().get("username").toString();
+                                Commento commentoTemp = new Commento(username, userId, commentoText);
+
+                                if (commentoTemp != null) commentiList.add(commentoTemp);
+                            }
+                            PutDataIntoRecyclerView(commentiList, recyclerView, mContext);
+                        } else
+                            Log.d("testFirebase", "Error getting documents: ", task.getException());
+                    }
+                });
+
+    }
     private static void PutDataIntoRecyclerView(List<Commento> commentoList, RecyclerView commentiRecycler, Context mContext){
         AdapteryCommenti adaptery=new AdapteryCommenti(mContext, commentoList);
         commentiRecycler.setLayoutManager(new LinearLayoutManager(mContext));
-
         commentiRecycler.setAdapter(adaptery);
 
     }
