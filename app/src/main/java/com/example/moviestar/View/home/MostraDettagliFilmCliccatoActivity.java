@@ -3,6 +3,7 @@ package com.example.moviestar.View.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,6 +33,7 @@ public class MostraDettagliFilmCliccatoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mostradettaglifilmcliccato);
         mContext=this;
+        Log.d("Activity", "Film cliccato");
 
         Intent intent = getIntent();
         String activity_type=intent.getStringExtra("tipologia");

@@ -17,10 +17,13 @@ public class CurrentUser extends Application {
     public static boolean daVedereContainsFilm(Film filmDaCercare){
         boolean result=false;
         String id = filmDaCercare.getId();
-        for(int i=0; i< listaFilmDaVedere.size(); i++) {
-            if(!id.equals(listaFilmDaVedere.get(i).getId()))
+        for(int i=0; i< getListaFilmDaVedere().size(); i++) {
+            if(!id.equals(getListaFilmDaVedere().get(i).getId()))
                 result = false;
-            else result=true;
+            else{
+                result=true;
+                break;
+            }
         }
         return result;
     }
@@ -29,9 +32,12 @@ public class CurrentUser extends Application {
         boolean result=false;
         String id = filmDaCercare.getId();
         for(int i=0; i< listaFilmVisti.size(); i++) {
-            if(!id.equals(listaFilmVisti.get(i).getId()))
+            if(!id.equals(getListaFilmVisti().get(i).getId()))
                 result = false;
-            else result=true;
+            else{
+                result=true;
+                break;
+            }
         }
         return result;
     }
@@ -39,10 +45,13 @@ public class CurrentUser extends Application {
     public static boolean preferitiContainsFilm(Film filmDaCercare){
         boolean result=false;
         String id = filmDaCercare.getId();
-        for(int i=0; i< listaFilmPreferiti.size(); i++) {
-            if(!id.equals(listaFilmPreferiti.get(i).getId()))
+        for(int i=0; i< getListaFilmPreferiti().size(); i++) {
+            if(!id.equals(getListaFilmPreferiti().get(i).getId()))
                 result = false;
-            else result=true;
+            else{
+                result=true;
+                break;
+            }
         }
         return result;
     }

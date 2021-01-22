@@ -3,22 +3,36 @@ package com.example.moviestar.View.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.MostraDettagliFilmController;
 import com.example.moviestar.R;
 import com.example.moviestar.View.MainActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
     ImageView star_1, star_2, star_3, star_4, star_5;
     Context mContext;
+    int number_star;
+    String filmId;
 
     @Override
     public void onBackPressed() {
@@ -32,6 +46,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.filmvistocliccato);
         mContext=this;
+        Log.d("Activity", "Film visto");
         star_1 = findViewById(R.id.star_1);
         star_2 = findViewById(R.id.star_2);
         star_3 = findViewById(R.id.star_3);
@@ -79,8 +94,13 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
         String filmName = intent.getStringExtra("FilmName");
         String filmVoto = intent.getStringExtra("FilmVoto");
         String filmOverview = intent.getStringExtra("FilmOverview");
-        String filmId = intent.getStringExtra("FilmId");
+        filmId = intent.getStringExtra("FilmId");
         String filmFotoPath=intent.getStringExtra("FilmPicPath");
+
+        int starNumber = getNumberOfStarsFromDB();
+        riempiStelle(starNumber);
+        riempiStelle(number_star);
+
 
         TextView filmNameTextView = findViewById(R.id.title_text);
         filmNameTextView.setText(filmName);
@@ -149,6 +169,32 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
         });
 }
 
+    private int getNumberOfStarsFromDB() {
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId = currentUser.getUserId();
+        String path="VotoStar";
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference filmPreferiti = db.collection(path);
+
+        db.collection(path)
+                .whereEqualTo("userID", userId).whereEqualTo("filmID", filmId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                number_star= Integer.parseInt(String.valueOf(document.get("voto")));
+                                riempiStelle(number_star);
+                            }
+                        } else Log.d("testFirebase", "Error getting documents: ", task.getException());
+
+                    }
+                });
+
+        return number_star;
+    }
+
 
     private void riempiStelle(int numeroStelleDaRiempire) {
         switch(numeroStelleDaRiempire) {
@@ -158,6 +204,8 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_3);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_4);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
+                riempiStelleDB(numeroStelleDaRiempire, filmId);
+
                 break;
             case 2:
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_1);
@@ -165,6 +213,8 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_3);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_4);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
+                riempiStelleDB(numeroStelleDaRiempire, filmId);
+
                 break;
             case 3:
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_1);
@@ -172,6 +222,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_3);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_4);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
+                riempiStelleDB(numeroStelleDaRiempire, filmId);
 
                 break;
             case 4:
@@ -180,6 +231,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_3);
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_4);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
+                riempiStelleDB(numeroStelleDaRiempire, filmId);
 
                 break;
             case 5:
@@ -188,6 +240,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_3);
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_4);
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_5);
+                riempiStelleDB(numeroStelleDaRiempire, filmId);
 
                 break;
 
@@ -195,5 +248,20 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
                 // code block
         }
     }
+
+    private void riempiStelleDB(int numeroStelleDaRiempire, String filmId) {
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId=currentUser.getUserId();
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        CollectionReference filmPreferiti = db.collection("VotoStar");
+
+        Map<String, Object> data4 = new HashMap<>();
+        data4.put("filmID", filmId);
+        data4.put("userID", userId);
+        data4.put("voto", numeroStelleDaRiempire );
+        filmPreferiti.document(userId+filmId).set(data4);
+
+    }
+
 
 }
