@@ -25,6 +25,13 @@ TextView disclaimer;
     final Context context= this;
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         RegistrazioneController.registerOnStart();

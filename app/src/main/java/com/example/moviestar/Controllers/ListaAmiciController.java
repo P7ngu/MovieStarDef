@@ -1,9 +1,12 @@
 package com.example.moviestar.Controllers;
 
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
+import com.example.moviestar.View.home.Recycler.Adaptery;
+import com.example.moviestar.View.profilo.ListaAmiciActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -51,7 +54,6 @@ public class ListaAmiciController {
                         //PopupController.mostraPopup("Richiesta respinta", "rimossa con successo.", mContext);
                         
                         //REFRESH SCHERMATA
-
                         LoginController.loadCurrentUserDetails();
                     }
                 })
@@ -96,24 +98,27 @@ public class ListaAmiciController {
         CollectionReference listaAmici = db.collection("ListaAmici");
 
         db.collection("ListaAmici").document(idUtenteDaEliminare+userId)
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                .delete();
+
+        db.collection("ListaAmici").document(userId+idUtenteDaEliminare)
+                .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        db.collection("ListaAmici").document(userId+idUtenteDaEliminare)
-                                .delete();
-                        PopupController.mostraPopup("Richiesta respinta", "rimossa con successo.", mContext);
-                        LoginController.loadCurrentUserDetails();
+                        LoginController.loadListaAmiciFromDB();
+                        PopupController.mostraPopup("Utente eliminato con successo",
+                                "Utente eliminato dalla lista amici con successo.", mContext);
+
+
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
+                }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         PopupController.mostraPopup("Errore", " non rimosso.", mContext);
                     }
                 });
+
     }
-
-
-
 }
+
+
+

@@ -72,7 +72,14 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
 
 
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+        public void removeAt(int position) {
+            mData.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, mData.size());
+        }
+
 
         TextView vote, name, nomeutentemostrato;
         ImageView img;
@@ -107,15 +114,20 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
                             (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
                     else if(tipologiaSchermata.equals("richieste")) ListaAmiciController.respingiRichiestaAmico
                             (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
-                    else ListaAmiciController.eliminaAmicoDaListaAmici
+                    else {
+                        ListaAmiciController.eliminaAmicoDaListaAmici
                                 (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
+                        removeAt(getAdapterPosition());
+                    }
                 }
             });
             else respingiRichiestaAmicoButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     ListaAmiciController.eliminaAmicoDaListaAmici
                             (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
+                    removeAt(getAdapterPosition());
                 }
             });
 //            vote = itemView.findViewById(R.id.vote_text);

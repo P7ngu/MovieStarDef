@@ -47,6 +47,13 @@ public class LoginActivity extends AppCompatActivity  {
     FirebaseFirestore db=FirebaseFirestore.getInstance();
     CollectionReference collectionReference = db.collection("Users");
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, RegistrazioneActivity.class);
+        startActivity(intent);
+    }
+
 
 
     @Override

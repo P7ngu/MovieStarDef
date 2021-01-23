@@ -23,18 +23,23 @@ public class InviaRichiesteAmicoController {
     public static void sendRichiestaAmico(String idUtenteDaAggiungere, Context mContext) {
         CurrentUser currentUser = CurrentUser.getInstance();
         String userId = currentUser.getUserId();
+        if(!userId.equals(idUtenteDaAggiungere)) {
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference richiesteamico = db.collection("RichiesteAmico");
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            CollectionReference richiesteamico = db.collection("RichiesteAmico");
 
 
-        Map<String, Object> data4 = new HashMap<>();
-        data4.put("userID_ricevente", idUtenteDaAggiungere);
-        data4.put("userID_mandante", userId);
-        richiesteamico.document(userId + idUtenteDaAggiungere).set(data4);
+            Map<String, Object> data4 = new HashMap<>();
+            data4.put("userID_ricevente", idUtenteDaAggiungere);
+            data4.put("userID_mandante", userId);
+            richiesteamico.document(userId + idUtenteDaAggiungere).set(data4);
 
-        LoginController.loadCurrentUserDetails();
-        PopupController.mostraPopup("Utente", "aggiunto alla lista", mContext);
+            LoginController.loadCurrentUserDetails();
+            PopupController.mostraPopup("Utente", "aggiunto alla lista", mContext);
+        } else{
+            PopupController.mostraPopup("Errore", "non puoi aggiungere te stesso!", mContext);
+
+        }
     }
 
     public static void getRichiesteAmico() {

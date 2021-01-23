@@ -33,6 +33,7 @@ public class ListaAmiciActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listaamici);
+        LoginController.loadListaAmiciFromDB();
 
         recyclerView=findViewById(R.id.recycler_view_listaamici);
 
@@ -45,11 +46,7 @@ public class ListaAmiciActivity extends AppCompatActivity {
             }
         });
         UtenteList=new ArrayList<>();
-        try {
-            LoginController.loadListaAmiciFromDB();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
+        LoginController.loadListaAmiciFromDB();
         PutDataIntoRecyclerView(CurrentUser.getInstance().getListaAmici());
     }
 

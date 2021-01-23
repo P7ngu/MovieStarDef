@@ -38,6 +38,7 @@ public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder>{
         return new MyViewHolder(v);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
@@ -60,7 +61,6 @@ public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder>{
     }
 
 
-
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView vote, name;
@@ -81,5 +81,7 @@ public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder>{
             name = itemView.findViewById(R.id.name_text);
             img = itemView.findViewById(R.id.imageView_film);
         }
+
+
     }
 }
