@@ -41,7 +41,7 @@ public class VerificaController {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (user.isEmailVerified()) {
+        if (user!=null && user.isEmailVerified()) {
             return true;
         } else {
             return false;

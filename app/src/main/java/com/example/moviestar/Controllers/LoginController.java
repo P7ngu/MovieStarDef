@@ -48,7 +48,7 @@ public class LoginController {
 
     public static void Firebase_loginEmailPasswordUser(String email, String password, Context mContext) {
         PopupController.mostraPopup("Debug", email+password, mContext);
-        if(VerificaController.IsEmailVerified()) {
+
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -95,6 +95,8 @@ public class LoginController {
 
                         }
                     });
+        if(VerificaController.IsEmailVerified()) {
+            mContext.startActivity(new Intent(mContext, MainActivity.class));
         } else {
                 mContext.startActivity(new Intent(mContext, VerificationActivity.class));
         }

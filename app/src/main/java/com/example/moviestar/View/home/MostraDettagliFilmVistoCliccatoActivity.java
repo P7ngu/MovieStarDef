@@ -29,15 +29,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.moviestar.Controllers.AggiungiAListaController.onClickAddToPreferiti;
+import static com.example.moviestar.Controllers.ModificaRecensioneController.getNumberOfStarsFromDB;
+import static com.example.moviestar.Controllers.ModificaRecensioneController.riempiStelleDB;
 import static com.example.moviestar.Controllers.RecensioniFilmController.onClickAggiungiCommento;
 import static com.example.moviestar.Controllers.RecensioniFilmController.onClickLeggiCommenti;
 import static com.example.moviestar.Controllers.RimuoviFilmDaListaController.onClickRemoveFromVisti;
 
 public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
-    ImageView star_1, star_2, star_3, star_4, star_5;
-    Context mContext;
-    int number_star;
-    String filmId;
+    static ImageView star_1, star_2, star_3, star_4, star_5;
+    static Context mContext;
+    static int number_star;
+    static String filmId;
 
     @Override
     public void onBackPressed() {
@@ -61,35 +63,35 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
         star_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                riempiStelle(1);
+                riempiStelle(1, true);
             }
         });
 
         star_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                riempiStelle(2);
+                riempiStelle(2, true);
             }
         });
 
         star_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                riempiStelle(3);
+                riempiStelle(3, true);
             }
         });
 
         star_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                riempiStelle(4);
+                riempiStelle(4, true);
             }
         });
 
         star_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                riempiStelle(5);
+                riempiStelle(5, true);
             }
         });
 
@@ -102,9 +104,9 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
         filmId = intent.getStringExtra("FilmId");
         String filmFotoPath=intent.getStringExtra("FilmPicPath");
 
-        int starNumber = getNumberOfStarsFromDB();
-        riempiStelle(starNumber);
-        riempiStelle(number_star);
+        int starNumber = getNumberOfStarsFromDB(filmId);
+        riempiStelle(starNumber, false);
+        riempiStelle(number_star, false);
 
 
         TextView filmNameTextView = findViewById(R.id.title_text);
@@ -174,34 +176,10 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
         });
 }
 
-    private int getNumberOfStarsFromDB() {
-        CurrentUser currentUser = CurrentUser.getInstance();
-        String userId = currentUser.getUserId();
-        String path="VotoStar";
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference filmPreferiti = db.collection(path);
-
-        db.collection(path)
-                .whereEqualTo("userID", userId).whereEqualTo("filmID", filmId)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                number_star= Integer.parseInt(String.valueOf(document.get("voto")));
-                                riempiStelle(number_star);
-                            }
-                        } else Log.d("testFirebase", "Error getting documents: ", task.getException());
-
-                    }
-                });
-
-        return number_star;
-    }
 
 
-    private void riempiStelle(int numeroStelleDaRiempire) {
+
+    public static void riempiStelle(int numeroStelleDaRiempire, boolean isUserEditing) {
         switch(numeroStelleDaRiempire) {
             case 1:
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_1);
@@ -209,7 +187,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_3);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_4);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
-                riempiStelleDB(numeroStelleDaRiempire, filmId);
+                if(isUserEditing)riempiStelleDB(numeroStelleDaRiempire, filmId);
 
                 break;
             case 2:
@@ -218,7 +196,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_3);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_4);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
-                riempiStelleDB(numeroStelleDaRiempire, filmId);
+                if(isUserEditing)riempiStelleDB(numeroStelleDaRiempire, filmId);
 
                 break;
             case 3:
@@ -227,7 +205,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_3);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_4);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
-                riempiStelleDB(numeroStelleDaRiempire, filmId);
+                if(isUserEditing)riempiStelleDB(numeroStelleDaRiempire, filmId);
 
                 break;
             case 4:
@@ -236,7 +214,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_3);
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_4);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
-                riempiStelleDB(numeroStelleDaRiempire, filmId);
+                if(isUserEditing)riempiStelleDB(numeroStelleDaRiempire, filmId);
 
                 break;
             case 5:
@@ -245,7 +223,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_3);
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_4);
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_5);
-                riempiStelleDB(numeroStelleDaRiempire, filmId);
+                if(isUserEditing)riempiStelleDB(numeroStelleDaRiempire, filmId);
 
                 break;
 
@@ -254,19 +232,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
         }
     }
 
-    private void riempiStelleDB(int numeroStelleDaRiempire, String filmId) {
-        CurrentUser currentUser = CurrentUser.getInstance();
-        String userId=currentUser.getUserId();
-        FirebaseFirestore db=FirebaseFirestore.getInstance();
-        CollectionReference filmPreferiti = db.collection("VotoStar");
 
-        Map<String, Object> data4 = new HashMap<>();
-        data4.put("filmID", filmId);
-        data4.put("userID", userId);
-        data4.put("voto", numeroStelleDaRiempire );
-        filmPreferiti.document(userId+filmId).set(data4);
-
-    }
 
 
 }

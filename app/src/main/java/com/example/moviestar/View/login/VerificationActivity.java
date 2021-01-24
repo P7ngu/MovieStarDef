@@ -18,6 +18,13 @@ import com.example.moviestar.View.login.LoginActivity;
 
 public class VerificationActivity extends AppCompatActivity {
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
     Context mContext=this;
 
     @Override
