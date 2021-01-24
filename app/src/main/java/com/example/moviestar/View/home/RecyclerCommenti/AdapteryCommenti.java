@@ -77,7 +77,7 @@ public class AdapteryCommenti extends RecyclerView.Adapter<AdapteryCommenti.MyVi
             nomeutentemostrato=itemView.findViewById(R.id.nome_text);
             deleteCommentoButton=itemView.findViewById(R.id.deletecomment_button);
 
-            Button deleteCommentoButton = itemView.findViewById(R.id.deletecomment_button);
+          
             deleteCommentoButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
