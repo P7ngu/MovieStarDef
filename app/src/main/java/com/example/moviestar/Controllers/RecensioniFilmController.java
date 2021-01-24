@@ -99,7 +99,7 @@ public class RecensioniFilmController {
                                 String username = document.getData().get("username").toString();
                                 String seconds = document.getData().get("unique_number").toString();
                                 String idFilm=document.getData().get("filmID").toString();
-                                Commento commentoTemp = new Commento(username, userId, commentoText, seconds, idFilm);
+                                Commento commentoTemp = new Commento(username, userid, commentoText, seconds, idFilm);
 
                                 if (commentoTemp != null) commentiList.add(commentoTemp);
                             }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.ModificaRecensioneController;
+import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.Model.Commento;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
@@ -41,8 +42,11 @@ public class AdapteryCommenti extends RecyclerView.Adapter<AdapteryCommenti.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull AdapteryCommenti.MyViewHolder holder, int position) {
-        if(!mData.get(position).getIdAutore().contentEquals(CurrentUser.getInstance().getUserId()))
-        holder.deleteCommentoButton.setVisibility(View.GONE);
+        if(!mData.get(position).getIdAutore().contentEquals(CurrentUser.getInstance().getUserId())) {
+            holder.deleteCommentoButton.setVisibility(View.INVISIBLE);
+            PopupController.mostraPopup("Debug", mData.get(position).getIdAutore() + CurrentUser.getInstance().getUserId() , mContext);
+        }
+        PopupController.mostraPopup("Debug", mData.get(position).getIdAutore() + CurrentUser.getInstance().getUserId() , mContext);
 
         holder.nomeutentemostrato.setText(mData.get(position).getNomeAutore());
         holder.testo.setText(mData.get(position).getTesto());
@@ -77,11 +81,10 @@ public class AdapteryCommenti extends RecyclerView.Adapter<AdapteryCommenti.MyVi
             nomeutentemostrato=itemView.findViewById(R.id.nome_text);
             deleteCommentoButton=itemView.findViewById(R.id.deletecomment_button);
 
-          
+
             deleteCommentoButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     ModificaRecensioneController.eliminaRecensione(mData.get(getAdapterPosition()), mContext);
                 }
             });
