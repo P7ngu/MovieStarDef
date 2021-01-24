@@ -63,13 +63,15 @@ public class RecensioniFilmController {
         String username= currentUser.getUsername();
         FirebaseFirestore db=FirebaseFirestore.getInstance();
         CollectionReference richiesteamico = db.collection("Commenti");
+        int seconds= Math.toIntExact(Timestamp.now().getSeconds());
 
         Map<String, Object> data4 = new HashMap<>();
         data4.put("userID", userId);
         data4.put("commento", commentoDaInserire);
         data4.put("filmID", idFilmCommentato);
         data4.put("username", username);
-        richiesteamico.document(userId+idFilmCommentato+ Timestamp.now().getSeconds()).set(data4);
+        data4.put("unique_number", seconds);
+        richiesteamico.document(userId+idFilmCommentato+seconds).set(data4);
 
         LoginController.loadCurrentUserDetails();
         PopupController.mostraPopup("Commento", "aggiunto alla lista", mContext);
@@ -95,7 +97,9 @@ public class RecensioniFilmController {
                                 String commentoText = document.getData().get("commento").toString();
                                 String userid = document.getData().get("userID").toString();
                                 String username = document.getData().get("username").toString();
-                                Commento commentoTemp = new Commento(username, userId, commentoText);
+                                String seconds = document.getData().get("unique_number").toString();
+                                String idFilm=document.getData().get("filmID").toString();
+                                Commento commentoTemp = new Commento(username, userId, commentoText, seconds, idFilm);
 
                                 if (commentoTemp != null) commentiList.add(commentoTemp);
                             }

@@ -4,12 +4,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.moviestar.Controllers.CurrentUser;
+import com.example.moviestar.Controllers.ModificaRecensioneController;
 import com.example.moviestar.Model.Commento;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
@@ -38,6 +41,8 @@ public class AdapteryCommenti extends RecyclerView.Adapter<AdapteryCommenti.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull AdapteryCommenti.MyViewHolder holder, int position) {
+        if(!mData.get(position).getIdAutore().contentEquals(CurrentUser.getInstance().getUserId()))
+        holder.deleteCommentoButton.setVisibility(View.GONE);
 
         holder.nomeutentemostrato.setText(mData.get(position).getNomeAutore());
         holder.testo.setText(mData.get(position).getTesto());
@@ -55,6 +60,7 @@ public class AdapteryCommenti extends RecyclerView.Adapter<AdapteryCommenti.MyVi
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView vote, testo, nomeutentemostrato;
+        Button deleteCommentoButton;
         ImageView img;
 
 
@@ -69,6 +75,16 @@ public class AdapteryCommenti extends RecyclerView.Adapter<AdapteryCommenti.MyVi
             itemView.setOnClickListener(this);
             testo=itemView.findViewById(R.id.testo_text);
             nomeutentemostrato=itemView.findViewById(R.id.nome_text);
+            deleteCommentoButton=itemView.findViewById(R.id.deletecomment_button);
+
+            Button deleteCommentoButton = itemView.findViewById(R.id.deletecomment_button);
+            deleteCommentoButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ModificaRecensioneController.eliminaRecensione(mData.get(getAdapterPosition()), mContext);
+                }
+            });
 //            vote = itemView.findViewById(R.id.vote_text);
 //            name = itemView.findViewById(R.id.name_text);
 //            img = itemView.findViewById(R.id.imageView_film);
