@@ -37,14 +37,14 @@ public class VerificaController {
 
 
 
-    public static  void IsEmailVerified() {
+    public static boolean IsEmailVerified() {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user.isEmailVerified()) {
-            Log.d("Firebase Debug", "Email is verified.");
+            return true;
         } else {
-            Log.d("Firebase Debug", "Email is not verified !.");
+            return false;
         }
 
     }

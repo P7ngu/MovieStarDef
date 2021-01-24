@@ -15,8 +15,10 @@ import android.widget.ProgressBar;
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.LoginController;
 import com.example.moviestar.Controllers.LogoutController;
+import com.example.moviestar.Controllers.VerificaController;
 import com.example.moviestar.R;
 import com.example.moviestar.View.login.RegistrazioneActivity;
+import com.example.moviestar.View.login.VerificationActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,7 @@ import java.sql.ResultSet;
 public class MainActivity extends AppCompatActivity {
     ResultSet UsersRS;
     static boolean isUserLogged=false;
+    static boolean isUserVerified=false;
     static ProgressBar progBar;
     Context myContext;
 
@@ -79,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         progBar.setVisibility(0);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        isUserVerified= VerificaController.IsEmailVerified();
 
 
         Bundle bundle = getIntent().getExtras();
@@ -88,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
                    && bundle.get("username")!= null &&bundle.getString("username").length()>0) {
                 currentUser.setUserId(bundle.getString("userID"));
                 currentUser.setUsername(bundle.getString("username"));
-                isUserLogged = true;
+                if(isUserVerified) isUserLogged = true;
+                else startActivity(new Intent(this, VerificationActivity.class));
             }
         }
 
@@ -96,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
         final String email = prefs.getString("email", "");
         final String password = prefs.getString("password", "");
         Log.d("Stored Data", email+password);
-        if(!isUserLogged && email.length()>3 && password.length()>5) LoginController.Firebase_loginEmailPasswordUser(email, password, mContext);
+        if(!isUserLogged && isUserVerified && email.length()>3 && password.length()>5) LoginController.Firebase_loginEmailPasswordUser(email, password, mContext);
+        else if(!isUserVerified) startActivity(new Intent(this, VerificationActivity.class));
         //Log.i("Test", "saved data: "+email+password);
 
         if(!isUserLogged){

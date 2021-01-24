@@ -13,6 +13,7 @@ import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
 import com.example.moviestar.View.MainActivity;
 import com.example.moviestar.View.login.RegistrazioneActivity;
+import com.example.moviestar.View.login.VerificationActivity;
 import com.example.moviestar.View.profilo.ListaAmiciActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -47,6 +48,7 @@ public class LoginController {
 
     public static void Firebase_loginEmailPasswordUser(String email, String password, Context mContext) {
         PopupController.mostraPopup("Debug", email+password, mContext);
+        if(VerificaController.IsEmailVerified()) {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -93,6 +95,9 @@ public class LoginController {
 
                         }
                     });
+        } else {
+                mContext.startActivity(new Intent(mContext, VerificationActivity.class));
+        }
 
 
 
