@@ -28,6 +28,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.moviestar.Controllers.RecensioniFilmController.onClickAggiungiCommento;
+import static com.example.moviestar.Controllers.RecensioniFilmController.onClickLeggiCommenti;
+import static com.example.moviestar.Controllers.RimuoviFilmDaListaController.onClickRemoveFromPreferiti;
+import static com.example.moviestar.Controllers.RimuoviFilmDaListaController.onClickRemoveFromVisti;
+
 public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatActivity {
     ImageView star_1, star_2, star_3, star_4, star_5;
     int number_star;
@@ -117,7 +122,7 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
         buttonLeggiCommenti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickLeggiCommenti(filmId, mContext);
+                onClickLeggiCommenti(filmId, mContext);
             }
         });
 
@@ -125,7 +130,7 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
         aggiungiCommentoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickAggiungiCommento(filmId, filmName, filmOverview, mContext);
+                onClickAggiungiCommento(filmId, filmName, filmOverview, mContext);
             }
         });
 
@@ -133,7 +138,7 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
         removeFromPreferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickRemoveFromPreferiti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+                onClickRemoveFromPreferiti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
                 setContentView(R.layout.loadinglayout);
                 Intent intent = new Intent(mContext, MostraDettagliFilmVistoCliccatoActivity.class);
                 intent.putExtra("FilmName", filmName);
@@ -157,7 +162,7 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
         removeFromVistiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickRemoveFromVisti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+                onClickRemoveFromVisti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
                 setContentView(R.layout.loadinglayout);
                 Intent intent = new Intent(mContext, MostraDettagliFilmCliccatoActivity.class);
                 intent.putExtra("FilmName", filmName);

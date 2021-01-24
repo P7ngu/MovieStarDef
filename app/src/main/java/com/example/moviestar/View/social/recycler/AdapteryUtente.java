@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,18 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.InviaRichiesteAmicoController;
-import com.example.moviestar.Controllers.ListaAmiciController;
-import com.example.moviestar.Controllers.MostraDettagliFilmController;
+import com.example.moviestar.Controllers.RimuoviAmicoController;
 import com.example.moviestar.DAO.UtenteDAO;
-import com.example.moviestar.Model.Film;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
-import com.example.moviestar.View.home.Recycler.Adaptery;
-import com.example.moviestar.View.profilo.ProfiloFragment;
-import com.example.moviestar.View.social.SocialFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +94,7 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
                 public void onClick(View v) {
                   if(tipologiaSchermata.equals("ricerca"))  InviaRichiesteAmicoController.sendRichiestaAmico
                           (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
-                  else ListaAmiciController.accettaRichiestaAmico(mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
+                  else RimuoviAmicoController.accettaRichiestaAmico(mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
                 }
             });
 
@@ -110,12 +103,12 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
                 respingiRichiestaAmicoButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(tipologiaSchermata.equals("ricerca"))  ListaAmiciController.respingiRichiestaAmico
+                    if(tipologiaSchermata.equals("ricerca"))  RimuoviAmicoController.respingiRichiestaAmico
                             (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
-                    else if(tipologiaSchermata.equals("richieste")) ListaAmiciController.respingiRichiestaAmico
+                    else if(tipologiaSchermata.equals("richieste")) RimuoviAmicoController.respingiRichiestaAmico
                             (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
                     else {
-                        ListaAmiciController.eliminaAmicoDaListaAmici
+                        RimuoviAmicoController.eliminaAmicoDaListaAmici
                                 (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
                         removeAt(getAdapterPosition());
                     }
@@ -125,7 +118,7 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
                 @Override
                 public void onClick(View v) {
 
-                    ListaAmiciController.eliminaAmicoDaListaAmici
+                    RimuoviAmicoController.eliminaAmicoDaListaAmici
                             (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
                     removeAt(getAdapterPosition());
                 }

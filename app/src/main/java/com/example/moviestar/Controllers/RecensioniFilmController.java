@@ -1,6 +1,7 @@
 package com.example.moviestar.Controllers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.moviestar.Model.Commento;
 import com.example.moviestar.Model.Film;
 import com.example.moviestar.Model.Utente;
+import com.example.moviestar.View.home.AggiungiCommentoActivity;
+import com.example.moviestar.View.home.CommentiFilmActivity;
 import com.example.moviestar.View.home.RecyclerCommenti.AdapteryCommenti;
 import com.example.moviestar.View.social.SocialFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,7 +36,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ControllerCommentiFilm {
+public class RecensioniFilmController {
+
+    public static void onClickLeggiCommenti(String filmId, Context context){
+        Intent intent=new Intent(context, CommentiFilmActivity.class);
+        intent.putExtra("filmCliccatoId", filmId);
+        context.startActivity(intent);
+
+    }
+
+
+    public static void onClickAggiungiCommento(String idFilm, String filmName, String overview, Context mContext) {
+        Intent intent = new Intent(mContext, AggiungiCommentoActivity.class);
+        intent.putExtra("film", filmName);
+        intent.putExtra("FilmName", filmName);
+        intent.putExtra("FilmId", idFilm);
+        intent.putExtra("FilmOverview", overview);
+        mContext.startActivity(intent);
+    }
+
+
 
     public static void inserisciCommentoFilm(String idFilmCommentato, String commentoDaInserire, Context mContext){
         CurrentUser currentUser = CurrentUser.getInstance();

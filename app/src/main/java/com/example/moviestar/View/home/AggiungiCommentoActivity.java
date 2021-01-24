@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.moviestar.Controllers.ControllerCommentiFilm;
+import com.example.moviestar.Controllers.RecensioniFilmController;
 import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.R;
 
@@ -37,7 +37,7 @@ Context mContext;
         inviaCommentoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ControllerCommentiFilm.inserisciCommentoFilm(idfilm, commentoText.getText().toString(), mContext);
+                RecensioniFilmController.inserisciCommentoFilm(idfilm, commentoText.getText().toString(), mContext);
                 PopupController.mostraPopup("Commento inviato", "Commento inviato con successo!", mContext);
             }
         });

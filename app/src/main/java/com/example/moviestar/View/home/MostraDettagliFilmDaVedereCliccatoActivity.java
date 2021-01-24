@@ -15,6 +15,11 @@ import com.example.moviestar.Controllers.MostraDettagliFilmController;
 import com.example.moviestar.R;
 import com.example.moviestar.View.MainActivity;
 
+import static com.example.moviestar.Controllers.AggiungiAListaController.onClickAddToPreferiti;
+import static com.example.moviestar.Controllers.AggiungiAListaController.onClickAddToVisti;
+import static com.example.moviestar.Controllers.RecensioniFilmController.onClickLeggiCommenti;
+import static com.example.moviestar.Controllers.RimuoviFilmDaListaController.onClickRemoveToDaVedere;
+
 public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
@@ -50,7 +55,7 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
         buttonLeggiCommenti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickLeggiCommenti(filmId, mContext);
+                onClickLeggiCommenti(filmId, mContext);
             }
         });
 
@@ -59,7 +64,7 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
         addToPreferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickAddToPreferiti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+                onClickAddToPreferiti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
                 setContentView(R.layout.loadinglayout);
                 Intent intent = new Intent(mContext, MostraDettagliFilmVistoCliccatoPreferitoActivity.class);
                 intent.putExtra("FilmName", filmName);
@@ -75,7 +80,7 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
         removeFromDaVedereButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickRemoveToDaVedere(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+                onClickRemoveToDaVedere(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
                 Intent intent = new Intent(mContext, MostraDettagliFilmCliccatoActivity.class);
                 setContentView(R.layout.loadinglayout);
                 intent.putExtra("FilmName", filmName);
@@ -90,7 +95,7 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
         addToVistiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickAddToVisti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+                onClickAddToVisti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
                 addToVistiButton.setVisibility(0);
                 setContentView(R.layout.loadinglayout);
                 Intent intent = new Intent(mContext, MostraDettagliFilmVistoCliccatoActivity.class);

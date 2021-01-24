@@ -14,9 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.MostraDettagliFilmController;
+import com.example.moviestar.Controllers.RecensioniFilmController;
 import com.example.moviestar.R;
 import com.example.moviestar.View.MainActivity;
 
+import static com.example.moviestar.Controllers.AggiungiAListaController.onClickAddToDaVedere;
+import static com.example.moviestar.Controllers.AggiungiAListaController.onClickAddToPreferiti;
+import static com.example.moviestar.Controllers.AggiungiAListaController.onClickAddToVisti;
 import static com.example.moviestar.R.drawable.star_piena;
 
 public class MostraDettagliFilmCliccatoActivity extends AppCompatActivity {
@@ -56,7 +60,7 @@ public class MostraDettagliFilmCliccatoActivity extends AppCompatActivity {
         buttonLeggiCommenti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickLeggiCommenti(filmId, mContext);
+                RecensioniFilmController.onClickLeggiCommenti(filmId, mContext);
             }
         });
 
@@ -65,7 +69,7 @@ public class MostraDettagliFilmCliccatoActivity extends AppCompatActivity {
         addToPreferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickAddToPreferiti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+               onClickAddToPreferiti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
                 setContentView(R.layout.loadinglayout);
                 Intent intent = new Intent(mContext, MostraDettagliFilmVistoCliccatoPreferitoActivity.class);
                 setContentView(R.layout.loadinglayout);
@@ -82,7 +86,7 @@ public class MostraDettagliFilmCliccatoActivity extends AppCompatActivity {
         addToDaVedereButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickAddToDaVedere(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+                onClickAddToDaVedere(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
                 setContentView(R.layout.loadinglayout);
                 Intent intent = new Intent(mContext, MostraDettagliFilmDaVedereCliccatoActivity.class);
                 setContentView(R.layout.loadinglayout);
@@ -98,7 +102,7 @@ public class MostraDettagliFilmCliccatoActivity extends AppCompatActivity {
         addToVistiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MostraDettagliFilmController.onClickAddToVisti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+                onClickAddToVisti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
                 setContentView(R.layout.loadinglayout);
                 Intent intent = new Intent(mContext, MostraDettagliFilmVistoCliccatoActivity.class);
                 setContentView(R.layout.loadinglayout);

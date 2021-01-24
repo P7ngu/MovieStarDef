@@ -15,7 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ListaAmiciController {
+public class RimuoviAmicoController {
 
     public static void accettaRichiestaAmico(String idUtenteDaAggiungere, Context mContext){
         CurrentUser currentUser = CurrentUser.getInstance();
