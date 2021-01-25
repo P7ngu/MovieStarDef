@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.MostraDettagliFilmController;
+import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.R;
 import com.example.moviestar.View.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -58,7 +59,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.filmvistocliccato);
         mContext=this;
-        Log.d("Activity", "Film visto");
+
         star_1 = findViewById(R.id.star_1);
         star_2 = findViewById(R.id.star_2);
         star_3 = findViewById(R.id.star_3);
@@ -110,8 +111,8 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
         filmFotoPath=intent.getStringExtra("FilmPicPath");
 
         int starNumber = getNumberOfStarsFromDB(filmId);
-        riempiStelle(starNumber, false);
-        riempiStelle(number_star, false);
+       // riempiStelle(starNumber, false);
+        //riempiStelle(number_star, false);
 
 
         TextView filmNameTextView = findViewById(R.id.title_text);
@@ -155,14 +156,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
             }
         });
 
-        Button addToDaVedereButton = findViewById(R.id.button_list_davedere);
-        addToDaVedereButton.setVisibility(0);
-        addToDaVedereButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //
-            }
-        });
+
         Button removeFromVistiButton=findViewById(R.id.button_remove_list_visti);
         removeFromVistiButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,6 +165,8 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
 
             }
         });
+
+
 }
 
 public static void removeFromVistiSuccess(Context mContext){
@@ -195,7 +191,7 @@ public static void removeFromVistiSuccess(Context mContext){
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_3);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_4);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
-                if(isUserEditing)riempiStelleDB(numeroStelleDaRiempire, filmId);
+                if(isUserEditing)riempiStelleDB(1, filmId);
 
                 break;
             case 2:
@@ -204,7 +200,7 @@ public static void removeFromVistiSuccess(Context mContext){
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_3);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_4);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
-                if(isUserEditing)riempiStelleDB(numeroStelleDaRiempire, filmId);
+                if(isUserEditing)riempiStelleDB(2, filmId);
 
                 break;
             case 3:
@@ -213,7 +209,7 @@ public static void removeFromVistiSuccess(Context mContext){
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_3);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_4);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
-                if(isUserEditing)riempiStelleDB(numeroStelleDaRiempire, filmId);
+                if(isUserEditing)riempiStelleDB(3, filmId);
 
                 break;
             case 4:
@@ -222,7 +218,7 @@ public static void removeFromVistiSuccess(Context mContext){
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_3);
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_4);
                 Glide.with(mContext).load("https://i.ibb.co/9YgQ3YN/star-vuota.png").into(star_5);
-                if(isUserEditing)riempiStelleDB(numeroStelleDaRiempire, filmId);
+                if(isUserEditing)riempiStelleDB(4, filmId);
 
                 break;
             case 5:
@@ -231,7 +227,7 @@ public static void removeFromVistiSuccess(Context mContext){
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_3);
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_4);
                 Glide.with(mContext).load("https://i.ibb.co/hDRdQTD/star-piena.png").into(star_5);
-                if(isUserEditing)riempiStelleDB(numeroStelleDaRiempire, filmId);
+                if(isUserEditing)riempiStelleDB(5, filmId);
 
                 break;
 

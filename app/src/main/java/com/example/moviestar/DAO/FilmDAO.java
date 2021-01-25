@@ -68,6 +68,8 @@ public class FilmDAO {
         return currentModel;
     }
 
+
+
 //    private static void findFilmDataById(String idFilm, Context mContext) {
 //        String APIkey="89d40cd46523243c6d553bb54b2ca47e";
 //        String myURL = "https://api.themoviedb.org/3/movie/"+idFilm+"?api_key="+APIkey+"&append_to_response=videos";

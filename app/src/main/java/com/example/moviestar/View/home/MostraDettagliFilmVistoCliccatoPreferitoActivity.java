@@ -151,14 +151,7 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
             }
         });
 
-        Button addToDaVedereButton = findViewById(R.id.button_list_davedere);
-        addToDaVedereButton.setVisibility(0);
-        addToDaVedereButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               //
-            }
-        });
+
         Button removeFromVistiButton=findViewById(R.id.button_remove_list_visti);
         removeFromVistiButton.setOnClickListener(new View.OnClickListener() {
             @Override

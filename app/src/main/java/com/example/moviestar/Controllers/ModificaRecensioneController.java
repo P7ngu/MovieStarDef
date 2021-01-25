@@ -133,8 +133,14 @@ public class ModificaRecensioneController {
                                try {
                                    MostraDettagliFilmVistoCliccatoPreferitoActivity.riempiStelle(number_star, false);
                                    MostraDettagliFilmVistoCliccatoActivity.riempiStelle(number_star, false);
+                                   Log.d("DebugStelle", number_star+"");
                                } catch (Exception e){
+                                   try{
+                                   MostraDettagliFilmVistoCliccatoActivity.riempiStelle(number_star, false);
+                                   Log.d("DebugStelle", number_star+"");}
+                                   catch (Exception e1){
 
+                                   }
                                }
                             }
                         } else Log.d("testFirebase", "Error getting documents: ", task.getException());
