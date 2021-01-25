@@ -21,6 +21,13 @@ import static com.example.moviestar.Controllers.RecensioniFilmController.onClick
 import static com.example.moviestar.Controllers.RimuoviFilmDaListaController.onClickRemoveToDaVedere;
 
 public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivity {
+    static String activity_type;
+    static String filmName;
+    static String filmVoto;
+    static String filmOverview;
+    static String filmId;
+    static String filmFotoPath;
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -35,12 +42,12 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
         Context mContext=this;
         Log.d("Activity", "Film da vedere");
         Intent intent = getIntent();
-        String activity_type=intent.getStringExtra("tipologia");
-        String filmName = intent.getStringExtra("FilmName");
-        String filmVoto = intent.getStringExtra("FilmVoto");
-        String filmOverview = intent.getStringExtra("FilmOverview");
-        String filmId = intent.getStringExtra("FilmId");
-        String filmFotoPath=intent.getStringExtra("FilmPicPath");
+        activity_type=intent.getStringExtra("tipologia");
+        filmName = intent.getStringExtra("FilmName");
+        filmVoto = intent.getStringExtra("FilmVoto");
+        filmOverview = intent.getStringExtra("FilmOverview");
+        filmId = intent.getStringExtra("FilmId");
+        filmFotoPath=intent.getStringExtra("FilmPicPath");
 
         TextView filmNameTextView = findViewById(R.id.title_text);
         filmNameTextView.setText(filmName);
@@ -81,16 +88,10 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
             @Override
             public void onClick(View v) {
                 onClickRemoveToDaVedere(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
-                Intent intent = new Intent(mContext, MostraDettagliFilmCliccatoActivity.class);
-                setContentView(R.layout.loadinglayout);
-                intent.putExtra("FilmName", filmName);
-                intent.putExtra("FilmVoto", filmVoto);
-                intent.putExtra("FilmOverview", filmOverview);
-                intent.putExtra("FilmId", filmId);
-                intent.putExtra("FilmPicPath", filmFotoPath);
-                startActivity(intent);
             }
         });
+
+
         Button addToVistiButton = findViewById(R.id.button_list_visti);
         addToVistiButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,4 +112,17 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
         });
 
     }
+
+    public static void removeFromDaVedereSuccess(Context mContext){
+        Intent intent1 = new Intent(mContext, MostraDettagliFilmCliccatoActivity.class);
+       // mContext.setContentView(R.layout.loadinglayout);
+        intent1.putExtra("FilmName", filmName);
+        intent1.putExtra("FilmVoto", filmVoto);
+        intent1.putExtra("FilmOverview", filmOverview);
+        intent1.putExtra("FilmId", filmId);
+        intent1.putExtra("FilmPicPath", filmFotoPath);
+        mContext.startActivity(intent1);
+    }
+
+
 }

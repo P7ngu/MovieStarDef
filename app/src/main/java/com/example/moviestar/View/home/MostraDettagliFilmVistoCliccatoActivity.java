@@ -40,6 +40,11 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
     static Context mContext;
     static int number_star;
     static String filmId;
+    static String activity_type;
+    static String filmName;
+    static String filmVoto;
+    static String filmOverview;
+    static String filmFotoPath;
 
     @Override
     public void onBackPressed() {
@@ -97,12 +102,12 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        String activity_type=intent.getStringExtra("tipologia");
-        String filmName = intent.getStringExtra("FilmName");
-        String filmVoto = intent.getStringExtra("FilmVoto");
-        String filmOverview = intent.getStringExtra("FilmOverview");
+        activity_type = intent.getStringExtra("tipologia");
+        filmName = intent.getStringExtra("FilmName");
+        filmVoto = intent.getStringExtra("FilmVoto");
+        filmOverview = intent.getStringExtra("FilmOverview");
         filmId = intent.getStringExtra("FilmId");
-        String filmFotoPath=intent.getStringExtra("FilmPicPath");
+        filmFotoPath=intent.getStringExtra("FilmPicPath");
 
         int starNumber = getNumberOfStarsFromDB(filmId);
         riempiStelle(starNumber, false);
@@ -163,17 +168,20 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onClickRemoveFromVisti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
-                setContentView(R.layout.loadinglayout);
-                Intent intent = new Intent(mContext, MostraDettagliFilmCliccatoActivity.class);
-                intent.putExtra("FilmName", filmName);
-                intent.putExtra("FilmVoto", filmVoto);
-                intent.putExtra("FilmOverview", filmOverview);
-                intent.putExtra("FilmId", filmId);
-                intent.putExtra("FilmPicPath", filmFotoPath);
-                startActivity(intent);
 
             }
         });
+}
+
+public static void removeFromVistiSuccess(Context mContext){
+    //setContentView(R.layout.loadinglayout);
+    Intent intent = new Intent(mContext, MostraDettagliFilmCliccatoActivity.class);
+    intent.putExtra("FilmName", filmName);
+    intent.putExtra("FilmVoto", filmVoto);
+    intent.putExtra("FilmOverview", filmOverview);
+    intent.putExtra("FilmId", filmId);
+    intent.putExtra("FilmPicPath", filmFotoPath);
+    mContext.startActivity(intent);
 }
 
 

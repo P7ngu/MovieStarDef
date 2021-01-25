@@ -36,9 +36,15 @@ import static com.example.moviestar.Controllers.RimuoviFilmDaListaController.onC
 import static com.example.moviestar.Controllers.RimuoviFilmDaListaController.onClickRemoveFromVisti;
 
 public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatActivity {
+    static String filmId;
+    static String activity_type;
+    static String filmName;
+    static String filmVoto;
+    static String filmOverview;
+    static String filmFotoPath;
+
     static ImageView star_1, star_2, star_3, star_4, star_5;
     static int number_star;
-    static String filmId;
     static Context mContext;
 
     @Override
@@ -100,12 +106,12 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
 
 
         Intent intent = getIntent();
-        String activity_type=intent.getStringExtra("tipologia");
-        String filmName = intent.getStringExtra("FilmName");
-        String filmVoto = intent.getStringExtra("FilmVoto");
-        String filmOverview = intent.getStringExtra("FilmOverview");
+         activity_type=intent.getStringExtra("tipologia");
+        filmName = intent.getStringExtra("FilmName");
+        filmVoto = intent.getStringExtra("FilmVoto");
+         filmOverview = intent.getStringExtra("FilmOverview");
         filmId = intent.getStringExtra("FilmId");
-        String filmFotoPath=intent.getStringExtra("FilmPicPath");
+         filmFotoPath=intent.getStringExtra("FilmPicPath");
 
         int starNumber = getNumberOfStarsFromDB(filmId);
         riempiStelle(starNumber, false);
@@ -141,14 +147,7 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
             @Override
             public void onClick(View v) {
                 onClickRemoveFromPreferiti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
-                setContentView(R.layout.loadinglayout);
-                Intent intent = new Intent(mContext, MostraDettagliFilmVistoCliccatoActivity.class);
-                intent.putExtra("FilmName", filmName);
-                intent.putExtra("FilmVoto", filmVoto);
-                intent.putExtra("FilmOverview", filmOverview);
-                intent.putExtra("FilmId", filmId);
-                intent.putExtra("FilmPicPath", filmFotoPath);
-                startActivity(intent);
+
             }
         });
 
@@ -165,18 +164,32 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
             @Override
             public void onClick(View v) {
                 onClickRemoveFromVisti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
-                setContentView(R.layout.loadinglayout);
-                Intent intent = new Intent(mContext, MostraDettagliFilmCliccatoActivity.class);
-                intent.putExtra("FilmName", filmName);
-                intent.putExtra("FilmVoto", filmVoto);
-                intent.putExtra("FilmOverview", filmOverview);
-                intent.putExtra("FilmId", filmId);
-                intent.putExtra("FilmPicPath", filmFotoPath);
-                startActivity(intent);
 
             }
         });
 
+    }
+
+    public static void removePreferitoFromVistiSuccess(Context mContext){
+        Intent intent = new Intent(mContext, MostraDettagliFilmCliccatoActivity.class);
+        intent.putExtra("FilmName", filmName);
+        intent.putExtra("FilmVoto", filmVoto);
+        intent.putExtra("FilmOverview", filmOverview);
+        intent.putExtra("FilmId", filmId);
+        intent.putExtra("FilmPicPath", filmFotoPath);
+        mContext.startActivity(intent);
+
+    }
+
+    public static void removeFromPreferitiSuccess(Context mContext){
+       // setContentView(R.layout.loadinglayout);
+        Intent intent = new Intent(mContext, MostraDettagliFilmVistoCliccatoActivity.class);
+        intent.putExtra("FilmName", filmName);
+        intent.putExtra("FilmVoto", filmVoto);
+        intent.putExtra("FilmOverview", filmOverview);
+        intent.putExtra("FilmId", filmId);
+        intent.putExtra("FilmPicPath", filmFotoPath);
+        mContext.startActivity(intent);
     }
 
 

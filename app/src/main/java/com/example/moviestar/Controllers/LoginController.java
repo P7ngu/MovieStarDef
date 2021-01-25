@@ -213,7 +213,6 @@ public class LoginController {
     }
 
     private static boolean checkPassword(String password) {
-        // TODO Auto-generated method stub
         if(password.length() > 0) {
             return true;
         } else{
@@ -222,7 +221,6 @@ public class LoginController {
     }
 
     private static boolean checkId(String idUtente) {
-        // TODO Auto-generated method stub
         if(idUtente.length() > 0) {
             return true;
         } else{

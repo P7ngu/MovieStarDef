@@ -118,6 +118,14 @@ public class RimuoviAmicoController {
                 });
 
     }
+
+    public static void gestionePositiveButton(Context myContext, String path, String idObject) {
+
+    }
+
+    public static void gestioneNegativeButton(Context myContext) {
+
+    }
 }
 
 

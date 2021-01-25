@@ -22,7 +22,6 @@ import java.util.Map;
 
 public class ModificaRecensioneController {
     static int number_star=0;
-    //todo
 
     public static void eliminaRecensione(Commento commentoDaRimuovere, Context mContext){
         CurrentUser currentUser = CurrentUser.getInstance();
