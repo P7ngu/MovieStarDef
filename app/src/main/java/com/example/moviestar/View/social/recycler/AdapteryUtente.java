@@ -110,7 +110,7 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
                     else {
                         RimuoviAmicoController.eliminaAmicoDaListaAmici
                                 (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
-                        removeAt(getAdapterPosition());
+                       // removeAt(getAdapterPosition());
                     }
                 }
             });
@@ -120,7 +120,7 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
 
                     RimuoviAmicoController.eliminaAmicoDaListaAmici
                             (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
-                    removeAt(getAdapterPosition());
+                   // removeAt(getAdapterPosition());
                 }
             });
 //            vote = itemView.findViewById(R.id.vote_text);
