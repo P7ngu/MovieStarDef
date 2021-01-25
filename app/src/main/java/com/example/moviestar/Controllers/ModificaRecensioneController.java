@@ -24,6 +24,12 @@ public class ModificaRecensioneController {
     static int number_star=0;
 
     public static void eliminaRecensione(Commento commentoDaRimuovere, Context mContext){
+        PopupController.mostraPopupDiConfermaOAnnulla("Elimina commento", "Vuoi davvero eliminare questo commento?",
+                mContext, "commento", "Commenti", commentoDaRimuovere);
+
+    }
+
+    public static void eliminaRecensione_DB(Commento commentoDaRimuovere, Context mContext){
         CurrentUser currentUser = CurrentUser.getInstance();
         String userId=currentUser.getUserId();
         FirebaseFirestore db=FirebaseFirestore.getInstance();
@@ -46,7 +52,11 @@ public class ModificaRecensioneController {
                         PopupController.mostraPopup("Errore", " non rimosso.", mContext);
                     }
                 });
+
     }
+
+
+
     public static void riempiStelleDB(int numeroStelleDaRiempire, String filmId) {
         CurrentUser currentUser = CurrentUser.getInstance();
         String userId=currentUser.getUserId();
@@ -90,5 +100,13 @@ public class ModificaRecensioneController {
                 });
 
         return number_star;
+    }
+
+    public static void gestionePositiveButton(Commento idObject, Context myContext) {
+        eliminaRecensione_DB(idObject, myContext);
+    }
+
+    public static void gestioneNegativeButton(Context myContext) {
+
     }
 }

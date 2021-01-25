@@ -44,9 +44,7 @@ public class AdapteryCommenti extends RecyclerView.Adapter<AdapteryCommenti.MyVi
     public void onBindViewHolder(@NonNull AdapteryCommenti.MyViewHolder holder, int position) {
         if(!mData.get(position).getIdAutore().contentEquals(CurrentUser.getInstance().getUserId())) {
             holder.deleteCommentoButton.setVisibility(View.INVISIBLE);
-            PopupController.mostraPopup("Debug", mData.get(position).getIdAutore() + CurrentUser.getInstance().getUserId() , mContext);
         }
-        PopupController.mostraPopup("Debug", mData.get(position).getIdAutore() + CurrentUser.getInstance().getUserId() , mContext);
 
         holder.nomeutentemostrato.setText(mData.get(position).getNomeAutore());
         holder.testo.setText(mData.get(position).getTesto());
