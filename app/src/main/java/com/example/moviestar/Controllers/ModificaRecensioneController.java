@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviestar.Model.Commento;
 import com.example.moviestar.View.home.MostraDettagliFilmVistoCliccatoActivity;
@@ -22,12 +23,15 @@ import java.util.Map;
 
 public class ModificaRecensioneController {
     static int number_star=0;
+    static boolean risultato;
 
-    public static void eliminaRecensione(Commento commentoDaRimuovere, Context mContext){
+    public static boolean eliminaRecensione(Commento commentoDaRimuovere, Context mContext){
         PopupController.mostraPopupDiConfermaOAnnulla("Elimina commento", "Vuoi davvero eliminare questo commento?",
                 mContext, "commento", "Commenti", commentoDaRimuovere);
+        return risultato;
 
     }
+
 
     public static void eliminaRecensione_DB(Commento commentoDaRimuovere, Context mContext){
         CurrentUser currentUser = CurrentUser.getInstance();
@@ -43,6 +47,45 @@ public class ModificaRecensioneController {
                     public void onSuccess(Void aVoid) {
                         PopupController.mostraPopup("Commento rimosso", "commento rimosso con successo", mContext);
                         //REFRESH SCHERMATA
+                        risultato=true;
+                        RecensioniFilmController.onClickLeggiCommenti(filmId, mContext);
+                        LoginController.loadCurrentUserDetails();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        PopupController.mostraPopup("Errore", " non rimosso.", mContext);
+                    }
+                });
+
+    }
+
+
+    public static boolean eliminaRecensione(Commento commentoDaRimuovere, Context mContext, RecyclerView recyclerView){
+        PopupController.mostraPopupDiConfermaOAnnulla("Elimina commento", "Vuoi davvero eliminare questo commento?",
+                mContext, "commento", "Commenti", commentoDaRimuovere);
+        return risultato;
+
+    }
+
+
+    public static void eliminaRecensione_DB(Commento commentoDaRimuovere, Context mContext, RecyclerView recyclerView){
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId=currentUser.getUserId();
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        CollectionReference listaAmici = db.collection("RichiesteAmico");
+        String filmId=commentoDaRimuovere.getFilmId();
+        String seconds=commentoDaRimuovere.getTimeStamp();
+        db.collection("Commenti").document(userId+filmId+seconds)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        PopupController.mostraPopup("Commento rimosso", "commento rimosso con successo", mContext);
+                        //REFRESH SCHERMATA
+                        risultato=true;
+                        RecensioniFilmController.onClickLeggiCommenti(filmId, mContext, recyclerView);
                         LoginController.loadCurrentUserDetails();
                     }
                 })

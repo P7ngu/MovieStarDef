@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.ChangePasswordController;
 import com.example.moviestar.R;
 
@@ -20,15 +22,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
         setContentView(R.layout.changepassword);
         getIntent();
 
-        final EditText editTextUsername=findViewById(R.id.cp_username_text);
-        final EditText editTextOldPass=findViewById(R.id.cp_oldpass);
         final EditText editTextNewPass=findViewById(R.id.cp_newpass);
+        ImageView img = findViewById(R.id.imageView4);
+        Glide.with(mContext).load("https://i.ibb.co/zVhNTdy/logo.png").into(img);
 
         Button changePasswordButton=findViewById(R.id.cp_change_password_button);
         changePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChangePasswordController.changePassword(editTextNewPass, editTextUsername, editTextOldPass, mContext);
+                ChangePasswordController.changePassword(editTextNewPass,  mContext);
 
             }
         });

@@ -17,7 +17,7 @@ import static android.content.ContentValues.TAG;
 public class ChangePasswordController {
    static Context mContext;
 
-    public static void changePassword(EditText editTextNewPass, EditText editTextUsername, EditText editTextOldPass, Context context){
+    public static void changePassword(EditText editTextNewPass, Context context){
         mContext=context;
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -28,7 +28,7 @@ public class ChangePasswordController {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "User password updated.");
+                            PopupController.mostraPopup("Password aggiornata", "Password aggiornata con successo!", mContext);
                         }
                     }
                 });

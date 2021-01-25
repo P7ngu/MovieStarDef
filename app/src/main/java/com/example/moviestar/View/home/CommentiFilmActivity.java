@@ -27,6 +27,13 @@ public class CommentiFilmActivity extends AppCompatActivity {
         filmCliccato=filmCliccato1;
     }
 
+    public void refreshActivity(){
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +41,7 @@ public class CommentiFilmActivity extends AppCompatActivity {
         commentiRecycler=findViewById(R.id.commentifilm_recyclerview);
         Intent intent = getIntent();
         String filmID = intent.getStringExtra("filmCliccatoId");
+
         commentoList=new ArrayList<>();
 
         RecensioniFilmController.getListaCommentiFilm(filmID, mContext, commentiRecycler);

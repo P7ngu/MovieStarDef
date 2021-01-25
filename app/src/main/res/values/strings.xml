@@ -7,6 +7,6 @@
     <string name="error_missing_username">Errore, inserire un nome utente!</string>
     <string name="error_missing_password">Errore, inserire un password!</string>
     <string name="add_to_watchlist">Add to watchlist</string>
-    <string name="richiesta_text">Vuoi aggiungere NomeUtente ai tuoi amici?</string>
+    <string name="richiesta_text">Vuoi aggiungere questo utente ai tuoi amici?</string>
     <string name="cerca_utente_text">Cerca un utente...</string>
 </resources>

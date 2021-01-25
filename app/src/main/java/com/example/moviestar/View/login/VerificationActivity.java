@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.VerificaController;
 import com.example.moviestar.R;
 import com.example.moviestar.View.login.ForgotPasswordActivity;
@@ -38,13 +39,9 @@ public class VerificationActivity extends AppCompatActivity {
         final EditText idText, codiceText;
 
         accediButton=findViewById(R.id.button_accedi_verification);
-        verificaButton=findViewById(R.id.button_verifica_verification);
         newCodeButton=findViewById(R.id.button_sendnewcode_verification);
-
         forgotPasswordTV=findViewById(R.id.textView_forgotpassword_verification);
 
-        idText=findViewById(R.id.editText_id_verification);
-        codiceText=findViewById(R.id.editText_codice_verification);
 
         accediButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,19 +51,11 @@ public class VerificationActivity extends AppCompatActivity {
             }
         });
 
-        verificaButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                VerificaController.sendEmailConLinkDiVerifica(idText.getText().toString().trim(), mContext);
-
-            }
-        });
 
         newCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-       // VerificaController.
-                //TODO resend codice di verifica
+                VerificaController.sendEmailConLinkDiVerifica(CurrentUser.getInstance().getUserId(), mContext);
 
             }
         });

@@ -65,9 +65,9 @@ public class RimuoviFilmDaListaController {
             MostraDettagliFilmDaVedereCliccatoActivity.removeFromDaVedereSuccess(mContext);
         else if (pathListaDaCuiRimuovere.equals("FilmVisti")) {
             MostraDettagliFilmVistoCliccatoActivity.removeFromVistiSuccess(mContext);
-            MostraDettagliFilmVistoCliccatoPreferitoActivity.removePreferitoFromVistiSuccess(mContext);
+            //MostraDettagliFilmVistoCliccatoPreferitoActivity.removePreferitoFromVistiSuccess(mContext);
         }
-        else if(pathListaDaCuiRimuovere.equals("FilmPreferiti"))
+       if(pathListaDaCuiRimuovere.equals("FilmPreferiti"))
            MostraDettagliFilmVistoCliccatoPreferitoActivity.removeFromPreferitiSuccess(mContext);
     }
 

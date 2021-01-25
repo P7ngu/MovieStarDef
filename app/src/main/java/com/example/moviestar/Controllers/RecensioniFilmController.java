@@ -58,6 +58,22 @@ public class RecensioniFilmController {
 
     }
 
+    public static void onClickLeggiCommenti(String filmId, Context context, RecyclerView recyclerView){
+        Intent intent=new Intent(context, CommentiFilmActivity.class);
+        intent.putExtra("filmCliccatoId", filmId);
+        context.startActivity(intent);
+
+        getListaCommentiFilm(filmId, context, recyclerView);
+
+    }
+
+    public static void openListaCommentiDopoInserimentoCommento(String filmId, Context context){
+        Intent intent = new Intent(context, CommentiFilmActivity.class);
+        intent.putExtra("filmCliccatoId", filmId);
+        context.startActivity(intent);
+
+
+    }
 
     public static void onClickAggiungiCommento(String idFilm, String filmName, String overview, Context mContext) {
         Intent intent = new Intent(mContext, AggiungiCommentoActivity.class);
@@ -71,23 +87,28 @@ public class RecensioniFilmController {
 
 
     public static void inserisciCommentoFilm(String idFilmCommentato, String commentoDaInserire, Context mContext){
-        CurrentUser currentUser = CurrentUser.getInstance();
-        String userId=currentUser.getUserId();
-        String username= currentUser.getUsername();
-        FirebaseFirestore db=FirebaseFirestore.getInstance();
-        CollectionReference richiesteamico = db.collection("Commenti");
-        int seconds= Math.toIntExact(Timestamp.now().getSeconds());
+        if(commentoDaInserire.length()>0) {
+            CurrentUser currentUser = CurrentUser.getInstance();
+            String userId = currentUser.getUserId();
+            String username = currentUser.getUsername();
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            CollectionReference richiesteamico = db.collection("Commenti");
+            int seconds = Math.toIntExact(Timestamp.now().getSeconds());
 
-        Map<String, Object> data4 = new HashMap<>();
-        data4.put("userID", userId);
-        data4.put("commento", commentoDaInserire);
-        data4.put("filmID", idFilmCommentato);
-        data4.put("username", username);
-        data4.put("unique_number", seconds);
-        richiesteamico.document(userId+idFilmCommentato+seconds).set(data4);
+            Map<String, Object> data4 = new HashMap<>();
+            data4.put("userID", userId);
+            data4.put("commento", commentoDaInserire);
+            data4.put("filmID", idFilmCommentato);
+            data4.put("username", username);
+            data4.put("unique_number", seconds);
+            richiesteamico.document(userId + idFilmCommentato + seconds).set(data4);
 
-        LoginController.loadCurrentUserDetails();
-        PopupController.mostraPopup("Commento", "aggiunto alla lista", mContext);
+            LoginController.loadCurrentUserDetails();
+            PopupController.mostraPopup("Commento inviato", "Commento inviato con successo!", mContext);
+            openListaCommentiDopoInserimentoCommento(idFilmCommentato, mContext);
+
+        }
+        else PopupController.mostraPopup("Errore", "Commento vuoto: inserire il testo del commento", mContext);
     }
 
     public static void getListaCommentiFilm(String idFilm, Context mContext, RecyclerView recyclerView){
@@ -124,7 +145,7 @@ public class RecensioniFilmController {
 
     }
     private static void PutDataIntoRecyclerView(List<Commento> commentoList, RecyclerView commentiRecycler, Context mContext){
-        AdapteryCommenti adaptery=new AdapteryCommenti(mContext, commentoList);
+        AdapteryCommenti adaptery=new AdapteryCommenti(mContext, commentoList, commentiRecycler);
         commentiRecycler.setLayoutManager(new LinearLayoutManager(mContext));
         commentiRecycler.setAdapter(adaptery);
 

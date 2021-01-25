@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.InviaRichiesteAmicoController;
 import com.example.moviestar.Controllers.RimuoviAmicoController;
@@ -50,17 +51,25 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull AdapteryUtente.MyViewHolder holder, int position) {
         ArrayList<Utente> tempList = new ArrayList<>();
-        UtenteDAO.getUtentiByID(mData.get(position).getIdUtente());
-        tempList = CurrentUser.getInstance().getListaUtenti();
+        try {
+            UtenteDAO.getUtentiByID(mData.get(position).getIdUtente());
+        } finally {
+            tempList = CurrentUser.getInstance().getListaUtenti();
+        }
 
-        if(tempList!=null && tempList.size()>0) holder.nomeutentemostrato.setText(tempList.get(0).getNomeUtenteMostrato());
+
+        if(tempList!=null && tempList.size()>0) {
+            holder.nomeutentemostrato.setText(tempList.get(0).getNomeUtenteMostrato()+" #"+tempList.get(0).getIdUtente());
+            Glide.with(mContext).load("https://i.ibb.co/7tbJ1Sv/user.png").into(holder.img);
+        }
         //holder.nomeutentemostrato.setText(mData.get(position).getIdUtente());
 
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+       if(mData!=null) return mData.size();
+       else return 0;
     }
 
 
@@ -128,6 +137,8 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
 //            img = itemView.findViewById(R.id.imageView_film);
 
             nomeutentemostrato = itemView.findViewById(R.id.username_text);
+            img = itemView.findViewById(R.id.imageView_film);
+
         }
     }
 }

@@ -38,9 +38,10 @@ Context mContext;
             @Override
             public void onClick(View v) {
                 RecensioniFilmController.inserisciCommentoFilm(idfilm, commentoText.getText().toString(), mContext);
-                PopupController.mostraPopup("Commento inviato", "Commento inviato con successo!", mContext);
             }
         });
+
+
 
 
     }

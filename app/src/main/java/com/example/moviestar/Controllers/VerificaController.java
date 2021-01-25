@@ -29,7 +29,7 @@ public class VerificaController {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Log.d("FirebaseDebug", "Email sent.");
+                            PopupController.mostraPopup("Link inviato", "Nuovo link inviato con successo, controlla le tue email!", mContext);
                         }
                     }
                 });

@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.moviestar.Model.Utente;
+import com.example.moviestar.View.MainActivity;
 import com.example.moviestar.View.social.SocialFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -41,12 +42,14 @@ public class RicercaUtentiController {
 
                                 if (utenteTemp != null) userList.add(utenteTemp);
                             }
+
                             SocialFragment.PutDataIntoRecyclerView(userList, "ricerca");
                         } else Log.d("testFirebase", "Error getting documents: ", task.getException());
-                        //currentUser.setListaUtenti(userList);
+                        currentUser.setListaUtenti(userList);
 
                     }
                 });
+        SocialFragment.PutDataIntoRecyclerView(userList, "ricerca");
     }
 
     public static void getListaUtentiFromDB(){

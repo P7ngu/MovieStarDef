@@ -38,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
     static ProgressBar progBar;
     Context myContext;
 
+    public void refreshActivity(){
+        finish();
+        startActivity(getIntent());
+    }
     public static void setUserLogged(boolean b) {
         isUserLogged=b;
     }

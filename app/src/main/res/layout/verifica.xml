@@ -7,8 +7,8 @@
     android:background="#1a1a1a">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="294dp"
+        android:layout_height="517dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,42 +20,23 @@
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="123dp"
             android:layout_marginBottom="50dp"
             app:srcCompat="@drawable/ic_home_black_24dp" />
 
-        <EditText
-            android:id="@+id/editText_id_verification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:ems="10"
-            android:hint="Nome utente"
-            android:inputType="textPersonName"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#FFFFFF" />
-
-        <EditText
-            android:id="@+id/editText_codice_verification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Codice ricevuto"
-            android:inputType="number"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#FFFFFF" />
-
-        <Button
-            android:id="@+id/button_verifica_verification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp
-"
-            android:text="Verifica codice" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="294dp"
+            android:layout_height="94dp"
+            android:gravity="center"
+            android:text="La verifica avviene tramite email, usa l'apposito pulsante se il link ricevuto è scaduto."
+            android:textColor="#FF8F00"
+            android:textSize="20sp" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="71dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <Button
@@ -72,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="Accedi" />
         </LinearLayout>
 

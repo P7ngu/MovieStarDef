@@ -14,19 +14,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.ModificaRecensioneController;
 import com.example.moviestar.Controllers.PopupController;
+import com.example.moviestar.Controllers.RecensioniFilmController;
 import com.example.moviestar.Model.Commento;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
+import com.example.moviestar.View.home.CommentiFilmActivity;
 
 import java.util.List;
 
 public class AdapteryCommenti extends RecyclerView.Adapter<AdapteryCommenti.MyViewHolder>{
     private static Context mContext;
     private static List<Commento> mData;
+    private static RecyclerView recycler;
 
-    public AdapteryCommenti(Context mContext, List<Commento> mData) {
+    public AdapteryCommenti(Context mContext, List<Commento> mData, RecyclerView recyclerView) {
         this.mContext = mContext;
         this.mData = mData;
+        this.recycler=recyclerView;
     }
 
     @NonNull
@@ -38,6 +42,12 @@ public class AdapteryCommenti extends RecyclerView.Adapter<AdapteryCommenti.MyVi
         v = View.inflate(mContext, R.layout.commento_item, null);
 
         return new AdapteryCommenti.MyViewHolder(v);
+    }
+
+    public void removeAt(int position) {
+        mData.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mData.size());
     }
 
     @Override
@@ -83,12 +93,10 @@ public class AdapteryCommenti extends RecyclerView.Adapter<AdapteryCommenti.MyVi
             deleteCommentoButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ModificaRecensioneController.eliminaRecensione(mData.get(getAdapterPosition()), mContext);
+                   ModificaRecensioneController.eliminaRecensione(mData.get(getAdapterPosition()), mContext, recycler);
+
                 }
             });
-//            vote = itemView.findViewById(R.id.vote_text);
-//            name = itemView.findViewById(R.id.name_text);
-//            img = itemView.findViewById(R.id.imageView_film);
 
         }
     }
