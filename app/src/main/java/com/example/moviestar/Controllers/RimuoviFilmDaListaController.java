@@ -59,7 +59,7 @@ public class RimuoviFilmDaListaController {
 
     }
 
-   public static void gestionePositiveButton(Context mContext, String pathListaDaCuiRimuovere, String filmId){
+   public static void onClickPositiveButton(Context mContext, String pathListaDaCuiRimuovere, String filmId){
         rimozioneFilmDaLista(mContext, pathListaDaCuiRimuovere, filmId);
         if(pathListaDaCuiRimuovere.equals("FilmDaVedere"))
             MostraDettagliFilmDaVedereCliccatoActivity.removeFromDaVedereSuccess(mContext);
@@ -71,7 +71,7 @@ public class RimuoviFilmDaListaController {
            MostraDettagliFilmVistoCliccatoPreferitoActivity.removeFromPreferitiSuccess(mContext);
     }
 
-    public static void gestioneNegativeButton(Context mContext){
+    public static void onClickNegativeButton(Context mContext){
 
 
     }

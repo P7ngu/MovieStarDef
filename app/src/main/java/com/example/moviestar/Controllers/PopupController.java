@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import com.example.moviestar.Model.Commento;
-import com.example.moviestar.R;
 
 public class PopupController {
 
@@ -31,11 +30,11 @@ public class PopupController {
         builder.setPositiveButton("Continua", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if(classe.equals("rimuovifilm"))
-                RimuoviFilmDaListaController.gestionePositiveButton(myContext, path, idObject);
+                RimuoviFilmDaListaController.onClickPositiveButton(myContext, path, idObject);
                 else if(classe.equals("rimuoviamico"))
-                    RimuoviAmicoController.gestionePositiveButton(myContext, path, idObject);
+                    RimuoviAmicoController.onClickPositiveButton(myContext, path, idObject);
                 else if(classe.equals("spoiler"))
-                    MostraDettagliFilmController.gestionePositiveButton(myContext, path, idObject);
+                    RecensioniFilmController.onClickPositiveButton(idObject, myContext);
 
 
             }
@@ -43,11 +42,11 @@ public class PopupController {
         builder.setNegativeButton("Annulla azione", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if(classe.equals("rimuovifilm"))
-                RimuoviFilmDaListaController.gestioneNegativeButton(myContext);
+                RimuoviFilmDaListaController.onClickNegativeButton(myContext);
                 else if(classe.equals("rimuoviamico"))
-                    RimuoviAmicoController.gestioneNegativeButton(myContext);
+                    RimuoviAmicoController.onClickNegativeButton(myContext);
                 else if(classe.equals("spoiler"))
-                    MostraDettagliFilmController.gestioneNegativeButton(myContext);
+                    RecensioniFilmController.onClickNegativeButton(myContext);
                 // User cancelled the dialog
             }
         });
@@ -65,14 +64,14 @@ public class PopupController {
         builder.setPositiveButton("Continua", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if(classe.equals("commento"))
-                    ModificaRecensioneController.gestionePositiveButton((Commento) idObject, myContext);
+                    ModificaRecensioneController.onClickPositiveButton((Commento) idObject, myContext);
 
             }
         });
         builder.setNegativeButton("Annulla azione", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if(classe.equals("commento"))
-                    ModificaRecensioneController.gestioneNegativeButton(myContext);
+                    ModificaRecensioneController.onClickNegativeButton(myContext);
 
                 // User cancelled the dialog
             }

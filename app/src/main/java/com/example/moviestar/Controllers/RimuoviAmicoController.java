@@ -126,12 +126,12 @@ public class RimuoviAmicoController {
 
     }
 
-    public static void gestionePositiveButton(Context myContext, String path, String idObject) {
+    public static void onClickPositiveButton(Context myContext, String path, String idObject) {
         eliminaAmicoDaListaAmici_DB(idObject, myContext);
 
     }
 
-    public static void gestioneNegativeButton(Context myContext) {
+    public static void onClickNegativeButton(Context myContext) {
 
     }
 }

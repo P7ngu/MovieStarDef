@@ -60,7 +60,7 @@ public class MostraDettagliFilmCliccatoActivity extends AppCompatActivity {
         buttonLeggiCommenti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RecensioniFilmController.onClickLeggiCommenti(filmId, mContext);
+                RecensioniFilmController.onClickLeggiCommenti(filmId, mContext, true);
             }
         });
 

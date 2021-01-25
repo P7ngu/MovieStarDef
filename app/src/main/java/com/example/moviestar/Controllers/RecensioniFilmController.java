@@ -38,6 +38,19 @@ import java.util.Map;
 
 public class RecensioniFilmController {
 
+    public static void onClickLeggiCommenti(String filmId, Context context, boolean isSpoiler){
+        PopupController.mostraPopupDiConfermaOAnnulla("SPOILER ALERT", "I commenti potrebbero contenere spoiler, sei sicuro di voler procedere?"
+        , context, "spoiler", "Commenti", filmId);
+    }
+
+    public static void onClickPositiveButton(String objectId, Context context){
+        onClickLeggiCommenti(objectId, context);
+    }
+
+    public static void onClickNegativeButton(Context mContext) {
+
+    }
+
     public static void onClickLeggiCommenti(String filmId, Context context){
         Intent intent=new Intent(context, CommentiFilmActivity.class);
         intent.putExtra("filmCliccatoId", filmId);

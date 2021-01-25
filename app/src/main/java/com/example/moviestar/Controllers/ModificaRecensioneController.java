@@ -102,11 +102,11 @@ public class ModificaRecensioneController {
         return number_star;
     }
 
-    public static void gestionePositiveButton(Commento idObject, Context myContext) {
+    public static void onClickPositiveButton(Commento idObject, Context myContext) {
         eliminaRecensione_DB(idObject, myContext);
     }
 
-    public static void gestioneNegativeButton(Context myContext) {
+    public static void onClickNegativeButton(Context myContext) {
 
     }
 }
