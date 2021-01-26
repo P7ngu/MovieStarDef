@@ -168,12 +168,12 @@ public class LoginController {
                                 //data = document.getData();
                                 String idUtente = document.getData().get("userID_ricevente").toString();
                                 Utente utenteTemp = new Utente(idUtente);
-
                                 if (utenteTemp != null) amiciList.add(utenteTemp);
                             }
-                           // ListaAmiciActivity.PutDataIntoRecyclerView(amiciList);
+                            //ListaAmiciActivity.PutDataIntoRecyclerView(amiciList);
                         } else Log.d("testFirebase", "Error getting documents: ", task.getException());
                        currentUser.setListaAmici(amiciList);
+                       try{ListaAmiciActivity.PutDataIntoRecyclerView(amiciList);} catch(Exception e){}
                     }
                 });
 

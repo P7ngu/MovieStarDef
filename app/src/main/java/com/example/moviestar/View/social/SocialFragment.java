@@ -85,7 +85,9 @@ public class SocialFragment extends Fragment {
 //        String urlJSON="https://api.themoviedb.org/3/discover/movie?api_key=89d40cd46523243c6d553bb54b2ca47e&language=it-IT&sort_by=popularity.desc";
         UtenteList=new ArrayList<>();
         try {
+            //PutDataIntoRecyclerView(new ArrayList<Utente>(), "richieste");
             InviaRichiesteAmicoController.getRichiesteAmico();
+            PutDataIntoRecyclerView(CurrentUser.getInstance().getListaRichiesteAmico(), "richieste");
         } catch(Exception e){
             e.printStackTrace();
         }

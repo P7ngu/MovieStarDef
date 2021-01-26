@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Model.Utente;
+import com.example.moviestar.View.social.SocialFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -56,6 +57,10 @@ public class UtenteDAO {
                         } else Log.d("testFirebase", "Error getting documents: ", task.getException());
                     }
                 });
+        try {
+         //   currentUser.setListaUtenti(usersList);
+           // SocialFragment.PutDataIntoRecyclerView(usersList, "richieste");
+        }catch (Exception e){}
     }
     public static void getImageFromDatabase(String currentID, Context mContext){
         FirebaseFirestore db=FirebaseFirestore.getInstance();

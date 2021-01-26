@@ -26,12 +26,13 @@ public class ListaAmiciActivity extends AppCompatActivity {
     private static RecyclerView recyclerView;
     private View root;
     private List<Utente> UtenteList;
-    Context mContext = this;
+    static Context mContext;
     private ImageButton deleteButton, addButton, searchButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext=this;
         setContentView(R.layout.listaamici);
         LoginController.loadListaAmiciFromDB();
 
@@ -45,14 +46,18 @@ public class ListaAmiciActivity extends AppCompatActivity {
                 //RICERCA UTENTI
             }
         });
-        UtenteList=new ArrayList<>();
-        LoginController.loadListaAmiciFromDB();
-        PutDataIntoRecyclerView(CurrentUser.getInstance().getListaAmici());
+        try {
+            UtenteList = new ArrayList<>();
+            LoginController.loadListaAmiciFromDB();
+            PutDataIntoRecyclerView(CurrentUser.getInstance().getListaAmici());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 
 
-    public void PutDataIntoRecyclerView(List<Utente> utenteList){
+    public static void PutDataIntoRecyclerView(List<Utente> utenteList){
         AdapteryUtente adaptery =new AdapteryUtente(mContext, utenteList, "listaamici");
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(adaptery);

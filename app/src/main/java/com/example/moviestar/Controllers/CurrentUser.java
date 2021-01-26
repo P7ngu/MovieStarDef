@@ -13,6 +13,15 @@ public class CurrentUser extends Application {
     private static String userId;
     private static ArrayList<Utente> listaAmici;
     private static ArrayList<Utente> listaUtenti;
+    private static ArrayList<Utente> listaRichiesteAmico;
+
+    public static ArrayList<Utente> getListaRichiesteAmico() {
+        return listaRichiesteAmico;
+    }
+
+    public static void setListaRichiesteAmico(ArrayList<Utente> listaRichiesteAmico) {
+        CurrentUser.listaRichiesteAmico = listaRichiesteAmico;
+    }
 
     public static boolean daVedereContainsFilm(Film filmDaCercare){
         boolean result=false;
