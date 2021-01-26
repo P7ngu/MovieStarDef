@@ -1,0 +1,35 @@
+Index: app/src/main/java/com/example/moviestar/View/home/RecyclerCommenti/AdapteryCommenti.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.moviestar.View.home.RecyclerCommenti;\r\nimport android.content.Context;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.ImageView;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.example.moviestar.Controllers.CurrentUser;\r\nimport com.example.moviestar.Controllers.ModificaRecensioneController;\r\nimport com.example.moviestar.Model.Commento;\r\nimport com.example.moviestar.Model.Utente;\r\nimport com.example.moviestar.R;\r\n\r\nimport java.util.List;\r\n\r\npublic class AdapteryCommenti extends RecyclerView.Adapter<AdapteryCommenti.MyViewHolder>{\r\n    private static Context mContext;\r\n    private static List<Commento> mData;\r\n\r\n    public AdapteryCommenti(Context mContext, List<Commento> mData) {\r\n        this.mContext = mContext;\r\n        this.mData = mData;\r\n    }\r\n\r\n    @NonNull\r\n    @Override\r\n    public AdapteryCommenti.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {\r\n        View v;\r\n        LayoutInflater inflater = LayoutInflater.from(mContext);\r\n        //v=inflater.inflate(R.layout.movie_item, parent, false);\r\n        v = View.inflate(mContext, R.layout.commento_item, null);\r\n\r\n        return new AdapteryCommenti.MyViewHolder(v);\r\n    }\r\n\r\n    @Override\r\n    public void onBindViewHolder(@NonNull AdapteryCommenti.MyViewHolder holder, int position) {\r\n        if(!mData.get(position).getIdAutore().contentEquals(CurrentUser.getInstance().getUserId()))\r\n        holder.deleteCommentoButton.setVisibility(View.GONE);\r\n\r\n        holder.nomeutentemostrato.setText(mData.get(position).getNomeAutore());\r\n        holder.testo.setText(mData.get(position).getTesto());\r\n\r\n\r\n    }\r\n\r\n    @Override\r\n    public int getItemCount() {\r\n        return mData.size();\r\n    }\r\n\r\n\r\n\r\n    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{\r\n\r\n        TextView vote, testo, nomeutentemostrato;\r\n        Button deleteCommentoButton;\r\n        ImageView img;\r\n\r\n\r\n        @Override\r\n        public void onClick(View v) {\r\n            int pos = getAdapterPosition();\r\n//            MostraDettagliFilmController.openFilm(mData.get(pos), mContext);\r\n        }\r\n\r\n        public MyViewHolder(@NonNull View itemView) {\r\n            super(itemView);\r\n            itemView.setOnClickListener(this);\r\n            testo=itemView.findViewById(R.id.testo_text);\r\n            nomeutentemostrato=itemView.findViewById(R.id.nome_text);\r\n            deleteCommentoButton=itemView.findViewById(R.id.deletecomment_button);\r\n\r\n          \r\n            deleteCommentoButton.setOnClickListener(new View.OnClickListener() {\r\n                @Override\r\n                public void onClick(View v) {\r\n\r\n                    ModificaRecensioneController.eliminaRecensione(mData.get(getAdapterPosition()), mContext);\r\n                }\r\n            });\r\n//            vote = itemView.findViewById(R.id.vote_text);\r\n//            name = itemView.findViewById(R.id.name_text);\r\n//            img = itemView.findViewById(R.id.imageView_film);\r\n\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/moviestar/View/home/RecyclerCommenti/AdapteryCommenti.java	(revision 83384ef81587008c87a82c4217bb8818cbf981cf)
++++ app/src/main/java/com/example/moviestar/View/home/RecyclerCommenti/AdapteryCommenti.java	(date 1611490657017)
+@@ -42,7 +42,7 @@
+     @Override
+     public void onBindViewHolder(@NonNull AdapteryCommenti.MyViewHolder holder, int position) {
+         if(!mData.get(position).getIdAutore().contentEquals(CurrentUser.getInstance().getUserId()))
+-        holder.deleteCommentoButton.setVisibility(View.GONE);
++        holder.deleteCommentoButton.setVisibility(View.INVISIBLE);
+ 
+         holder.nomeutentemostrato.setText(mData.get(position).getNomeAutore());
+         holder.testo.setText(mData.get(position).getTesto());
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>*.iml\r\n.gradle\r\n/local.properties\r\n/.idea/caches\r\n/.idea/libraries\r\n/.idea/modules.xml\r\n/.idea/workspace.xml\r\n/.idea/navEditor.xml\r\n/.idea/assetWizardSettings.xml\r\n.DS_Store\r\n/build\r\n/captures\r\n.externalNativeBuild\r\n.cxx\r\n\r\n#amplify\r\namplify/\\#current-cloud-backend\r\namplify/.config/local-*\r\namplify/logs\r\namplify/mock-data\r\namplify/backend/amplify-meta.json\r\namplify/backend/awscloudformation\r\namplify/backend/.temp\r\nbuild/\r\ndist/\r\nnode_modules/\r\naws-exports.js\r\nawsconfiguration.json\r\namplifyconfiguration.json\r\namplify-build-config.json\r\namplify-gradle-config.json\r\namplifytools.xcconfig\r\n.secret-*
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .gitignore	(revision 83384ef81587008c87a82c4217bb8818cbf981cf)
++++ .gitignore	(date 1610555210885)
+@@ -30,4 +30,5 @@
+ amplify-build-config.json
+ amplify-gradle-config.json
+ amplifytools.xcconfig
+-.secret-*
+\ No newline at end of file
++.secret-*
++Movie Star.zip
