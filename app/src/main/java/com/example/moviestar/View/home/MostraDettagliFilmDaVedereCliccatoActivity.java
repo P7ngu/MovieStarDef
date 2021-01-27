@@ -11,12 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.moviestar.Controllers.MostraDettagliFilmController;
 import com.example.moviestar.R;
 import com.example.moviestar.View.MainActivity;
 
-import static com.example.moviestar.Controllers.AggiungiAListaController.onClickAddToPreferiti;
-import static com.example.moviestar.Controllers.AggiungiAListaController.onClickAddToVisti;
+import static com.example.moviestar.Controllers.AggiungiAListaFilmController.onClickAddToPreferiti;
+import static com.example.moviestar.Controllers.AggiungiAListaFilmController.onClickAddToVisti;
 import static com.example.moviestar.Controllers.RecensioniFilmController.onClickLeggiCommenti;
 import static com.example.moviestar.Controllers.RimuoviFilmDaListaController.onClickRemoveToDaVedere;
 

@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static com.example.moviestar.Controllers.RimuoviFilmDaListaController.onClickRemoveToDaVedere;
 
-public class AggiungiAListaController {
+public class AggiungiAListaFilmController {
 
     public static void onClickAddToPreferiti(String filmId, String filmName, String filmOverview, String filmFotoPath, String filmVoto, Context mContext){
         onClickAddToVisti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);

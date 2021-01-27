@@ -6,14 +6,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 import com.example.moviestar.Controllers.CurrentUser;
-import com.example.moviestar.Controllers.InviaRichiesteAmicoController;
 import com.example.moviestar.Controllers.LoginController;
 import com.example.moviestar.Controllers.LogoutController;
 import com.example.moviestar.Controllers.VerificaController;
@@ -28,7 +26,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import com.example.moviestar.Controllers.CurrentUser;
 
 import java.sql.ResultSet;
 

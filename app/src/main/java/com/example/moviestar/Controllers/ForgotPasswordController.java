@@ -31,6 +31,7 @@ public class ForgotPasswordController {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d("Firebase Debug", "Email sent.");
+                            PopupController.mostraPopup("Link inviato", "Nuovo link inviato con successo, controlla la tua casella di posta!", mContext);
                         }
                     }
                 });

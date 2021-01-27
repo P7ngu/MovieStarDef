@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviestar.Controllers.CurrentUser;
-import com.example.moviestar.Controllers.InviaRichiesteAmicoController;
+import com.example.moviestar.Controllers.RichiesteAmicoController;
 import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.Controllers.RicercaUtentiController;
 import com.example.moviestar.Model.Utente;
@@ -118,7 +118,7 @@ public class SocialFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-               InviaRichiesteAmicoController.getRichiesteAmico();
+               RichiesteAmicoController.getRichiesteAmico();
                 UtenteList=CurrentUser.getInstance().getListaRichiesteAmico();
                 PopupController.mostraPopup("dede", UtenteList.get(0)+" ", mContext);
                 PutDataIntoRecyclerView(UtenteList, "richieste");
@@ -132,7 +132,7 @@ public class SocialFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             try {
-                InviaRichiesteAmicoController.getRichiesteAmico();
+                RichiesteAmicoController.getRichiesteAmico();
                 UtenteList=CurrentUser.getInstance().getListaRichiesteAmico();
                 PopupController.mostraPopup("dede", UtenteList.get(0)+" ", mContext);
                 PutDataIntoRecyclerView(UtenteList, "richieste");

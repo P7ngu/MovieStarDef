@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InviaRichiesteAmicoController {
+public class RichiesteAmicoController {
 
     public static void sendRichiestaAmico(String idUtenteDaAggiungere, Context mContext) {
         CurrentUser currentUser = CurrentUser.getInstance();

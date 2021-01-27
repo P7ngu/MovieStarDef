@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.ForgotPasswordContinuation;
 import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.ForgotPasswordController;
 import com.example.moviestar.R;
@@ -19,7 +18,7 @@ import com.example.moviestar.R;
 public class ForgotPasswordActivity extends AppCompatActivity {
     Context mContext=this;
     Button resetPasswordButton, sendNewCodeButton;
-    EditText idUtenteET, codeET, newPasswordET;
+    EditText emailET, codeET, newPasswordET;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,11 +30,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         Glide.with(mContext).load("https://i.ibb.co/zVhNTdy/logo.png").into(img);
 
         sendNewCodeButton=findViewById(R.id.button_sendcode_fp);
+        emailET=findViewById(R.id.email_forgotpassword_ET);
 
         sendNewCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            ForgotPasswordController.sendNewCode(mContext, idUtenteET.getText().toString().trim());
+            ForgotPasswordController.sendNewCode(mContext, emailET.getText().toString().trim());
             }
         });
 
