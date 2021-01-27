@@ -28,6 +28,7 @@
         <activity android:name=".View.profilo.EditProfiloFotoActivity"/>
         <activity android:name=".View.profilo.EditProfiloNomeActivity"/>
 
+
         <activity android:name=".View.home.CommentiFilmActivity"/>
         <activity android:name=".View.profilo.ListaFilmActivity"/>
         <activity android:name=".View.profilo.ListaAmiciActivity"/>

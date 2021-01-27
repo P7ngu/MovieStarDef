@@ -66,7 +66,8 @@ public class InviaRichiesteAmicoController {
 
                                 if (utenteTemp != null) userList.add(utenteTemp);
                             }
-                            SocialFragment.PutDataIntoRecyclerView(userList, "richieste");
+                           //SocialFragment.PutDataIntoRecyclerView(userList, "richieste");
+                            CurrentUser.getInstance().setListaRichiesteAmico(userList);
                         } else
                             Log.d("testFirebase", "Error getting documents: ", task.getException());
                     }

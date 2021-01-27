@@ -9,7 +9,7 @@
     tools:context=".View.social.SocialFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/recycler_view_social"
         android:layout_width="wrap_content"
         android:layout_height="530dp"
         android:layout_marginTop="100dp"

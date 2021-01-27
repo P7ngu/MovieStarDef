@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 import com.example.moviestar.Controllers.CurrentUser;
+import com.example.moviestar.Controllers.InviaRichiesteAmicoController;
 import com.example.moviestar.Controllers.LoginController;
 import com.example.moviestar.Controllers.LogoutController;
 import com.example.moviestar.Controllers.VerificaController;

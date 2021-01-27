@@ -106,10 +106,14 @@ public class LoginController {
     }
 
     public static void loadCurrentUserDetails() {
-        loadListaFilmFromDB("FilmVisti");
-        loadListaFilmFromDB("FilmPreferiti");
-        loadListaFilmFromDB("FilmDaVedere");
-        loadListaAmiciFromDB();
+        try {
+            loadListaFilmFromDB("FilmVisti");
+            loadListaFilmFromDB("FilmPreferiti");
+            loadListaFilmFromDB("FilmDaVedere");
+            loadListaAmiciFromDB();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private static void loadListaFilmFromDB(String path) {
