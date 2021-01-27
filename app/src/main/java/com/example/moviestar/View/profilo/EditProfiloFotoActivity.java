@@ -14,25 +14,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.EditProfiloController;
 import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.DAO.UtenteDAO;
-import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import static com.example.moviestar.Controllers.EditProfiloController.clickOnUpdatePicButton_EditProfiloFotoActivity;
 
 public class EditProfiloFotoActivity extends AppCompatActivity {
     Button selectPicButton, updatePicButton;
@@ -94,7 +86,7 @@ public class EditProfiloFotoActivity extends AppCompatActivity {
         currentUsername = CurrentUser.getInstance().getUsername();
 
 
-        selectPicButton = findViewById(R.id.button_changename_ep);
+        selectPicButton = findViewById(R.id.button_visuallizzaid_ep);
         updatePicButton = findViewById(R.id.button_changepassword_ep);
         filenameTV = findViewById(R.id.textView_nomefile_ep);
         propicImg = findViewById(R.id.propic_ep_imageview);

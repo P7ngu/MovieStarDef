@@ -24,14 +24,14 @@ public class EditProfiloActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editprofilo);
 
-       currentUserID= CurrentUser.getInstance().getUserId();
-       currentUsername=CurrentUser.getInstance().getUsername();
+        currentUserID= CurrentUser.getInstance().getUserId();
+        currentUsername=CurrentUser.getInstance().getUsername();
 
         nomeVisualizzatoTV=findViewById(R.id.nomeutente_ep);
         nomeVisualizzatoTV.setText(currentUsername);
 
         cambiaFotoButton=findViewById(R.id.button_ep_cambiafoto);
-        cambiaNomeButton=findViewById(R.id.button_changename_ep);
+        cambiaNomeButton=findViewById(R.id.button_visuallizzaid_ep);
         cambiaPasswordButton=findViewById(R.id.button_changepassword_ep);
 
         cambiaFotoButton.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +45,7 @@ public class EditProfiloActivity extends AppCompatActivity {
         cambiaNomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, EditProfiloNomeActivity.class);
+                Intent intent = new Intent(mContext, VisualizzaIdActivity.class);
                 startActivity(intent);
             }
         });
