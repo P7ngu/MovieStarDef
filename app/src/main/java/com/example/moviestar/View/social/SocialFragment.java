@@ -120,7 +120,7 @@ public class SocialFragment extends Fragment {
             try {
                RichiesteAmicoController.getRichiesteAmico();
                 UtenteList=CurrentUser.getInstance().getListaRichiesteAmico();
-                PopupController.mostraPopup("dede", UtenteList.get(0)+" ", mContext);
+               // PopupController.mostraPopup("dede", UtenteList.get(0)+" ", mContext);
                 PutDataIntoRecyclerView(UtenteList, "richieste");
             } catch(Exception e){
                 e.printStackTrace();
@@ -134,7 +134,7 @@ public class SocialFragment extends Fragment {
             try {
                 RichiesteAmicoController.getRichiesteAmico();
                 UtenteList=CurrentUser.getInstance().getListaRichiesteAmico();
-                PopupController.mostraPopup("dede", UtenteList.get(0)+" ", mContext);
+               // PopupController.mostraPopup("dede", UtenteList.get(0)+" ", mContext);
                 PutDataIntoRecyclerView(UtenteList, "richieste");
             } catch(Exception e){
                 e.printStackTrace();
@@ -146,7 +146,7 @@ public class SocialFragment extends Fragment {
         protected void onPostExecute(Void result) {
             try {
                 UtenteList=CurrentUser.getInstance().getListaRichiesteAmico();
-                PopupController.mostraPopup("dede", UtenteList.get(0)+" ", mContext);
+                //PopupController.mostraPopup("dede", UtenteList.get(0)+" ", mContext);
                 PutDataIntoRecyclerView(UtenteList, "richieste");
             } catch(Exception e){
                 e.printStackTrace();

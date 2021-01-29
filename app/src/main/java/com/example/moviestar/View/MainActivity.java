@@ -27,12 +27,32 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.Key;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.Certificate;
 import java.sql.ResultSet;
+import java.util.Enumeration;
 
 public class MainActivity extends AppCompatActivity {
     ResultSet UsersRS;
     static boolean isUserLogged=false;
     static boolean isUserVerified=false;
+
+    public static boolean isIsUserVerified() {
+        return isUserVerified;
+    }
+
+    public static void setIsUserVerified(boolean isUserVerified) {
+        MainActivity.isUserVerified = isUserVerified;
+    }
+
     static ProgressBar progBar;
     Context myContext;
 
@@ -74,27 +94,29 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final Context mContext=this;
+        final Context mContext = this;
         SharedPreferences prefs;
-        myContext=this;
+        myContext = this;
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progBar=findViewById(R.id.progressBar2);
+        progBar = findViewById(R.id.progressBar2);
         progBar.setVisibility(0);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        isUserVerified= VerificaController.IsEmailVerified();
+        isUserVerified = VerificaController.IsEmailVerified();
 
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle !=null){
-            CurrentUser currentUser= CurrentUser.getInstance();
-           if(bundle.getString("userID")!=null && bundle.getString("userID").length()>0
-                   && bundle.get("username")!= null &&bundle.getString("username").length()>0) {
+        if (bundle != null) {
+            CurrentUser currentUser = CurrentUser.getInstance();
+            if (bundle.getString("userID") != null && bundle.getString("userID").length() > 0
+                    && bundle.get("username") != null && bundle.getString("username").length() > 0) {
                 currentUser.setUserId(bundle.getString("userID"));
                 currentUser.setUsername(bundle.getString("username"));
-                if(isUserVerified) isUserLogged = true;
+                if (isUserVerified) isUserLogged = true;
                 else startActivity(new Intent(this, VerificationActivity.class));
             }
         }
@@ -102,20 +124,21 @@ public class MainActivity extends AppCompatActivity {
         prefs = mContext.getSharedPreferences("myPrefsKeys", Context.MODE_PRIVATE);
         final String email = prefs.getString("email", "");
         final String password = prefs.getString("password", "");
-        Log.d("Stored Data", email+password);
-        if(!isUserLogged && isUserVerified && email.length()>3 && password.length()>5) LoginController.Firebase_loginEmailPasswordUser(email, password, mContext);
-        else if(!isUserVerified) startActivity(new Intent(this, VerificationActivity.class));
+        Log.d("Stored Data", email + password);
+        if (!isUserLogged && isUserVerified && email.length() > 3 && password.length() > 5)
+            LoginController.Firebase_loginEmailPasswordUser(email, password, mContext);
+        else if (!isUserVerified) startActivity(new Intent(this, VerificationActivity.class));
         //Log.i("Test", "saved data: "+email+password);
 
-        if(!isUserLogged){
-           Intent intent = new Intent(this, RegistrazioneActivity.class);
+        if (!isUserLogged) {
+            Intent intent = new Intent(this, RegistrazioneActivity.class);
             startActivity(intent);
         }
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-      R.id.navigation_home, R.id.navigation_social, R.id.navigation_profilo)
-          .build();
+                R.id.navigation_home, R.id.navigation_social, R.id.navigation_profilo)
+                .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);

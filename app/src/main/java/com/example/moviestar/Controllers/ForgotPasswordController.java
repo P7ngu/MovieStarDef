@@ -3,6 +3,7 @@ package com.example.moviestar.Controllers;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
@@ -55,5 +56,22 @@ public class ForgotPasswordController {
         context.startActivity(intent);
     }
 
+
+    public static void changePassword(EditText editTextNewPass, Context context){
+        mContext=context;
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String newPassword = editTextNewPass.getText().toString();
+
+        user.updatePassword(newPassword)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            PopupController.mostraPopup("Password aggiornata", "Password aggiornata con successo!", mContext);
+                        }
+                    }
+                });
+    }
 
 }

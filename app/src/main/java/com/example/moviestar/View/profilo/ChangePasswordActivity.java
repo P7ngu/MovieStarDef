@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.moviestar.Controllers.ChangePasswordController;
+import com.example.moviestar.Controllers.ForgotPasswordController;
 import com.example.moviestar.R;
 
 public class ChangePasswordActivity extends AppCompatActivity {
@@ -30,7 +30,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         changePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChangePasswordController.changePassword(editTextNewPass,  mContext);
+               ForgotPasswordController.changePassword(editTextNewPass,  mContext);
 
             }
         });

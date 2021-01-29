@@ -17,7 +17,15 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class VerificaController {
     static Context mContext;
+    static boolean userVerifiedByGoogle;
 
+    public static boolean isUserVerifiedByGoogle() {
+        return userVerifiedByGoogle;
+    }
+
+    public static void setUserVerifiedByGoogle(boolean userVerifiedByGoogle) {
+        VerificaController.userVerifiedByGoogle = userVerifiedByGoogle;
+    }
 
     public static void sendEmailConLinkDiVerifica(String idUtente, Context context) {
         mContext = context;
@@ -44,7 +52,7 @@ public class VerificaController {
         if (user!=null && user.isEmailVerified()) {
             return true;
         } else {
-            return false;
+            return userVerifiedByGoogle;
         }
 
     }

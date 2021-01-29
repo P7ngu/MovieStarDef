@@ -1,5 +1,6 @@
 package com.example.moviestar.View.profilo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ShareCompat;
 
+import com.example.moviestar.Controllers.CondividiIdUtenteController;
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.R;
 
@@ -21,10 +23,12 @@ public class VisualizzaIdActivity extends AppCompatActivity {
     TextView usernameTV, idTV;
     Button shareButton;
     ImageView propicImg;
+    static Context mContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
+        mContext=this;
         String currentUserID = CurrentUser.getUserId();
         String currentUsername = CurrentUser.getUsername();
         super.onCreate(savedInstanceState);
@@ -39,14 +43,9 @@ public class VisualizzaIdActivity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
                 String idtext = idTV.getText().toString();
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, idtext);
-                startActivity(Intent.createChooser(sharingIntent, "Share using"));
+                CondividiIdUtenteController.clickOnShareID(mContext, idtext);
                 //Log.d("shareID", "idtext = " + idtext);
-
             }
         });
     }
