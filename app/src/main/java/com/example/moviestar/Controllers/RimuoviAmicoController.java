@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
+import com.example.moviestar.DAO.UtenteDAO;
 import com.example.moviestar.View.home.Recycler.Adaptery;
 import com.example.moviestar.View.profilo.ListaAmiciActivity;
 import com.example.moviestar.View.social.recycler.AdapteryUtente;
@@ -25,31 +26,7 @@ public class RimuoviAmicoController {
     }
 
     public static void eliminaAmicoDaListaAmici_DB(String idUtenteDaEliminare, Context mContext){
-        CurrentUser currentUser = CurrentUser.getInstance();
-        String userId=currentUser.getUserId();
-        FirebaseFirestore db=FirebaseFirestore.getInstance();
-        CollectionReference listaAmici = db.collection("ListaAmici");
-
-        db.collection("ListaAmici").document(idUtenteDaEliminare+userId)
-                .delete();
-
-        db.collection("ListaAmici").document(userId+idUtenteDaEliminare)
-                .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                LoginController.loadListaAmiciFromDB();
-                PopupController.mostraPopup("Utente eliminato con successo",
-                        "Utente eliminato dalla lista amici con successo.", mContext);
-
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                PopupController.mostraPopup("Errore", " non rimosso.", mContext);
-            }
-        });
-
+        UtenteDAO.eliminaAmicoDaListaAmici_Firebase(idUtenteDaEliminare, mContext);
     }
 
     public static void onClickPositiveButton(Context myContext, String path, String idObject) {

@@ -113,7 +113,7 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
         filmId = intent.getStringExtra("FilmId");
          filmFotoPath=intent.getStringExtra("FilmPicPath");
 
-        int starNumber = getNumberOfStarsFromDB(filmId);
+        int starNumber = getNumberOfStarsFromDB(filmId, number_star);
         riempiStelle(starNumber, false);
         //riempiStelle(number_star, false);
 

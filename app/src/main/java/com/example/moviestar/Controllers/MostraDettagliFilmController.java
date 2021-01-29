@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.moviestar.DAO.UtenteDAO;
 import com.example.moviestar.Model.Film;
 import com.example.moviestar.View.home.AggiungiCommentoActivity;
 import com.example.moviestar.View.home.CommentiFilmActivity;
@@ -59,29 +60,7 @@ public class MostraDettagliFilmController {
     }
 
     public static boolean checkFilmPresenteListaDB (String filmId, String path, Context mContext){
-        CurrentUser currentUser = CurrentUser.getInstance();
-        String userId = currentUser.getUserId();
-        String idFilm, title, overview, fotoPath, voto;
-        flag=false;
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference filmPreferiti = db.collection(path);
-        ArrayList<Film> filmList = new ArrayList<>();
-
-        db.collection(path)
-                .whereEqualTo("userID", userId).whereEqualTo("filmID", filmId)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                              flag=true;
-                            }
-                        } else Log.d("testFirebase", "Error getting documents: ", task.getException());
-
-                    }
-                });
+        flag = UtenteDAO.checkFilmPresenteLista_Firebase(filmId, path, mContext);
         return flag;
     }
 

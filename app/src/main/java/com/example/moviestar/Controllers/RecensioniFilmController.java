@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.moviestar.DAO.RecensioneDAO;
 import com.example.moviestar.Model.Commento;
 import com.example.moviestar.Model.Film;
 import com.example.moviestar.Model.Utente;
@@ -88,60 +89,13 @@ public class RecensioniFilmController {
 
     public static void inserisciCommentoFilm(String idFilmCommentato, String commentoDaInserire, Context mContext){
         if(commentoDaInserire.length()>0) {
-            CurrentUser currentUser = CurrentUser.getInstance();
-            String userId = currentUser.getUserId();
-            String username = currentUser.getUsername();
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            CollectionReference richiesteamico = db.collection("Commenti");
-            int seconds = Math.toIntExact(Timestamp.now().getSeconds());
-
-            Map<String, Object> data4 = new HashMap<>();
-            data4.put("userID", userId);
-            data4.put("commento", commentoDaInserire);
-            data4.put("filmID", idFilmCommentato);
-            data4.put("username", username);
-            data4.put("unique_number", seconds);
-            richiesteamico.document(userId + idFilmCommentato + seconds).set(data4);
-
-            LoginController.loadCurrentUserDetails();
-            PopupController.mostraPopup("Commento inviato", "Commento inviato con successo!", mContext);
-            openListaCommentiDopoInserimentoCommento(idFilmCommentato, mContext);
-
+          RecensioneDAO.inserisciCommentoFilm_Firebase(idFilmCommentato, commentoDaInserire, mContext);
         }
         else PopupController.mostraPopup("Errore", "Commento vuoto: inserire il testo del commento", mContext);
     }
 
     public static void getListaCommentiFilm(String idFilm, Context mContext, RecyclerView recyclerView){
-        CurrentUser currentUser = CurrentUser.getInstance();
-        String userId = currentUser.getUserId();
-        String path = "Commenti";
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference commentiCollection = db.collection(path);
-        ArrayList<Commento> commentiList = new ArrayList<>();
-
-        db.collection(path)
-                .whereEqualTo("filmID", idFilm)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                //data = document.getData();
-                                String commentoText = document.getData().get("commento").toString();
-                                String userid = document.getData().get("userID").toString();
-                                String username = document.getData().get("username").toString();
-                                String seconds = document.getData().get("unique_number").toString();
-                                String idFilm=document.getData().get("filmID").toString();
-                                Commento commentoTemp = new Commento(username, userid, commentoText, seconds, idFilm);
-
-                                if (commentoTemp != null) commentiList.add(commentoTemp);
-                            }
-                            PutDataIntoRecyclerView(commentiList, recyclerView, mContext);
-                        } else
-                            Log.d("testFirebase", "Error getting documents: ", task.getException());
-                    }
-                });
+        RecensioneDAO.getListaCommentiFilm_Firebase(idFilm, mContext, recyclerView);
 
     }
     private static void PutDataIntoRecyclerView(List<Commento> commentoList, RecyclerView commentiRecycler, Context mContext){

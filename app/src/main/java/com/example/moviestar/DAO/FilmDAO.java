@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.moviestar.Controllers.CurrentUser;
+import com.example.moviestar.Controllers.LoginController;
 import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.Model.Film;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,11 +28,74 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FilmDAO {
 
     public static Film currentModel;
     public static ArrayList<Film> movieList;
+
+    public static void addToPreferitiDAO(String filmId, String filmName, String filmOverview, String filmFotoPath, String filmVoto, Context mContext){
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId=currentUser.getUserId();
+
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        CollectionReference filmPreferiti = db.collection("FilmPreferiti");
+
+        Map<String, Object> data4 = new HashMap<>();
+        data4.put("filmID", filmId);
+        data4.put("filmName", filmName);
+        data4.put("filmOverview", filmOverview);
+        data4.put("filmFotoPath", filmFotoPath);
+        data4.put("filmVoto", filmVoto);
+        data4.put("userID", userId);
+        filmPreferiti.document(userId+filmId).set(data4);
+
+        LoginController.loadCurrentUserDetails();
+        PopupController.mostraPopup("filmId", "aggiunto alla lista", mContext);
+    }
+
+    public static void addToVistiDAO(String filmId, String filmName, String filmOverview, String filmFotoPath, String filmVoto, Context mContext){
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId=currentUser.getUserId();
+
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        CollectionReference filmVisti = db.collection("FilmVisti");
+
+
+        Map<String, Object> data4 = new HashMap<>();
+        data4.put("filmID", filmId);
+        data4.put("filmName", filmName);
+        data4.put("filmOverview", filmOverview);
+        data4.put("filmFotoPath", filmFotoPath);
+        data4.put("filmVoto", filmVoto);
+        data4.put("userID", userId);
+        filmVisti.document(userId+filmId).set(data4);
+
+        LoginController.loadCurrentUserDetails();
+        PopupController.mostraPopup("filmId", "aggiunto alla lista", mContext);
+    }
+
+    public static void addToDaVedereDAO(String filmId, String filmName, String filmOverview, String filmFotoPath, String filmVoto, Context mContext){
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId=currentUser.getUserId();
+
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        CollectionReference filmDaVedere = db.collection("FilmDaVedere");
+
+        Map<String, Object> data4 = new HashMap<>();
+        data4.put("filmID", filmId);
+        data4.put("filmName", filmName);
+        data4.put("filmOverview", filmOverview);
+        data4.put("filmFotoPath", filmFotoPath);
+        data4.put("filmVoto", filmVoto);
+        data4.put("userID", userId);
+        filmDaVedere.document(userId+filmId).set(data4);
+
+        LoginController.loadCurrentUserDetails();
+        PopupController.mostraPopup("filmId", "aggiunto alla lista", mContext);
+    }
 
     public static Film queryDB_FindListByPath(String path, Context mContext) {
         CurrentUser currentUser = CurrentUser.getInstance();
@@ -67,94 +131,6 @@ public class FilmDAO {
                 });
         return currentModel;
     }
-
-
-
-//    private static void findFilmDataById(String idFilm, Context mContext) {
-//        String APIkey="89d40cd46523243c6d553bb54b2ca47e";
-//        String myURL = "https://api.themoviedb.org/3/movie/"+idFilm+"?api_key="+APIkey+"&append_to_response=videos";
-//        try {
-//            GetData getData = new GetData(myURL, mContext);
-//            getData.execute();
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//    }
-//
-//
-//    public static class GetData extends AsyncTask<String, String, String> {
-//        Context mContext;
-//        String URL1;
-//        Film model_returned=new Film();
-//
-//        public GetData(String url, Context mContext) throws UnsupportedEncodingException {
-//            this.URL1=url;
-//            this.mContext=mContext;
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... strings) {
-//            String current = "";
-//            try {
-//                URL url;
-//                HttpURLConnection urlConnection = null;
-//                try {
-//                    url = new URL(URL1);
-//                    urlConnection = (HttpURLConnection) url.openConnection();
-//                    InputStream is = urlConnection.getInputStream();
-//                    InputStreamReader isr = new InputStreamReader(is);
-//
-//                    int data = isr.read();
-//                    while (data != -1) {
-//                        current += (char) data;
-//                        data = isr.read();
-//                    }
-//
-//                    return current;
-//
-//                } catch (MalformedURLException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                } finally {
-//                    if (urlConnection != null) {
-//                        urlConnection.disconnect();
-//                    }
-//                }
-//            } catch (Exception e){
-//                e.printStackTrace();
-//            }
-//            return current;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//
-//            try{
-//                JSONArray jsonArray= new JSONArray(s);
-//                for(int i=0; i<jsonArray.length(); i++){
-//                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-//                    Film model = new Film();
-//                    model.setVote(jsonObject1.getString("vote_average"));
-//                    model.setId(jsonObject1.getString("id"));
-//                    model.setName(jsonObject1.getString("title"));
-//                    model.setImg(jsonObject1.getString("poster_path"));
-//                    model.setOverview(jsonObject1.getString("overview"));
-//                    PopupController.mostraPopup(model.getName(), "dijejfd", mContext);
-//                    movieList.add(model);
-//
-//                }
-//
-//
-//            } catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
-//
-//    }
-
 
 
 }

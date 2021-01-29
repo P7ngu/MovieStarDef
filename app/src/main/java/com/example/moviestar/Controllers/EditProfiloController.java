@@ -28,8 +28,8 @@ public class EditProfiloController {
         if(imageUri!=null&&currentUserID!=null){
             final StorageReference filepath=storageReference //.../profile_pictures/image_jpeg
                     .child("profile_pictures")
-                    .child(currentUserID);
-            filepath.putFile(imageUri)
+                    .child(currentUserID+".jpeg");
+            filepath.putFile(Uri.parse(imageUri+"jpeg"))
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
