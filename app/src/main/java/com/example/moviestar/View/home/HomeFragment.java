@@ -19,6 +19,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.moviestar.Controllers.EffettuaRicercheController;
+import com.example.moviestar.Controllers.TrendingFilmController;
 import com.example.moviestar.Model.Film;
 import com.example.moviestar.R;
 import com.example.moviestar.View.MainActivity;
@@ -46,7 +48,7 @@ public class HomeFragment extends Fragment {
     static ProgressBar progBar;
     View root;
     List<Film> movieList;
-    Context mContext;
+    static Context mContext;
     static ImageButton searchButton;
     String paroleCercate;
 
@@ -74,7 +76,7 @@ public class HomeFragment extends Fragment {
                 URL_ForSearching = "https://api.themoviedb.org/3/search/movie?api_key=89d40cd46523243c6d553bb54b2ca47e&language=it-IT&query=" + paroleCercate;
                 Log.i("Test", URL_ForSearching);
                 try {
-                    GetData getData1 = new GetData(URL_ForSearching);
+                    EffettuaRicercheController.GetData getData1 = new EffettuaRicercheController.GetData(URL_ForSearching, movieList);
                     getData1.execute();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -101,7 +103,7 @@ public class HomeFragment extends Fragment {
        String urlJSON="https://api.themoviedb.org/3/discover/movie?api_key=89d40cd46523243c6d553bb54b2ca47e&language=it-IT&sort_by=popularity.desc";
         movieList=new ArrayList<>();
         try {
-            GetData getData = new GetData(urlJSON);
+            TrendingFilmController.GetData getData = new TrendingFilmController.GetData(urlJSON, movieList);
             getData.execute();
         } catch(Exception e){
             e.printStackTrace();
@@ -109,76 +111,9 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public class GetData extends AsyncTask<String, String, String> {
-        String URL1;
 
-        public GetData(String url_forSearching) throws UnsupportedEncodingException {
-            MainActivity.showProgressBar();
-            String ulr_updated = formattaStringaPerQuery(url_forSearching);
-            this.URL1=ulr_updated;
-        }
 
-        @Override
-        protected String doInBackground(String... strings) {
-            String current = "";
-            try {
-                URL url;
-                HttpURLConnection urlConnection = null;
-                try {
-                    url = new URL(URL1);
-                    urlConnection = (HttpURLConnection) url.openConnection();
-                    InputStream is = urlConnection.getInputStream();
-                    InputStreamReader isr = new InputStreamReader(is);
-
-                    int data = isr.read();
-                    while (data != -1) {
-                        current += (char) data;
-                        data = isr.read();
-                    }
-
-                    return current;
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (urlConnection != null) {
-                        urlConnection.disconnect();
-                    }
-                }
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-            return current;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-
-            try{
-                JSONObject jsonObject = new JSONObject(s);
-                JSONArray jsonArray=jsonObject.getJSONArray("results");
-                for(int i=0; i<jsonArray.length(); i++){
-                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                    Film model = new Film();
-                    model.setVote(jsonObject1.getString("vote_average"));
-                    model.setId(jsonObject1.getString("id"));
-                    model.setName(jsonObject1.getString("title"));
-                    model.setImg(jsonObject1.getString("poster_path"));
-                    model.setOverview(jsonObject1.getString("overview"));
-                    movieList.add(model);
-                }
-
-                MainActivity.hideProgressBar();
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-            PutDataIntoRecyclerView(movieList);
-        }
-    }
-
-    private void PutDataIntoRecyclerView(List<Film> movieList){
+    public static void PutDataIntoRecyclerView(List<Film> movieList){
         Adaptery adaptery=new Adaptery(mContext, movieList);
         Log.d("Test", ""+mContext.toString()+recyclerView.toString());
         Log.d("Test1", recyclerView.toString());

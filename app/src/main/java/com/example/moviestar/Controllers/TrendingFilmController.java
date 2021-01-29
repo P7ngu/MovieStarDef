@@ -19,9 +19,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EffettuaRicercheController {
-    //TODO
-    ArrayList<Film> movieList;
+public class TrendingFilmController {
 
     public static class GetData extends AsyncTask<String, String, String> {
         String URL1;
@@ -98,6 +96,5 @@ public class EffettuaRicercheController {
         String result = url_forSearching.replaceAll(" ","%20");
         return result;
     }
-
 
 }
