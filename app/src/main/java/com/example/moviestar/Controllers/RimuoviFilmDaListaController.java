@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.example.moviestar.DAO.FilmDAO;
 import com.example.moviestar.View.home.MostraDettagliFilmDaVedereCliccatoActivity;
 import com.example.moviestar.View.home.MostraDettagliFilmVistoCliccatoActivity;
 import com.example.moviestar.View.home.MostraDettagliFilmVistoCliccatoPreferitoActivity;
@@ -32,30 +33,7 @@ public class RimuoviFilmDaListaController {
     }
 
     public static void rimozioneFilmDaLista(Context mContext, String pathListaDaCuiRimuovere, String filmId){
-        LoginController.loadCurrentUserDetails();
-        CurrentUser currentUser = CurrentUser.getInstance();
-        String userId=currentUser.getUserId();
-        FirebaseFirestore db=FirebaseFirestore.getInstance();
-        CollectionReference filmPreferiti = db.collection(pathListaDaCuiRimuovere);
-
-        db.collection(pathListaDaCuiRimuovere).document(userId+filmId)
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        if(pathListaDaCuiRimuovere.equals("FilmVisti"))
-                            db.collection("FilmPreferiti").document(userId+filmId)
-                            .delete();
-                        //PopupController.mostraPopup("Film rimosso!", filmName+"rimosso con successo.", mContext);
-                        LoginController.loadCurrentUserDetails();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        PopupController.mostraPopup("Errore", " ", mContext);
-                    }
-                });
+        FilmDAO.rimuoviFilmDaLista_Firebase(mContext, pathListaDaCuiRimuovere, filmId);
 
     }
 

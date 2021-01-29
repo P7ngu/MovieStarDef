@@ -26,6 +26,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UtenteDAO {
     String imageURI;
@@ -215,6 +217,190 @@ public class UtenteDAO {
                     }
                 });
         return flag;
+    }
+
+    public static void getListaUtenti_Firebase() {
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String path="Users";
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference listaAmici = db.collection(path);
+        ArrayList<Utente> userList = new ArrayList<>();
+
+        db.collection(path)
+                //.whereEqualTo("username", nome)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                //data = document.getData();
+                                String idUtente = document.getData().get("userID").toString();
+                                String username = document.getData().get("username").toString();
+                                Utente utenteTemp = new Utente(idUtente, username);
+
+                                if (utenteTemp != null) userList.add(utenteTemp);
+                            }
+                        } else Log.d("testFirebase", "Error getting documents: ", task.getException());
+                        currentUser.setListaUtenti(userList);
+                        //SocialFragment.PutDataIntoRecyclerView(userList);
+
+                    }
+                });
+    }
+
+    public static void cercaUtenteByNome(String nome) {
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId = currentUser.getUserId();
+        String path="Users";
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference listaAmici = db.collection(path);
+        ArrayList<Utente> userList = new ArrayList<>();
+
+        db.collection(path)
+                .whereEqualTo("username", nome)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                //data = document.getData();
+                                String idUtente = document.getData().get("userID").toString();
+                                String username = document.getData().get("username").toString();
+                                Utente utenteTemp = new Utente(idUtente, username);
+
+                                if (utenteTemp != null) userList.add(utenteTemp);
+                            }
+
+                            SocialFragment.PutDataIntoRecyclerView(userList, "ricerca");
+                        } else Log.d("testFirebase", "Error getting documents: ", task.getException());
+                        currentUser.setListaUtenti(userList);
+
+                    }
+                });
+        SocialFragment.PutDataIntoRecyclerView(userList, "ricerca");
+    }
+
+    public static void sendRichiestaAmico_Firebase(String idUtenteDaAggiungere, Context mContext) {
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId = currentUser.getUserId();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference richiesteamico = db.collection("RichiesteAmico");
+
+        Map<String, Object> data4 = new HashMap<>();
+        data4.put("userID_ricevente", idUtenteDaAggiungere);
+        data4.put("userID_mandante", userId);
+        richiesteamico.document(userId + idUtenteDaAggiungere).set(data4);
+
+        LoginController.loadCurrentUserDetails();
+        PopupController.mostraPopup("Utente", "aggiunto alla lista", mContext);
+
+    }
+
+    public static void getRichiesteAmico_Firebase() {
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId = currentUser.getUserId();
+        String path = "RichiesteAmico";
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference listaAmici = db.collection(path);
+        ArrayList<Utente> userList = new ArrayList<>();
+
+        db.collection(path)
+                .whereEqualTo("userID_ricevente", userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                //data = document.getData();
+                                String idUtente = document.getData().get("userID_mandante").toString();
+                                //String username = document.getData().get("username").toString();
+                                Utente utenteTemp = new Utente(idUtente);
+
+                                if (utenteTemp != null) userList.add(utenteTemp);
+                            }
+                            //SocialFragment.PutDataIntoRecyclerView(userList, "richieste");
+                            CurrentUser.getInstance().setListaRichiesteAmico(userList);
+                        } else
+                            Log.d("testFirebase", "Error getting documents: ", task.getException());
+                    }
+                });
+    }
+
+    public static void accettaRichiestaAmico_Firebase(String idUtenteDaAggiungere, Context mContext) {
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId=currentUser.getUserId();
+
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        CollectionReference richiesteamico = db.collection("ListaAmici");
+
+        Map<String, Object> data4 = new HashMap<>();
+        data4.put("userID_ricevente", idUtenteDaAggiungere);
+        data4.put("userID_mandante", userId);
+        richiesteamico.document(userId+idUtenteDaAggiungere).set(data4);
+
+        Map<String, Object> data5 = new HashMap<>();
+        data5.put("userID_ricevente", userId);
+        data5.put("userID_mandante", idUtenteDaAggiungere);
+        richiesteamico.document(idUtenteDaAggiungere+userId).set(data5);
+
+        removeRichiestaAmico_Firebase(idUtenteDaAggiungere, mContext);
+
+        LoginController.loadCurrentUserDetails();
+        PopupController.mostraPopup("Utente", "aggiunto alla lista", mContext);
+    }
+
+    public static void removeRichiestaAmico_Firebase(String idUtenteDaAggiungere, Context mContext) {
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId=currentUser.getUserId();
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        CollectionReference listaAmici = db.collection("RichiesteAmico");
+
+        db.collection("RichiesteAmico").document(idUtenteDaAggiungere+userId)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //PopupController.mostraPopup("Richiesta respinta", "rimossa con successo.", mContext);
+
+                        //REFRESH SCHERMATA
+                        LoginController.loadCurrentUserDetails();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        PopupController.mostraPopup("Errore", idUtenteDaAggiungere+" non rimosso.", mContext);
+                    }
+                });
+    }
+
+    public static void respingiRichiestaAmico(String idUtenteDaRespingere, Context mContext) {
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId=currentUser.getUserId();
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        CollectionReference listaAmici = db.collection("RichiesteAmico");
+
+        db.collection("RichiesteAmico").document(idUtenteDaRespingere+userId)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        PopupController.mostraPopup("Richiesta respinta", "rimossa con successo.", mContext);
+                        LoginController.loadCurrentUserDetails();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        PopupController.mostraPopup("Errore", idUtenteDaRespingere+" non rimosso.", mContext);
+                    }
+                });
     }
 
     public String getImageURI() {
