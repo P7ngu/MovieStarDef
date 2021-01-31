@@ -50,18 +50,6 @@
         app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/button_addtowatchlist"
-        android:layout_width="126dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="64dp"
-        android:text="@string/add_to_watchlist"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="5dp"

@@ -148,8 +148,8 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
     private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, 123);
+        //Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        //startActivityForResult(signInIntent, 123);
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -163,10 +163,10 @@ public class LoginActivity extends AppCompatActivity  {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("Debug Google", "signInResult:failed code=" + e.getStatusCode());
-            MainActivity.setUserLogged(true);
-            MainActivity.setIsUserVerified(true);
-            VerificaController.setUserVerifiedByGoogle(true);
-            mContext.startActivity(new Intent(mContext, MainActivity.class));
+            //MainActivity.setUserLogged(true);
+            //MainActivity.setIsUserVerified(true);
+            //VerificaController.setUserVerifiedByGoogle(true);
+            //mContext.startActivity(new Intent(mContext, MainActivity.class));
 
         }
     }
