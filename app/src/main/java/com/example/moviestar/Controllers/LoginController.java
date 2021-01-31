@@ -29,10 +29,12 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.CharArrayWriter;
 import java.util.ArrayList;
 
 import static com.example.moviestar.DAO.UtenteDAO.loadListaAmiciFromDB;
 import static com.example.moviestar.DAO.UtenteDAO.loadListaFilmFromDB;
+import static com.google.firebase.FirebaseError.ERROR_EMAIL_ALREADY_IN_USE;
 
 public class LoginController {
     private static Utente myUtente;
@@ -52,60 +54,63 @@ public class LoginController {
 
     public static void Firebase_loginEmailPasswordUser(String email, String password, Context mContext) {
         PopupController.mostraPopup("Debug", email+password, mContext);
-
+        if(login(email,password,mContext)==true) {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            assert user != null;
-                            final String currentuserid = user.getUid();
+                            //assert user != null;
+                            if (user != null) {
+                                final String currentuserid = user.getUid();
 
-                            collectionReference
-                                    .whereEqualTo("userID", currentuserid)
-                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                            if (error != null) {
-                                                PopupController.mostraPopup("Errore durante il login", error.toString(), mContext);
-                                            }
-                                            assert value != null;
-                                            if (!value.isEmpty()) {
-                                                for (QueryDocumentSnapshot snapshot : value) {
-                                                    CurrentUser currentUser = CurrentUser.getInstance();
-                                                    currentUser.setUsername(snapshot.getString("username"));
-                                                    currentUser.setUserId(currentuserid);
-                                                    PopupController.mostraPopup("Dentro query", currentuserid + snapshot.getString("username"), mContext);
-                                                    prefs = mContext.getSharedPreferences("myPrefsKeys", Context.MODE_PRIVATE);
-                                                    SharedPreferences.Editor editor = prefs.edit();
-                                                    editor.putString("email", email);
-                                                    editor.putString("password", password);
-                                                    editor.apply();
-                                                    loadCurrentUserDetails();
-                                                    MainActivity.setUserLogged(true);
-                                                    Intent intent = new Intent(mContext, MainActivity.class);
-                                                    mContext.startActivity(intent);
-
+                                collectionReference
+                                        .whereEqualTo("userID", currentuserid)
+                                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                if (error != null) {
+                                                    String errore = error.getMessage();
+                                                    Log.d("LOGIN123",error.getMessage());
+                                                    System.out.println(errore);
+                                                    System.out.println(error.getMessage());
+                                                    PopupController.mostraPopup("Errore durante il login", error.getMessage(), mContext);
+                                                }
+                                                assert value != null;
+                                                if (!value.isEmpty()) {
+                                                    for (QueryDocumentSnapshot snapshot : value) {
+                                                        CurrentUser currentUser = CurrentUser.getInstance();
+                                                        currentUser.setUsername(snapshot.getString("username"));
+                                                        currentUser.setUserId(currentuserid);
+                                                        PopupController.mostraPopup("Dentro query", currentuserid + snapshot.getString("username"), mContext);
+                                                        prefs = mContext.getSharedPreferences("myPrefsKeys", Context.MODE_PRIVATE);
+                                                        SharedPreferences.Editor editor = prefs.edit();
+                                                        editor.putString("email", email);
+                                                        editor.putString("password", password);
+                                                        editor.apply();
+                                                        loadCurrentUserDetails();
+                                                        MainActivity.setUserLogged(true);
+                                                        Intent intent = new Intent(mContext, MainActivity.class);
+                                                        mContext.startActivity(intent);
+                                                    }
+                                                    if(VerificaController.IsEmailVerified()) {
+                                                        mContext.startActivity(new Intent(mContext, MainActivity.class));
+                                                    } else {
+                                                        mContext.startActivity(new Intent(mContext, VerificationActivity.class));
+                                                    }
                                                 }
                                             }
-                                        }
-                                    });
+                                        });
+                            }
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             PopupController.mostraPopup("Errore durante il login", e.toString(), mContext);
-
                         }
                     });
-        if(VerificaController.IsEmailVerified()) {
-            mContext.startActivity(new Intent(mContext, MainActivity.class));
-        } else {
-                mContext.startActivity(new Intent(mContext, VerificationActivity.class));
         }
-
-
 
     }
 
@@ -200,6 +205,11 @@ public class LoginController {
     public static void setMyUtente(Utente myUtente) {
         myUtente = myUtente;
     }
+
+//    public String excMessage(String message){
+//        String result = result.replaceFirst(String regex, String "Error:");
+//        return result;
+//    }
 
 
 }
