@@ -38,7 +38,7 @@ public class EditProfiloActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, EditProfiloFotoActivity.class);
-                startActivity(intent);
+                //startActivity(intent);
             }
         });
 

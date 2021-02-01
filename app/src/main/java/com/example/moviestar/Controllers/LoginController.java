@@ -53,7 +53,6 @@ public class LoginController {
 
 
     public static void Firebase_loginEmailPasswordUser(String email, String password, Context mContext) {
-        PopupController.mostraPopup("Debug", email+password, mContext);
         if(login(email,password,mContext)==true) {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -70,10 +69,6 @@ public class LoginController {
                                             @Override
                                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                                                 if (error != null) {
-                                                    String errore = error.getMessage();
-                                                    Log.d("LOGIN123",error.getMessage());
-                                                    System.out.println(errore);
-                                                    System.out.println(error.getMessage());
                                                     PopupController.mostraPopup("Errore durante il login", error.getMessage(), mContext);
                                                 }
                                                 assert value != null;
@@ -107,7 +102,9 @@ public class LoginController {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            PopupController.mostraPopup("Errore durante il login", e.toString(), mContext);
+                            String errore = e.getMessage();
+                            Log.d("LOGIN123",e.getMessage());
+                            PopupController.mostraPopup("Errore durante il login: ", e.getMessage(), mContext);
                         }
                     });
         }
