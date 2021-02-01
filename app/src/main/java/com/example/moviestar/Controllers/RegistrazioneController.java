@@ -71,7 +71,7 @@ public class RegistrazioneController extends AppCompatActivity {
 
     public static boolean checkCampiPerRegistraUtente(String email, String password1, String password2, String idUtente, final Context myContext) {
         if(checkCampiNonVuoti(idUtente, password1, password2, email)) {
-            if (checkCampiValidi(idUtente, password1, password2, email)) {
+            if (checkPasswordMatching( password1, password2, myContext)) {
                 myUtente = new Utente(idUtente, password1, email);
                 return true;
             }
@@ -93,17 +93,18 @@ public class RegistrazioneController extends AppCompatActivity {
         return false;
     }
 
-    static boolean checkCampiValidi(String idUtente, String password, String password2, String email) {
-        //if( checkId(idUtente) && checkPassword(password, password2) && checkEmail(email) )
-        return true;
-        //else return false;
-    }
+//    static boolean checkCampiValidi(String idUtente, String password, String password2, String email) {
+//        //if( checkId(idUtente) && checkPassword(password, password2) && checkEmail(email) )
+//        return true;
+//        //else return false;
+//    }
 
 
-    private static boolean checkPasswordMatching(String password1, String password2) {
-        if(password1.equals(password2) && password1.length()>= 6) return true;
-        else return false;
-
+    public static boolean checkPasswordMatching(String password1, String password2, final Context myContext) {
+        if(password1.equals(password2)) return true;
+        else
+            PopupController.mostraPopup("Errore", "Password not matching", myContext);
+            return false;
     }
 
 
@@ -150,7 +151,8 @@ public class RegistrazioneController extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-
+                    String errore = e.getMessage();
+                    PopupController.mostraPopup("Errore durante la registrazione: ", e.getMessage(), mContext);
                 }
             });
         }else{
@@ -160,7 +162,8 @@ public class RegistrazioneController extends AppCompatActivity {
     }).addOnFailureListener(new OnFailureListener() {
         @Override
         public void onFailure(@NonNull Exception e) {
-
+            String errore = e.getMessage();
+            PopupController.mostraPopup("Errore durante la registrazione: ", e.getMessage(), mContext);
         }
     });
 
