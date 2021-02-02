@@ -27,18 +27,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.Key;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.Certificate;
 import java.sql.ResultSet;
-import java.util.Enumeration;
 
 public class MainActivity extends AppCompatActivity {
     ResultSet UsersRS;
@@ -84,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.logout_menu_button:
-                LogoutController.logoutCurrentUser_Firebase(myContext);
+                LogoutController.logoutCurrentUser(myContext);
                 break;
         }
         return super.onOptionsItemSelected(item);

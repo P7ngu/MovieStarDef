@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -35,6 +37,18 @@ public class UtenteDAO {
     static Uri ImageUri;
     static String currentID;
     static boolean flag;
+    private static FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+    private static FirebaseUser user;
+    private FirebaseFirestore db =FirebaseFirestore.getInstance();
+
+    public static void logout_Firebase() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
+        if (user != null && firebaseAuth != null) {
+            firebaseAuth.signOut();
+        }
+    }
 
 
     public static void eliminaAmicoDaListaAmici_Firebase(String idUtenteDaEliminare, Context mContext){
