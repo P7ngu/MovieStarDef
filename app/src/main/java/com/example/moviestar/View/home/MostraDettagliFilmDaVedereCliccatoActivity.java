@@ -26,6 +26,10 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
     static String filmOverview;
     static String filmId;
     static String filmFotoPath;
+    TextView filmNameTextView, tramaTextView, votoTextView;
+    Button addToPreferitiButton, addToVistiButton;
+    Button removeFromDaVedereButton;
+    Button buttonLeggiCommenti;
 
     @Override
     public void onBackPressed() {
@@ -48,16 +52,16 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
         filmId = intent.getStringExtra("FilmId");
         filmFotoPath=intent.getStringExtra("FilmPicPath");
 
-        TextView filmNameTextView = findViewById(R.id.title_text);
+        filmNameTextView = findViewById(R.id.title_text);
         filmNameTextView.setText(filmName);
 
-        TextView tramaTextView = findViewById(R.id.trama_text);
+        tramaTextView = findViewById(R.id.trama_text);
         tramaTextView.setText(filmOverview);
 
-        TextView votoTextView = findViewById(R.id.voto_text);
+        votoTextView = findViewById(R.id.voto_text);
         votoTextView.setText(filmVoto);
 
-        Button buttonLeggiCommenti = findViewById(R.id.button_leggicommenti);
+        buttonLeggiCommenti = findViewById(R.id.button_leggicommenti);
         buttonLeggiCommenti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +70,7 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
         });
 
 
-        Button addToPreferitiButton = findViewById(R.id.button_list_preferiti);
+        addToPreferitiButton = findViewById(R.id.button_list_preferiti);
         addToPreferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +86,7 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
             }
         });
 
-        Button removeFromDaVedereButton = findViewById(R.id.button_remove_list_davedere);
+        removeFromDaVedereButton = findViewById(R.id.button_remove_list_davedere);
         removeFromDaVedereButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +95,7 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
         });
 
 
-        Button addToVistiButton = findViewById(R.id.button_list_visti);
+        addToVistiButton = findViewById(R.id.button_list_visti);
         addToVistiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -19,7 +19,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EffettuaRicercheController {
+public class EffettuaRicercheFilmController {
     //TODO
     ArrayList<Film> movieList;
 

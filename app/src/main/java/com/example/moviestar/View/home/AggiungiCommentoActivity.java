@@ -19,6 +19,7 @@ String titoloFilm, idfilm;
 TextView titoloTextview;
 EditText commentoText;
 Context mContext;
+Button inviaCommentoButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ Context mContext;
         commentoText=findViewById(R.id.editTextTextMultiLine);
 
 
-        Button inviaCommentoButton=findViewById(R.id.button_addcomment_add);
+        inviaCommentoButton=findViewById(R.id.button_addcomment_add);
         inviaCommentoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
