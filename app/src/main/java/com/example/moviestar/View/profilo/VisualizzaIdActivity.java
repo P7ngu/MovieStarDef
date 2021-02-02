@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ShareCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.CondividiIdUtenteController;
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.R;
@@ -39,6 +40,7 @@ public class VisualizzaIdActivity extends AppCompatActivity {
         idTV.setText(currentUserID);
         shareButton = findViewById(R.id.button_shareid_ep);
         propicImg = findViewById(R.id.propic_ep_imageview);
+        Glide.with(mContext).load("https://i.ibb.co/QmmFv5T/batman-hero-avatar-comics-512.png").into(propicImg);
 
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
