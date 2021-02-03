@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.LoginController;
 import com.example.moviestar.Controllers.PopupController;
@@ -98,7 +99,8 @@ public class LoginActivity extends AppCompatActivity  {
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
+        ImageView img = findViewById(R.id.imageView);
+        Glide.with(mContext).load("https://i.ibb.co/zVhNTdy/logo.png").into(img);
 
         emailEditText = findViewById(R.id.editText_email_login);
         passwordEditText = findViewById(R.id.editText_password_login);

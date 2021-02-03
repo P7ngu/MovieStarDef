@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.VerificaController;
 import com.example.moviestar.R;
@@ -41,6 +43,9 @@ public class VerificationActivity extends AppCompatActivity {
         accediButton=findViewById(R.id.button_accedi_verification);
         newCodeButton=findViewById(R.id.button_sendnewcode_verification);
         forgotPasswordTV=findViewById(R.id.textView_forgotpassword_verification);
+
+        ImageView img = findViewById(R.id.imageView3);
+        Glide.with(mContext).load("https://i.ibb.co/zVhNTdy/logo.png").into(img);
 
 
         accediButton.setOnClickListener(new View.OnClickListener() {

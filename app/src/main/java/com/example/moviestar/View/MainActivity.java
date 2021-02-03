@@ -16,6 +16,7 @@ import com.example.moviestar.Controllers.LoginController;
 import com.example.moviestar.Controllers.LogoutController;
 import com.example.moviestar.Controllers.VerificaController;
 import com.example.moviestar.R;
+import com.example.moviestar.View.login.LoginActivity;
 import com.example.moviestar.View.login.RegistrazioneActivity;
 import com.example.moviestar.View.login.VerificationActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         //Log.i("Test", "saved data: "+email+password);
 
         if (!isUserLogged) {
-            Intent intent = new Intent(this, RegistrazioneActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
 

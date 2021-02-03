@@ -362,11 +362,13 @@ public class UtenteDAO {
         CollectionReference richiesteamico = db.collection("ListaAmici");
 
         Map<String, Object> data4 = new HashMap<>();
+       // data4.put("username_mandante", currentUser.getUsername());
         data4.put("userID_ricevente", idUtenteDaAggiungere);
         data4.put("userID_mandante", userId);
         richiesteamico.document(userId+idUtenteDaAggiungere).set(data4);
 
         Map<String, Object> data5 = new HashMap<>();
+       // data5.put("username_ricevente", currentUser.getUsername());
         data5.put("userID_ricevente", userId);
         data5.put("userID_mandante", idUtenteDaAggiungere);
         richiesteamico.document(idUtenteDaAggiungere+userId).set(data5);

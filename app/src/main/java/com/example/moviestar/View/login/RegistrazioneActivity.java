@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.RegistrazioneController;
 import com.example.moviestar.R;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -46,6 +47,8 @@ TextView disclaimer;
         Intent intent = getIntent();
         RegistrazioneController.registerOnCreate();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        ImageView img = findViewById(R.id.imageView2);
+        Glide.with(context).load("https://i.ibb.co/zVhNTdy/logo.png").into(img);
 
         emailEditText= findViewById(R.id.editTextTextEmailAddress);
         nomeUtenteEditText=findViewById(R.id.editText_NomeUtente);

@@ -144,6 +144,8 @@ public class RegistrazioneController extends AppCompatActivity {
                                 intent.putExtra("userID", currentUserID);
                                 mContext.startActivity(intent);
 
+                                PopupController.mostraPopup("Congratulazioni", "Utente registrato con successo, verifica ora il tuo account!", mContext);
+
                             }else{
 
                             }
