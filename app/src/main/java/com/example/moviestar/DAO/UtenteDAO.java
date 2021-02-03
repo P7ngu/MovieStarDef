@@ -134,13 +134,18 @@ public class UtenteDAO {
                                 //data = document.getData();
                                 String idUtente = document.getData().get("userID_ricevente").toString();
                                 Utente utenteTemp = new Utente(idUtente);
-                                if (utenteTemp != null) amiciList.add(utenteTemp);
+                                if (utenteTemp != null) {
+                                    //getUtentiByID(idUtente);
+                                    amiciList.add(utenteTemp);
+                                }
                             }
                             //ListaAmiciActivity.PutDataIntoRecyclerView(amiciList);
                         } else Log.d("testFirebase", "Error getting documents: ", task.getException());
                         currentUser.setListaAmici(amiciList);
                         try{
-                            ListaAmiciActivity.PutDataIntoRecyclerView(amiciList);} catch(Exception e){}
+                            ListaAmiciActivity.PutDataIntoRecyclerView(amiciList);
+                            }
+                            catch(Exception e){}
                     }
                 });
 
@@ -180,6 +185,9 @@ public class UtenteDAO {
            // SocialFragment.PutDataIntoRecyclerView(usersList, "richieste");
         }catch (Exception e){}
     }
+
+
+
     public static void getImageFromDatabase(String currentID, Context mContext){
         FirebaseFirestore db=FirebaseFirestore.getInstance();
         StorageReference storageRef;

@@ -38,6 +38,7 @@ public class HomeFragment extends Fragment {
     static Context mContext;
     static ImageButton searchButton;
     String paroleCercate;
+    private static  boolean flag=false;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -89,23 +90,27 @@ public class HomeFragment extends Fragment {
 
        String urlJSON="https://api.themoviedb.org/3/discover/movie?api_key=89d40cd46523243c6d553bb54b2ca47e&language=it-IT&sort_by=popularity.desc";
         movieList=new ArrayList<>();
-        try {
-            TrendingFilmController.GetData getData = new TrendingFilmController.GetData(urlJSON, movieList);
-            getData.execute();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
+        //if(!flag) {
+            try {
+                TrendingFilmController.GetData getData = new TrendingFilmController.GetData(urlJSON, movieList);
+                getData.execute();
+                //flag=true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        //}
     }
 
 
 
 
     public static void PutDataIntoRecyclerView(List<Film> movieList){
-        Adaptery adaptery=new Adaptery(mContext, movieList);
-        Log.d("Test", ""+mContext.toString()+recyclerView.toString());
-        Log.d("Test1", recyclerView.toString());
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.setAdapter(adaptery);
+            Adaptery adaptery = new Adaptery(mContext, movieList);
+            Log.d("Test", "" + mContext.toString() + recyclerView.toString());
+            Log.d("Test1", recyclerView.toString());
+            recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+            recyclerView.setAdapter(adaptery);
+            flag=true;
 
 
     }

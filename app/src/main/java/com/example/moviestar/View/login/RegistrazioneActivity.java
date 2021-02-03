@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moviestar.Controllers.RegistrazioneController;
 import com.example.moviestar.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class RegistrazioneActivity extends AppCompatActivity {
 
@@ -23,6 +24,7 @@ TextView disclaimer;
     Button registratiButton, accediButton;
     ImageView logoIMG;
     final Context context= this;
+    FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     public void onBackPressed() {
@@ -43,6 +45,7 @@ TextView disclaimer;
          setContentView(R.layout.registrazione);
         Intent intent = getIntent();
         RegistrazioneController.registerOnCreate();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         emailEditText= findViewById(R.id.editTextTextEmailAddress);
         nomeUtenteEditText=findViewById(R.id.editText_NomeUtente);
@@ -76,6 +79,9 @@ TextView disclaimer;
                 String nomeUtente=nomeUtenteEditText.getText().toString().trim();
 
                 RegistrazioneController.createUserEmailAccount(email, password1, password2, nomeUtente, context);
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.METHOD, "method");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle);
                 //RegistrazioneController.checkCampiPerRegistraUtente(email, password1, password2, nomeUtente, context);
 
 

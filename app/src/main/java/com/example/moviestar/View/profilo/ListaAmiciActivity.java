@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.LoginController;
+import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
 import com.example.moviestar.View.social.SocialFragment;
@@ -49,6 +50,7 @@ public class ListaAmiciActivity extends AppCompatActivity {
         try {
             UtenteList = new ArrayList<>();
             LoginController.loadListaAmiciFromDB();
+            //PopupController.mostraPopup("Err", UtenteList.get(0) +""+ UtenteList.get(1)+ "", mContext);
             PutDataIntoRecyclerView(CurrentUser.getInstance().getListaAmici());
         } catch (Exception e){
             e.printStackTrace();

@@ -2,6 +2,7 @@ package com.example.moviestar.Controllers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
@@ -21,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -135,6 +137,7 @@ public class RegistrazioneController extends AppCompatActivity {
                                         .getString("username");
                                 String userid=task.getResult().getString("uid");
                                 VerificaController.sendEmailConLinkDiVerifica(currentUserID, mContext);
+
 
                                 Intent intent = new Intent(mContext, MainActivity.class);
                                 intent.putExtra("username", name);

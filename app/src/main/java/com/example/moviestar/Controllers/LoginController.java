@@ -18,6 +18,7 @@ import com.example.moviestar.View.login.VerificationActivity;
 import com.example.moviestar.View.profilo.ListaAmiciActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -84,21 +85,30 @@ public class LoginController {
                                                         editor.putString("password", password);
                                                         editor.apply();
                                                         loadCurrentUserDetails();
-                                                        MainActivity.setUserLogged(true);
-                                                        Intent intent = new Intent(mContext, MainActivity.class);
-                                                        mContext.startActivity(intent);
+
+
+                                                        //Intent intent = new Intent(mContext, MainActivity.class);
+                                                        //intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                                        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                        //mContext.startActivity(intent);
                                                     }
-                                                    if(VerificaController.IsEmailVerified()) {
-                                                        mContext.startActivity(new Intent(mContext, MainActivity.class));
-                                                    } else {
-                                                        mContext.startActivity(new Intent(mContext, VerificationActivity.class));
-                                                    }
+
                                                 }
                                             }
                                         });
                             }
                         }
-                    })
+                    }).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                @Override
+                public void onSuccess(AuthResult authResult) {
+                    if(VerificaController.IsEmailVerified()) {
+                        MainActivity.setUserLogged(true);
+                        mContext.startActivity(new Intent(mContext, MainActivity.class));
+                    } else {
+                        mContext.startActivity(new Intent(mContext, VerificationActivity.class));
+                    }
+                }
+            })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {

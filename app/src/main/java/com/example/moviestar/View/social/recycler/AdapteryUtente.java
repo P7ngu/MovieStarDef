@@ -55,15 +55,21 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
         try {
             UtenteDAO.getUtentiByID(mData.get(position).getIdUtente());
         } finally {
-            tempList = CurrentUser.getInstance().getListaUtenti();
-        }
+           if(tipologiaSchermata.equals("ricerca")|| tipologiaSchermata.equals("richieste"))
+               tempList = CurrentUser.getInstance().getListaUtenti();
+           else {
+               tempList=CurrentUser.getInstance().getListaAmici();
 
+           }
+        }
 
         if(tempList!=null && tempList.size()>0) {
-            holder.nomeutentemostrato.setText(tempList.get(0).getNomeUtenteMostrato()+" #"+tempList.get(0).getIdUtente());
+            //for(int i=0; i<tempList.size(); i++)
+            //holder.nomeutentemostrato.setText(tempList.get(position).getNomeUtenteMostrato()+" #"+tempList.get(position).getIdUtente());
             Glide.with(mContext).load("https://i.ibb.co/7tbJ1Sv/user.png").into(holder.img);
         }
-        //holder.nomeutentemostrato.setText(mData.get(position).getIdUtente());
+        //String nome = UtenteDAO.getUtentiByID(mData.get(position).getIdUtente());
+        holder.nomeutentemostrato.setText(mData.get(position).getNomeUtenteMostrato()+ " #"+mData.get(position).getIdUtente());
 
     }
 

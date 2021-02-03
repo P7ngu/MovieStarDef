@@ -38,6 +38,7 @@ public class SocialFragment extends Fragment {
     private static EditText searchbarET;
     public static Context mContext;
     private ImageButton deleteButton, addButton, searchButton;
+    private boolean flag_reloaded;
 
     @Override
     public void onAttach(Context context) {
@@ -95,13 +96,15 @@ public class SocialFragment extends Fragment {
    
 
         UtenteList=new ArrayList<>();
-        try {
-            CaricaRecyclerView caricaRecyclerView = new CaricaRecyclerView();
-            caricaRecyclerView.execute();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-
+        //if(!flag_reloaded) {
+            try {
+                CaricaRecyclerView caricaRecyclerView = new CaricaRecyclerView();
+                caricaRecyclerView.execute();
+                flag_reloaded=true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        //}
 
     }
 
