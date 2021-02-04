@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.Controllers.RegistrazioneController;
 import com.example.moviestar.R;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -58,7 +59,8 @@ TextView disclaimer;
         disclaimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Test", "Cliccato");
+//                Log.d("Test", "Cliccato");
+                PopupController.mostraPopup(getString(R.string.disclaimer),getString(R.string.termini), context);
             }
         });
 

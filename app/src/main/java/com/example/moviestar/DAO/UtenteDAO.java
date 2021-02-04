@@ -73,7 +73,7 @@ public class UtenteDAO {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                PopupController.mostraPopup("Errore", " non rimosso.", mContext);
+                PopupController.mostraPopup("Errore", "non rimosso, errore di sistema", mContext);
             }
         });
     }
@@ -318,7 +318,7 @@ public class UtenteDAO {
         richiesteamico.document(userId + idUtenteDaAggiungere).set(data4);
 
         LoginController.loadCurrentUserDetails();
-        PopupController.mostraPopup("Utente", "aggiunto alla lista", mContext);
+        PopupController.mostraPopup("Richiesta inviata", "Richiesta di collegamento inviata con successo", mContext);
 
     }
 
@@ -376,7 +376,11 @@ public class UtenteDAO {
         removeRichiestaAmico_Firebase(idUtenteDaAggiungere, mContext);
 
         LoginController.loadCurrentUserDetails();
+<<<<<<< Updated upstream
         //PopupController.mostraPopup("Utente", "aggiunto alla lista", mContext);
+=======
+        PopupController.mostraPopup("Richiesta accettata", "L'utente è stato aggiunto alla tua lista amici", mContext);
+>>>>>>> Stashed changes
     }
 
     public static void removeRichiestaAmico_Firebase(String idUtenteDaAggiungere, Context mContext) {
@@ -415,7 +419,7 @@ public class UtenteDAO {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        PopupController.mostraPopup("Richiesta respinta", "rimossa con successo.", mContext);
+                        PopupController.mostraPopup("Richiesta respinta", "Richiesta rimossa con successo.", mContext);
                         LoginController.loadCurrentUserDetails();
                     }
                 })

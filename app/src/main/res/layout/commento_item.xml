@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="TextView"
+            android:text="@string/username_tv"
             android:textColor="#F9A825"
             android:textSize="20sp" />
 
@@ -38,14 +38,14 @@
             android:layout_gravity="center_horizontal|center_vertical"
             android:layout_marginStart="150dp"
             android:layout_marginLeft="150dp"
-            android:text="elimina" />
+            android:text="@string/elimina" />
 
         <TextView
             android:id="@+id/testo_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="TextView"
+            android:text="@string/testo_commento"
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
 

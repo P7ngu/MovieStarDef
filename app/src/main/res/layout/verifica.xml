@@ -29,7 +29,7 @@
             android:layout_width="294dp"
             android:layout_height="94dp"
             android:gravity="center"
-            android:text="La verifica avviene tramite email, usa l'apposito pulsante se il link ricevuto è scaduto."
+            android:text="@string/la_verifica_avviene_tramite_email_usa_l_apposito_pulsante_se_il_link_ricevuto_scaduto"
             android:textColor="#FF8F00"
             android:textSize="20sp" />
 
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:text="Richiedi nuovo codice" />
+                android:text="@string/richiedi_nuovo_codice" />
 
             <Button
                 android:id="@+id/button_accedi_verification"
@@ -54,7 +54,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Accedi" />
+                android:text="@string/accedi" />
         </LinearLayout>
 
         <TextView
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="62dp"
             android:layout_marginTop="20dp"
-            android:text="Hai dimenticato la password? Reimpostala ora"
+            android:text="@string/hai_dimenticato_la_password_reimpostala_ora"
             android:textColor="#0277BD"
             android:textSize="18sp" />
 

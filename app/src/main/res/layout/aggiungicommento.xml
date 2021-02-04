@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center"
-            android:text="TITOLO FILM"
+            android:text="@string/titolo_film"
             android:textColor="#F9A825"
             android:textSize="24sp" />
 
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="INSERISCI IL COMMENTO"
+            android:text="@string/inserisci_il_commento"
             android:textColor="#FFFFFF" />
 
         <EditText
@@ -51,7 +51,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="Aggiungi Commento" />
+            android:text="@string/aggiungi_commento" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

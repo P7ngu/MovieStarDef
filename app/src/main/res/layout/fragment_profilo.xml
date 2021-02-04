@@ -27,28 +27,28 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:gravity="center|center_horizontal|center_vertical"
-            android:text="visualizza elenco amici" />
+            android:text="@string/visualizza_elenco_amici" />
 
         <Button
             android:id="@+id/button_showallfilmvisti_profilo2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="visualizza lista film visti" />
+            android:text="@string/visualizza_lista_film_visti" />
 
         <Button
             android:id="@+id/button_showallfilmdavedere_profilo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="visualizza lista film da vedere" />
+            android:text="@string/visualizza_lista_film_da_vedere" />
 
         <Button
             android:id="@+id/button_filmpref"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="visualizza lista film preferiti" />
+            android:text="@string/visualizza_lista_film_preferiti" />
     </LinearLayout>
 
     <LinearLayout
@@ -86,7 +86,7 @@
             android:layout_marginEnd="40dp"
             android:layout_marginRight="40dp"
             android:gravity="center"
-            android:text="Username"
+            android:text="@string/username_tv"
             android:textColor="#FFFFFF"
             android:textSize="22sp"
             android:textStyle="bold" />

@@ -1,10 +1,16 @@
 package com.example.moviestar.Model;
 
-public class Commento extends Recensione{
+public class Recensione {
     String testo;
     String nomeAutore;
     String idAutore;
     String filmId;
+    String timeStamp;
+    int voto;
+
+    public int getVoto() { return voto; }
+
+    public void setVoto(int voto) { this.voto = voto; }
 
     public String getFilmId() {
         return filmId;
@@ -12,14 +18,6 @@ public class Commento extends Recensione{
 
     public void setFilmId(String filmId) {
         this.filmId = filmId;
-    }
-
-    public Commento(String username, String userId, String commentoText, String seconds, String idFilm) {
-        this.nomeAutore=username;
-        this.testo=commentoText;
-        this.idAutore=userId;
-        this.timeStamp=seconds;
-        this.filmId=idFilm;
     }
 
     public String getIdAutore() {
@@ -38,21 +36,6 @@ public class Commento extends Recensione{
         this.timeStamp = timeStamp;
     }
 
-    String timeStamp;
-
-    public Commento(String username, String userId, String commentoText) {
-        this.nomeAutore=username;
-        this.testo=commentoText;
-        this.idAutore=userId;
-    }
-
-    public Commento(String username, String userId, String commentoText, String seconds) {
-        this.nomeAutore=username;
-        this.testo=commentoText;
-        this.idAutore=userId;
-        this.timeStamp=seconds;
-    }
-
     public String getTesto() {
         return testo;
     }
@@ -69,8 +52,4 @@ public class Commento extends Recensione{
         this.nomeAutore = nomeAutore;
     }
 
-    public Commento(String testo, String nomeAutore) {
-        this.testo = testo;
-        this.nomeAutore = nomeAutore;
-    }
 }

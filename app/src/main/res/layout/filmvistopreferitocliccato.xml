@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="TextView"
+            android:text="@string/titolo_film"
             android:textColor="#F9A825"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="TextView"
+            android:text="@string/trama"
             android:textColor="#FFFFFF" />
 
         <TextView
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="TextView"
+            android:text="@string/voto_medio"
             android:textColor="#FFFFFF" />
 
         <Button
@@ -58,7 +58,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             android:rotationX="2"
-            android:text="Aggiungi commento" />
+            android:text="@string/aggiungi_commento" />
 
         <LinearLayout
             android:layout_width="258dp"
@@ -115,7 +115,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             android:rotationX="2"
-            android:text="Rimuovi dalla lista dei film preferiti" />
+            android:text="@string/rimuovi_dalla_lista_dei_film_preferiti" />
 
         <Button
             android:id="@+id/button_remove_list_visti"
@@ -125,7 +125,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             android:rotationX="2"
-            android:text="Rimuovi dalla lista dei film visti" />
+            android:text="@string/rimuovi_alla_lista_dei_film_visti" />
 
         <Button
             android:id="@+id/button_leggicommenti"
@@ -135,7 +135,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             android:rotationX="2"
-            android:text="leggi commenti" />
+            android:text="@string/leggi_commenti" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

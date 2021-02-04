@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity  {
     Context mContext = this;
     EditText emailEditText, passwordEditText;
     TextView forgotPassword;
-    Button accediButton, accedi2Button, registratiButton;
+    Button accediButton,  registratiButton;
     ImageView logo;
 
     private FirebaseAuth firebaseAuth;
@@ -107,7 +107,6 @@ public class LoginActivity extends AppCompatActivity  {
         forgotPassword = findViewById(R.id.textView_forgotpassword_login);
 
         accediButton = findViewById(R.id.button_login_login);
-        accedi2Button = findViewById(R.id.button3);
         registratiButton = findViewById(R.id.button_registrati_login);
 
         accediButton.setOnClickListener(new View.OnClickListener() {

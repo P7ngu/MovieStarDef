@@ -29,7 +29,6 @@
         <activity android:name=".View.profilo.ChangePasswordActivity"/>
 
         <activity android:name=".View.profilo.EditProfiloActivity"/>
-        <activity android:name=".View.profilo.EditProfiloFotoActivity"/>
         <activity android:name=".View.profilo.VisualizzaIdActivity"/>
 
 

@@ -50,7 +50,7 @@ public class RecensioneDAO {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        PopupController.mostraPopup("Commento rimosso", "commento rimosso con successo", mContext);
+                        PopupController.mostraPopup("Commento rimosso", "Commento rimosso con successo", mContext);
                         //REFRESH SCHERMATA
                         ModificaRecensioneController.setRisultato(true);
                         RecensioniFilmController.onClickLeggiCommenti(filmId, mContext);
@@ -60,7 +60,7 @@ public class RecensioneDAO {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        PopupController.mostraPopup("Errore", " non rimosso.", mContext);
+                        PopupController.mostraPopup("Errore", "non rimosso, errore di sistema", mContext);
                     }
                 });
     }
@@ -77,7 +77,7 @@ public class RecensioneDAO {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        PopupController.mostraPopup("Commento rimosso", "commento rimosso con successo", mContext);
+                        PopupController.mostraPopup("Commento rimosso", "Commento rimosso con successo", mContext);
                         //REFRESH SCHERMATA
                        ModificaRecensioneController.setRisultato(true);
                         RecensioniFilmController.onClickLeggiCommenti(filmId, mContext, recyclerView);
@@ -87,7 +87,7 @@ public class RecensioneDAO {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        PopupController.mostraPopup("Errore", " non rimosso.", mContext);
+                        PopupController.mostraPopup("Errore", "non rimosso, errore di sistema", mContext);
                     }
                 });
     }

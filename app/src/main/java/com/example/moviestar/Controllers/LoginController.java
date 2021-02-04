@@ -78,7 +78,7 @@ public class LoginController {
                                                         CurrentUser currentUser = CurrentUser.getInstance();
                                                         currentUser.setUsername(snapshot.getString("username"));
                                                         currentUser.setUserId(currentuserid);
-                                                        PopupController.mostraPopup("Dentro query", currentuserid + snapshot.getString("username"), mContext);
+//                                                        PopupController.mostraPopup("Dentro query", currentuserid + snapshot.getString("username"), mContext);
                                                         prefs = mContext.getSharedPreferences("myPrefsKeys", Context.MODE_PRIVATE);
                                                         SharedPreferences.Editor editor = prefs.edit();
                                                         editor.putString("email", email);
@@ -204,7 +204,6 @@ public class LoginController {
         } else return false;
     }
 
-
     public static Utente getMyUtente() {
         return myUtente;
     }
@@ -212,11 +211,5 @@ public class LoginController {
     public static void setMyUtente(Utente myUtente) {
         myUtente = myUtente;
     }
-
-//    public String excMessage(String message){
-//        String result = result.replaceFirst(String regex, String "Error:");
-//        return result;
-//    }
-
 
 }
