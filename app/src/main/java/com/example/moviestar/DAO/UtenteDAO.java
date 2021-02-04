@@ -376,11 +376,8 @@ public class UtenteDAO {
         removeRichiestaAmico_Firebase(idUtenteDaAggiungere, mContext);
 
         LoginController.loadCurrentUserDetails();
-<<<<<<< Updated upstream
         //PopupController.mostraPopup("Utente", "aggiunto alla lista", mContext);
-=======
         PopupController.mostraPopup("Richiesta accettata", "L'utente è stato aggiunto alla tua lista amici", mContext);
->>>>>>> Stashed changes
     }
 
     public static void removeRichiestaAmico_Firebase(String idUtenteDaAggiungere, Context mContext) {

@@ -15,11 +15,12 @@ import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.R;
 
 public class AggiungiCommentoActivity extends AppCompatActivity {
-String titoloFilm, idfilm;
-TextView titoloTextview;
-EditText commentoText;
-Context mContext;
-Button inviaCommentoButton;
+    
+    String titoloFilm, idfilm;
+    TextView titoloTextview;
+    EditText commentoText;
+    Context mContext;
+    Button inviaCommentoButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

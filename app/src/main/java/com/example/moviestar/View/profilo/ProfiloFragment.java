@@ -30,8 +30,8 @@ public class ProfiloFragment extends Fragment {
     static ImageButton editProfiloButton;
     static Button vediAmiciButton, vediFilmPreferitiButton, vediFilmVistiButton, vediFilmDaVedereButton;
     static ImageView propicImg;
-   Context mContext;
-   TextView usernameTV;
+    Context mContext;
+    TextView usernameTV;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,

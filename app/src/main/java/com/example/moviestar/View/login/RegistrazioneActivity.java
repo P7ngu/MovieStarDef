@@ -21,8 +21,8 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class RegistrazioneActivity extends AppCompatActivity {
 
-EditText nomeUtenteEditText, emailEditText, password1EditText, password2EditText;
-TextView disclaimer;
+    EditText nomeUtenteEditText, emailEditText, password1EditText, password2EditText;
+    TextView disclaimer;
     Button registratiButton, accediButton;
     ImageView logoIMG;
     final Context context= this;
@@ -44,7 +44,7 @@ TextView disclaimer;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         setContentView(R.layout.registrazione);
+        setContentView(R.layout.registrazione);
         Intent intent = getIntent();
         RegistrazioneController.registerOnCreate();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -79,15 +79,15 @@ TextView disclaimer;
 
 
             String email = emailEditText.getText().toString().trim();
-                String password1=password1EditText.getText().toString().trim();
-                String password2= password2EditText.getText().toString().trim();
-                String nomeUtente=nomeUtenteEditText.getText().toString().trim();
+            String password1=password1EditText.getText().toString().trim();
+            String password2= password2EditText.getText().toString().trim();
+            String nomeUtente=nomeUtenteEditText.getText().toString().trim();
 
-                RegistrazioneController.createUserEmailAccount(email, password1, password2, nomeUtente, context);
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.METHOD, "method");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle);
-                //RegistrazioneController.checkCampiPerRegistraUtente(email, password1, password2, nomeUtente, context);
+            RegistrazioneController.createUserEmailAccount(email, password1, password2, nomeUtente, context);
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.METHOD, "method");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle);
+            //RegistrazioneController.checkCampiPerRegistraUtente(email, password1, password2, nomeUtente, context);
 
 
 
