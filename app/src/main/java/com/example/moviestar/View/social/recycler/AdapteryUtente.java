@@ -128,7 +128,7 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
                     else {
                         RimuoviAmicoController.eliminaAmicoDaListaAmici
                                 (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
-                       // removeAt(getAdapterPosition());
+                       removeAt(getAdapterPosition());
                     }
                 }
             });
