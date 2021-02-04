@@ -74,8 +74,10 @@ public class RegistrazioneController extends AppCompatActivity {
     public static boolean checkCampiPerRegistraUtente(String email, String password1, String password2, String idUtente, final Context myContext) {
         if(checkCampiNonVuoti(idUtente, password1, password2, email)) {
             if (checkPasswordMatching( password1, password2, myContext)) {
-                myUtente = new Utente(idUtente, password1, email);
-                return true;
+                if(idUtente.length()>3) {
+                    myUtente = new Utente(idUtente, password1, email);
+                    return true;
+                }
             }
         }
         if(!checkCampiNonVuoti(idUtente, password1, password2, email)){
@@ -84,6 +86,8 @@ public class RegistrazioneController extends AppCompatActivity {
             return false;
 
         }
+        if(idUtente.length()<4)
+          PopupController.mostraPopup("Errore", "Numero minimo di caratteri per nome utente: 4.", myContext);
         return false;
 
     }
