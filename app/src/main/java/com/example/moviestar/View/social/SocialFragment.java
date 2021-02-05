@@ -1,6 +1,7 @@
 package com.example.moviestar.View.social;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,12 +19,14 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.RichiesteAmicoController;
 import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.Controllers.RicercaUtentiController;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
+import com.example.moviestar.View.profilo.ListaAmiciActivity;
 import com.example.moviestar.View.social.recycler.AdapteryUtente;
 
 import java.util.ArrayList;
@@ -39,6 +43,7 @@ public class SocialFragment extends Fragment {
     public static Context mContext;
     private ImageButton deleteButton, addButton, searchButton;
     private boolean flag_reloaded;
+    private ImageView friendsListImgView;
 
     @Override
     public void onAttach(Context context) {
@@ -62,6 +67,19 @@ public class SocialFragment extends Fragment {
 
         final EditText searchbar = root.findViewById(R.id.ET_searchbar_social);
         searchbarET=searchbar;
+
+        final ImageView imgview = root.findViewById(R.id.friends_imgv);
+        friendsListImgView = imgview;
+        Glide.with(mContext).load("https://i.ibb.co/TB4mzTd/baseline-contact-page-white-18dp.png").into(friendsListImgView);
+
+        friendsListImgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ListaAmiciActivity.class);
+                intent.putExtra("tipologia", "listaAmici");
+                startActivity(intent);
+            }
+        });
 
 
         //searchbutton
