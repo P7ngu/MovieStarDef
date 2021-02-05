@@ -14,8 +14,9 @@ import static com.example.moviestar.Controllers.RimuoviFilmDaListaController.onC
 public class AggiungiAListaFilmController {
 
     public static void onClickAddToPreferiti(String filmId, String filmName, String filmOverview, String filmFotoPath, String filmVoto, Context mContext){
-        onClickAddToVisti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+        FilmDAO.rimuoviFilmDaLista_Firebase(mContext,"FilmDaVedere", filmId);
         onClickRemoveToDaVedere(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+        onClickAddToVisti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
         FilmDAO.addToPreferitiDAO(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
 
 
