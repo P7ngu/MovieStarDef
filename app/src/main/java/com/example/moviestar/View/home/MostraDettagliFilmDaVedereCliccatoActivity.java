@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moviestar.Model.Film;
 import com.example.moviestar.R;
 import com.example.moviestar.View.MainActivity;
 
@@ -26,6 +27,7 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
     static String filmOverview;
     static String filmId;
     static String filmFotoPath;
+    Film filmCliccato;
     TextView filmNameTextView, tramaTextView, votoTextView;
     Button addToPreferitiButton, addToVistiButton;
     Button removeFromDaVedereButton;
@@ -52,6 +54,8 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
         filmId = intent.getStringExtra("FilmId");
         filmFotoPath=intent.getStringExtra("FilmPicPath");
 
+        filmCliccato = new Film(filmId, filmName, filmFotoPath, filmVoto, filmOverview);
+
         filmNameTextView = findViewById(R.id.title_text);
         filmNameTextView.setText(filmName);
 
@@ -65,7 +69,7 @@ public class MostraDettagliFilmDaVedereCliccatoActivity extends AppCompatActivit
         buttonLeggiCommenti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickLeggiCommenti(filmId, mContext, true);
+                onClickLeggiCommenti(filmCliccato, mContext, true);
             }
         });
 

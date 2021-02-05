@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.moviestar.Model.Film;
 import com.example.moviestar.R;
 import com.example.moviestar.View.MainActivity;
 
@@ -32,6 +33,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
     static String filmVoto;
     static String filmOverview;
     static String filmFotoPath;
+    Film filmCliccato;
     TextView filmNameTextView, tramaTextView, votoTextView;
     Button addToPreferitiButton;
     Button removeFromVistiButton;
@@ -100,6 +102,9 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
         filmId = intent.getStringExtra("FilmId");
         filmFotoPath=intent.getStringExtra("FilmPicPath");
 
+        filmCliccato = new Film(filmId, filmName, filmFotoPath, filmVoto, filmOverview);
+
+
         int starNumber = getNumberOfStarsFromDB(filmId, number_star);
        // riempiStelle(starNumber, false);
         //riempiStelle(number_star, false);
@@ -118,7 +123,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
         buttonLeggiCommenti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickLeggiCommenti(filmId, mContext);
+                onClickLeggiCommenti(filmCliccato, mContext);
             }
         });
 
@@ -126,7 +131,7 @@ public class MostraDettagliFilmVistoCliccatoActivity extends AppCompatActivity {
         aggiungiCommentoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickAggiungiCommento(filmId, filmName, filmOverview, mContext);
+                onClickAggiungiCommento(filmCliccato, mContext);
             }
         });
 

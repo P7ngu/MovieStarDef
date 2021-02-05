@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.moviestar.DAO.RecensioneDAO;
 import com.example.moviestar.DAO.UtenteDAO;
 import com.example.moviestar.Model.Commento;
+import com.example.moviestar.Model.Film;
 import com.example.moviestar.View.home.MostraDettagliFilmVistoCliccatoActivity;
 import com.example.moviestar.View.home.MostraDettagliFilmVistoCliccatoPreferitoActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,31 +32,31 @@ public class ModificaRecensioneController {
         ModificaRecensioneController.risultato = risultato;
     }
 
-    public static boolean eliminaRecensione(Commento commentoDaRimuovere, Context mContext){
-        PopupController.mostraPopupDiConfermaOAnnulla("Elimina commento", "Vuoi davvero eliminare questo commento?",
+    public static boolean eliminaRecensione(Film filmCliccato, Commento commentoDaRimuovere, Context mContext){
+        PopupController.mostraPopupDiConfermaOAnnulla(filmCliccato, "Elimina commento", "Vuoi davvero eliminare questo commento?",
                 mContext, "commento", "Commenti", commentoDaRimuovere);
         return risultato;
 
     }
 
 
-    public static void eliminaRecensione_DB(Commento commentoDaRimuovere, Context mContext){
-        RecensioneDAO.eliminaRecensione_Firebase(commentoDaRimuovere, mContext);
+    public static void eliminaRecensione_DB(Film filmCliccato, Commento commentoDaRimuovere, Context mContext){
+        RecensioneDAO.eliminaRecensione_Firebase(filmCliccato, commentoDaRimuovere, mContext);
 
 
     }
 
 
-    public static boolean eliminaRecensione(Commento commentoDaRimuovere, Context mContext, RecyclerView recyclerView){
-        PopupController.mostraPopupDiConfermaOAnnulla("Elimina commento", "Vuoi davvero eliminare questo commento?",
+    public static boolean eliminaRecensione(Film filmCliccato, Commento commentoDaRimuovere, Context mContext, RecyclerView recyclerView){
+        PopupController.mostraPopupDiConfermaOAnnulla(filmCliccato, "Elimina commento", "Vuoi davvero eliminare questo commento?",
                 mContext, "commento", "Commenti", commentoDaRimuovere);
         return risultato;
 
     }
 
 
-    public static void eliminaRecensione_DB(Commento commentoDaRimuovere, Context mContext, RecyclerView recyclerView){
-        RecensioneDAO.eliminaRecensione_Firebase(commentoDaRimuovere, mContext, recyclerView);
+    public static void eliminaRecensione_DB(Film filmCliccato, Commento commentoDaRimuovere, Context mContext, RecyclerView recyclerView){
+        RecensioneDAO.eliminaRecensione_Firebase(filmCliccato, commentoDaRimuovere, mContext, recyclerView);
     }
 
 
@@ -70,8 +71,8 @@ public class ModificaRecensioneController {
        return result;
     }
 
-    public static void onClickPositiveButton(Commento idObject, Context myContext) {
-        eliminaRecensione_DB(idObject, myContext);
+    public static void onClickPositiveButton(Film filmCliccato,Commento idObject, Context myContext) {
+        eliminaRecensione_DB(filmCliccato ,idObject, myContext);
     }
 
     public static void onClickNegativeButton(Context myContext) {

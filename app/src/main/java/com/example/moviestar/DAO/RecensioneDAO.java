@@ -13,6 +13,7 @@ import com.example.moviestar.Controllers.ModificaRecensioneController;
 import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.Controllers.RecensioniFilmController;
 import com.example.moviestar.Model.Commento;
+import com.example.moviestar.Model.Film;
 import com.example.moviestar.View.home.MostraDettagliFilmVistoCliccatoActivity;
 import com.example.moviestar.View.home.MostraDettagliFilmVistoCliccatoPreferitoActivity;
 import com.example.moviestar.View.home.RecyclerCommenti.AdapteryCommenti;
@@ -38,7 +39,7 @@ public class RecensioneDAO {
 
 
 
-    public static void eliminaRecensione_Firebase(Commento commentoDaRimuovere, Context mContext){
+    public static void eliminaRecensione_Firebase(Film filmCliccato, Commento commentoDaRimuovere, Context mContext){
         CurrentUser currentUser = CurrentUser.getInstance();
         String userId=currentUser.getUserId();
         FirebaseFirestore db=FirebaseFirestore.getInstance();
@@ -53,7 +54,7 @@ public class RecensioneDAO {
                         PopupController.mostraPopup("Commento rimosso", "Commento rimosso con successo", mContext);
                         //REFRESH SCHERMATA
                         ModificaRecensioneController.setRisultato(true);
-                        RecensioniFilmController.onClickLeggiCommenti(filmId, mContext);
+                        RecensioniFilmController.onClickLeggiCommenti(filmCliccato, mContext);
                         LoginController.loadCurrentUserDetails();
                     }
                 })
@@ -65,7 +66,7 @@ public class RecensioneDAO {
                 });
     }
    //OVERLOAD
-    public static void eliminaRecensione_Firebase(Commento commentoDaRimuovere, Context mContext, RecyclerView recyclerView){
+    public static void eliminaRecensione_Firebase(Film filmCliccato, Commento commentoDaRimuovere, Context mContext, RecyclerView recyclerView){
         CurrentUser currentUser = CurrentUser.getInstance();
         String userId=currentUser.getUserId();
         FirebaseFirestore db=FirebaseFirestore.getInstance();
@@ -80,7 +81,7 @@ public class RecensioneDAO {
                         PopupController.mostraPopup("Commento rimosso", "Commento rimosso con successo", mContext);
                         //REFRESH SCHERMATA
                        ModificaRecensioneController.setRisultato(true);
-                        RecensioniFilmController.onClickLeggiCommenti(filmId, mContext, recyclerView);
+                        RecensioniFilmController.onClickLeggiCommenti(filmCliccato, mContext, recyclerView);
                         LoginController.loadCurrentUserDetails();
                     }
                 })
@@ -148,10 +149,11 @@ public class RecensioneDAO {
         return number_star;
     }
 
-    public static void getListaCommentiFilm_Firebase(String idFilm, Context mContext, RecyclerView recyclerView) {
+    public static void getListaCommentiFilm_Firebase(Film filmCliccato, Context mContext, RecyclerView recyclerView) {
         CurrentUser currentUser = CurrentUser.getInstance();
         String userId = currentUser.getUserId();
         String path = "Commenti";
+        String idFilm = filmCliccato.getId();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference commentiCollection = db.collection(path);
         ArrayList<Commento> commentiList = new ArrayList<>();
@@ -174,21 +176,21 @@ public class RecensioneDAO {
 
                                 if (commentoTemp != null) commentiList.add(commentoTemp);
                             }
-                            PutDataIntoRecyclerView(commentiList, recyclerView, mContext);
+                            PutDataIntoRecyclerView(filmCliccato, commentiList, recyclerView, mContext);
                         } else
                             Log.d("testFirebase", "Error getting documents: ", task.getException());
                     }
                 });
     }
 
-    private static void PutDataIntoRecyclerView(List<Commento> commentoList, RecyclerView commentiRecycler, Context mContext){
-        AdapteryCommenti adaptery=new AdapteryCommenti(mContext, commentoList, commentiRecycler);
+    private static void PutDataIntoRecyclerView(Film filmCliccato, List<Commento> commentoList, RecyclerView commentiRecycler, Context mContext){
+        AdapteryCommenti adaptery = new AdapteryCommenti(filmCliccato, mContext, commentoList, commentiRecycler);
         commentiRecycler.setLayoutManager(new LinearLayoutManager(mContext));
         commentiRecycler.setAdapter(adaptery);
 
     }
 
-    public static void inserisciCommentoFilm_Firebase(String idFilmCommentato, String commentoDaInserire, Context mContext) {
+    public static void inserisciCommentoFilm_Firebase(Film filmCliccato, String commentoDaInserire, Context mContext) {
         CurrentUser currentUser = CurrentUser.getInstance();
         String userId = currentUser.getUserId();
         String username = currentUser.getUsername();
@@ -199,13 +201,13 @@ public class RecensioneDAO {
         Map<String, Object> data4 = new HashMap<>();
         data4.put("userID", userId);
         data4.put("commento", commentoDaInserire);
-        data4.put("filmID", idFilmCommentato);
+        data4.put("filmID", filmCliccato.getId());
         data4.put("username", username);
         data4.put("unique_number", seconds);
-        richiesteamico.document(userId + idFilmCommentato + seconds).set(data4);
+        richiesteamico.document(userId + filmCliccato.getId() + seconds).set(data4);
 
         LoginController.loadCurrentUserDetails();
         PopupController.mostraPopup("Commento inviato", "Commento inviato con successo!", mContext);
-        RecensioniFilmController.openListaCommentiDopoInserimentoCommento(idFilmCommentato, mContext);
+        RecensioniFilmController.openListaCommentiDopoInserimentoCommento(filmCliccato, mContext);
     }
 }

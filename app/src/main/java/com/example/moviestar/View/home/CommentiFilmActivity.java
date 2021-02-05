@@ -24,7 +24,7 @@ public class CommentiFilmActivity extends AppCompatActivity {
     RecyclerView commentiRecycler;
     static Film filmCliccato;
     static String URL;
-     Context mContext=this;
+    Context mContext=this;
     public List<Commento> commentoList;
 
     public static void setFilm(Film filmCliccato1) {
@@ -36,8 +36,17 @@ public class CommentiFilmActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = getIntent();
-        String filmID = intent.getStringExtra("filmCliccatoId");
-        mContext.startActivity(new Intent(mContext, MainActivity.class));
+        String activity_type=intent.getStringExtra("tipologia");
+        String filmName = intent.getStringExtra("FilmName");
+        String filmVoto = intent.getStringExtra("FilmVoto");
+        String filmOverview = intent.getStringExtra("FilmOverview");
+        String filmId = intent.getStringExtra("FilmId");
+        String filmFotoPath=intent.getStringExtra("FilmPicPath");
+
+        filmCliccato = new Film(filmId, filmName, filmFotoPath, filmVoto, filmOverview);
+        MostraDettagliFilmController.openFilm(filmCliccato, mContext);
+//        mContext.startActivity(new Intent(mContext, MainActivity.class));
+
     }
 
     @Override
@@ -46,11 +55,17 @@ public class CommentiFilmActivity extends AppCompatActivity {
         setContentView(R.layout.commentifilm);
         commentiRecycler=findViewById(R.id.commentifilm_recyclerview);
         Intent intent = getIntent();
-        String filmID = intent.getStringExtra("filmCliccatoId");
+        String filmName = intent.getStringExtra("FilmName");
+        String filmVoto = intent.getStringExtra("FilmVoto");
+        String filmOverview = intent.getStringExtra("FilmOverview");
+        String filmId = intent.getStringExtra("FilmId");
+        String filmFotoPath=intent.getStringExtra("FilmPicPath");
+
+        filmCliccato = new Film(filmId, filmName, filmFotoPath, filmVoto, filmOverview);
 
         commentoList=new ArrayList<>();
 
-        RecensioniFilmController.getListaCommentiFilm(filmID, mContext, commentiRecycler);
+        RecensioniFilmController.getListaCommentiFilm(filmCliccato, mContext, commentiRecycler);
 
 
 

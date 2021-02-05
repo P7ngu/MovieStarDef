@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moviestar.Controllers.RecensioniFilmController;
+import com.example.moviestar.Model.Film;
 import com.example.moviestar.R;
 import com.example.moviestar.View.MainActivity;
 
@@ -24,6 +25,7 @@ public class MostraDettagliFilmCliccatoActivity extends AppCompatActivity {
     TextView filmNameTextView, tramaTextView, votoTextView;
     Button addToPreferitiButton, addToVistiButton, addToDaVedereButton;
     Button buttonLeggiCommenti;
+    Film filmCliccato;
 
     @Override
     public void onBackPressed() {
@@ -47,6 +49,8 @@ public class MostraDettagliFilmCliccatoActivity extends AppCompatActivity {
         String filmId = intent.getStringExtra("FilmId");
         String filmFotoPath=intent.getStringExtra("FilmPicPath");
 
+        filmCliccato = new Film(filmId, filmName, filmFotoPath, filmVoto, filmOverview);
+
         filmNameTextView = findViewById(R.id.title_text);
         filmNameTextView.setText(filmName);
 
@@ -60,7 +64,7 @@ public class MostraDettagliFilmCliccatoActivity extends AppCompatActivity {
         buttonLeggiCommenti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RecensioniFilmController.onClickLeggiCommenti(filmId, mContext, true);
+                RecensioniFilmController.onClickLeggiCommenti(filmCliccato, mContext, true);
             }
         });
 

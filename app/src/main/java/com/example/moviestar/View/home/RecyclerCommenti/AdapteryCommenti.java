@@ -16,6 +16,7 @@ import com.example.moviestar.Controllers.ModificaRecensioneController;
 import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.Controllers.RecensioniFilmController;
 import com.example.moviestar.Model.Commento;
+import com.example.moviestar.Model.Film;
 import com.example.moviestar.Model.Utente;
 import com.example.moviestar.R;
 import com.example.moviestar.View.home.CommentiFilmActivity;
@@ -26,8 +27,10 @@ public class AdapteryCommenti extends RecyclerView.Adapter<AdapteryCommenti.MyVi
     private static Context mContext;
     private static List<Commento> mData;
     private static RecyclerView recycler;
+    private static Film filmCliccato;
 
-    public AdapteryCommenti(Context mContext, List<Commento> mData, RecyclerView recyclerView) {
+    public AdapteryCommenti(Film filmCliccato, Context mContext, List<Commento> mData, RecyclerView recyclerView) {
+        this.filmCliccato = filmCliccato;
         this.mContext = mContext;
         this.mData = mData;
         this.recycler=recyclerView;
@@ -93,7 +96,7 @@ public class AdapteryCommenti extends RecyclerView.Adapter<AdapteryCommenti.MyVi
             deleteCommentoButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   ModificaRecensioneController.eliminaRecensione(mData.get(getAdapterPosition()), mContext, recycler);
+                   ModificaRecensioneController.eliminaRecensione(filmCliccato, mData.get(getAdapterPosition()), mContext, recycler);
 
                 }
             });

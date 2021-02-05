@@ -39,67 +39,90 @@ import java.util.Map;
 
 public class RecensioniFilmController {
 
-    public static void onClickLeggiCommenti(String filmId, Context context, boolean isSpoiler){
+    public static void onClickLeggiCommenti(Film filmCliccato, Context context, boolean isSpoiler){
         PopupController.mostraPopupDiConfermaOAnnulla("SPOILER ALERT", "I commenti potrebbero contenere spoiler, sei sicuro di voler procedere?"
-        , context, "spoiler", "Commenti", filmId);
+        , context, "spoiler", "Commenti", filmCliccato.getId(), filmCliccato);
     }
 
-    public static void onClickPositiveButton(String objectId, Context context){
-        onClickLeggiCommenti(objectId, context);
+//    public static void onClickPositiveButton(String objectId, Context context){
+//        onClickLeggiCommenti(objectId, context);
+//    }
+
+    public static void onClickPositiveButton(Film filmCliccato, Context context){
+        onClickLeggiCommenti(filmCliccato, context);
     }
 
     public static void onClickNegativeButton(Context mContext) {
 
     }
 
-    public static void onClickLeggiCommenti(String filmId, Context context){
+    public static void onClickLeggiCommenti(Film filmCliccato, Context context){
         Intent intent=new Intent(context, CommentiFilmActivity.class);
-        intent.putExtra("filmCliccatoId", filmId);
+        intent.putExtra("FilmName", filmCliccato.getName());
+        intent.putExtra("FilmVoto", filmCliccato.getVote());
+        intent.putExtra("FilmOverview", filmCliccato.getOverview());
+        intent.putExtra("FilmId", filmCliccato.getId());
+        intent.putExtra("FilmPicPath", filmCliccato.getImg());
         context.startActivity(intent);
 
     }
 
-    public static void onClickLeggiCommenti(String filmId, Context context, RecyclerView recyclerView){
+    public static void onClickLeggiCommenti(Film filmCliccato, Context context, RecyclerView recyclerView){
         Intent intent=new Intent(context, CommentiFilmActivity.class);
-        intent.putExtra("filmCliccatoId", filmId);
+        intent.putExtra("FilmName", filmCliccato.getName());
+        intent.putExtra("FilmVoto", filmCliccato.getVote());
+        intent.putExtra("FilmOverview", filmCliccato.getOverview());
+        intent.putExtra("FilmId", filmCliccato.getId());
+        intent.putExtra("FilmPicPath", filmCliccato.getImg());
         context.startActivity(intent);
 
-        getListaCommentiFilm(filmId, context, recyclerView);
+        getListaCommentiFilm(filmCliccato, context, recyclerView);
 
     }
 
-    public static void openListaCommentiDopoInserimentoCommento(String filmId, Context context){
+    public static void openListaCommentiDopoInserimentoCommento(Film filmCliccato, Context context){
         Intent intent = new Intent(context, CommentiFilmActivity.class);
-        intent.putExtra("filmCliccatoId", filmId);
+        intent.putExtra("FilmName", filmCliccato.getName());
+        intent.putExtra("FilmVoto", filmCliccato.getVote());
+        intent.putExtra("FilmOverview", filmCliccato.getOverview());
+        intent.putExtra("FilmId", filmCliccato.getId());
+        intent.putExtra("FilmPicPath", filmCliccato.getImg());
         context.startActivity(intent);
 
 
     }
 
-    public static void onClickAggiungiCommento(String idFilm, String filmName, String overview, Context mContext) {
+    public static void onClickAggiungiCommento(Film filmCliccato, Context mContext) {
         Intent intent = new Intent(mContext, AggiungiCommentoActivity.class);
-        intent.putExtra("film", filmName);
-        intent.putExtra("FilmName", filmName);
-        intent.putExtra("FilmId", idFilm);
-        intent.putExtra("FilmOverview", overview);
+        intent.putExtra("FilmName", filmCliccato.getName());
+        intent.putExtra("FilmVoto", filmCliccato.getVote());
+        intent.putExtra("FilmOverview", filmCliccato.getOverview());
+        intent.putExtra("FilmId", filmCliccato.getId());
+        intent.putExtra("FilmPicPath", filmCliccato.getImg());
         mContext.startActivity(intent);
     }
 
 
 
-    public static void inserisciCommentoFilm(String idFilmCommentato, String commentoDaInserire, Context mContext){
+    public static void inserisciCommentoFilm(Film filmCliccato, String commentoDaInserire, Context mContext){
         if(commentoDaInserire.length()>0) {
-          RecensioneDAO.inserisciCommentoFilm_Firebase(idFilmCommentato, commentoDaInserire, mContext);
+            Intent intent = new Intent(mContext, AggiungiCommentoActivity.class);
+            intent.putExtra("FilmName", filmCliccato.getName());
+            intent.putExtra("FilmVoto", filmCliccato.getVote());
+            intent.putExtra("FilmOverview", filmCliccato.getOverview());
+            intent.putExtra("FilmId", filmCliccato.getId());
+            intent.putExtra("FilmPicPath", filmCliccato.getImg());
+          RecensioneDAO.inserisciCommentoFilm_Firebase(filmCliccato, commentoDaInserire, mContext);
         }
         else PopupController.mostraPopup("Errore", "Commento vuoto: inserire il testo del commento", mContext);
     }
 
-    public static void getListaCommentiFilm(String idFilm, Context mContext, RecyclerView recyclerView){
-        RecensioneDAO.getListaCommentiFilm_Firebase(idFilm, mContext, recyclerView);
+    public static void getListaCommentiFilm(Film filmCliccato, Context mContext, RecyclerView recyclerView){
+        RecensioneDAO.getListaCommentiFilm_Firebase(filmCliccato, mContext, recyclerView);
 
     }
-    private static void PutDataIntoRecyclerView(List<Commento> commentoList, RecyclerView commentiRecycler, Context mContext){
-        AdapteryCommenti adaptery=new AdapteryCommenti(mContext, commentoList, commentiRecycler);
+    private static void PutDataIntoRecyclerView(Film filmCliccato, List<Commento> commentoList, RecyclerView commentiRecycler, Context mContext){
+        AdapteryCommenti adaptery=new AdapteryCommenti(filmCliccato, mContext, commentoList, commentiRecycler);
         commentiRecycler.setLayoutManager(new LinearLayoutManager(mContext));
         commentiRecycler.setAdapter(adaptery);
 

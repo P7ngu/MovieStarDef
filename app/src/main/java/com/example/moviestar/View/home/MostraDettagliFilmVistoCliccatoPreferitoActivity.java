@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.CurrentUser;
 import com.example.moviestar.Controllers.MostraDettagliFilmController;
+import com.example.moviestar.Model.Film;
 import com.example.moviestar.R;
 import com.example.moviestar.View.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,6 +43,7 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
     static String filmVoto;
     static String filmOverview;
     static String filmFotoPath;
+    Film filmCliccato;
 
     TextView filmNameTextView, tramaTextView, votoTextView;
     Button removeFromPreferitiButton, removeFromVistiButton;
@@ -110,12 +112,14 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
 
 
         Intent intent = getIntent();
-         activity_type=intent.getStringExtra("tipologia");
+        activity_type=intent.getStringExtra("tipologia");
         filmName = intent.getStringExtra("FilmName");
         filmVoto = intent.getStringExtra("FilmVoto");
-         filmOverview = intent.getStringExtra("FilmOverview");
+        filmOverview = intent.getStringExtra("FilmOverview");
         filmId = intent.getStringExtra("FilmId");
-         filmFotoPath=intent.getStringExtra("FilmPicPath");
+        filmFotoPath=intent.getStringExtra("FilmPicPath");
+
+        filmCliccato = new Film(filmId, filmName, filmFotoPath, filmVoto, filmOverview);
 
         int starNumber = getNumberOfStarsFromDB(filmId, number_star);
         riempiStelle(starNumber, false);
@@ -134,7 +138,7 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
         buttonLeggiCommenti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickLeggiCommenti(filmId, mContext);
+                onClickLeggiCommenti(filmCliccato, mContext);
             }
         });
 
@@ -142,7 +146,7 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
         aggiungiCommentoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickAggiungiCommento(filmId, filmName, filmOverview, mContext);
+                onClickAggiungiCommento(filmCliccato, mContext);
             }
         });
 
