@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -78,6 +79,7 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
             @Override
             public void onClick(View v) {
                 riempiStelle(1, true);
+                Toast.makeText(mContext, filmName + " votato 1/5", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -85,6 +87,7 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
             @Override
             public void onClick(View v) {
                 riempiStelle(2, true);
+                Toast.makeText(mContext, filmName + " votato 2/5", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -92,6 +95,7 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
             @Override
             public void onClick(View v) {
                 riempiStelle(3, true);
+                Toast.makeText(mContext, filmName + " votato 3/5", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -99,6 +103,7 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
             @Override
             public void onClick(View v) {
                 riempiStelle(4, true);
+                Toast.makeText(mContext, filmName + " votato 4/5", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -106,6 +111,7 @@ public class MostraDettagliFilmVistoCliccatoPreferitoActivity extends AppCompatA
             @Override
             public void onClick(View v) {
                 riempiStelle(5, true);
+                Toast.makeText(mContext, filmName + " votato 5/5", Toast.LENGTH_SHORT).show();
             }
         });
 

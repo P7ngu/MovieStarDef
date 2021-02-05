@@ -17,32 +17,26 @@
         <TextView
             android:id="@+id/textView5_filmtitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="127dp"
             android:layout_marginTop="30dp"
             android:gravity="center"
             android:text="@string/titolo_film"
             android:textColor="#F9A825"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="@string/inserisci_il_commento"
-            android:textColor="#FFFFFF" />
+            android:textSize="30sp" />
 
         <EditText
             android:id="@+id/editTextTextMultiLine"
             android:layout_width="match_parent"
-            android:layout_height="144dp"
+            android:layout_height="386dp"
             android:layout_marginTop="20dp"
             android:ems="10"
-            android:maxLength="500"
-            android:gravity="center|start|top"
+            android:gravity="center"
+            android:hint="Inserisci qui il tuo commento"
             android:inputType="textMultiLine"
-            android:textColor="#FFFFFF" />
+            android:maxLength="500"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/button_addcomment_add"

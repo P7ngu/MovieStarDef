@@ -29,7 +29,6 @@ public class RimuoviFilmDaListaController {
 
     public static void onClickRimuoviDaListaFilm(String pathListaDaCuiRimuovere, String filmId, String filmName, Context mContext){
         PopupController.mostraPopupDiConfermaOAnnulla("Rimuovere film?", "vuoi rimuoverlo?", mContext, "rimuovifilm", pathListaDaCuiRimuovere, filmId);
-
     }
 
     public static void rimozioneFilmDaLista(Context mContext, String pathListaDaCuiRimuovere, String filmId){

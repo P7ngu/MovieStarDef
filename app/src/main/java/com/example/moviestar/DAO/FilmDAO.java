@@ -57,7 +57,7 @@ public class FilmDAO {
         filmPreferiti.document(userId+filmId).set(data4);
 
         LoginController.loadCurrentUserDetails();
-        PopupController.mostraPopup(filmName, "Aggiunto ai film preferiti", mContext);
+//        PopupController.mostraPopup(filmName, "Aggiunto ai film preferiti", mContext);
     }
 
     public static void addToVistiDAO(String filmId, String filmName, String filmOverview, String filmFotoPath, String filmVoto, Context mContext){
@@ -78,7 +78,7 @@ public class FilmDAO {
         filmVisti.document(userId+filmId).set(data4);
 
         LoginController.loadCurrentUserDetails();
-        PopupController.mostraPopup(filmName, "Aggiunto ai film visti", mContext);
+//        PopupController.mostraPopup(filmName, "Aggiunto ai film visti", mContext);
     }
 
     public static void addToDaVedereDAO(String filmId, String filmName, String filmOverview, String filmFotoPath, String filmVoto, Context mContext){
@@ -98,7 +98,7 @@ public class FilmDAO {
         filmDaVedere.document(userId+filmId).set(data4);
 
         LoginController.loadCurrentUserDetails();
-        PopupController.mostraPopup(filmName, "Aggiunto ai film da vedere", mContext);
+//        PopupController.mostraPopup(filmName, "Aggiunto ai film da vedere", mContext);
     }
 
     public static Film queryDB_FindListByPath(String path, Context mContext) {

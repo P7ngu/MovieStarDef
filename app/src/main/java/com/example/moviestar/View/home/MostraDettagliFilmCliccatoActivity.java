@@ -73,7 +73,7 @@ public class MostraDettagliFilmCliccatoActivity extends AppCompatActivity {
         addToPreferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               onClickAddToPreferiti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
+                onClickAddToPreferiti(filmId, filmName, filmOverview, filmFotoPath, filmVoto, mContext);
                 setContentView(R.layout.loadinglayout);
                 Intent intent = new Intent(mContext, MostraDettagliFilmVistoCliccatoPreferitoActivity.class);
                 setContentView(R.layout.loadinglayout);

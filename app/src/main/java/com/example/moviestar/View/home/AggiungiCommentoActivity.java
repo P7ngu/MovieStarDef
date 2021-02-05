@@ -45,6 +45,9 @@ public class AggiungiCommentoActivity extends AppCompatActivity {
 
         commentoText=findViewById(R.id.editTextTextMultiLine);
 
+        titoloTextview = findViewById(R.id.textView5_filmtitle);
+        titoloTextview.setText(filmName);
+
 
         inviaCommentoButton=findViewById(R.id.button_addcomment_add);
         inviaCommentoButton.setOnClickListener(new View.OnClickListener() {
