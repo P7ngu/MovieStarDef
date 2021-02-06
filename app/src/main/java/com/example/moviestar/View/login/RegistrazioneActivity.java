@@ -22,8 +22,8 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 public class RegistrazioneActivity extends AppCompatActivity {
 
     EditText nomeUtenteEditText, emailEditText, password1EditText, password2EditText;
-    TextView disclaimer;
-    Button registratiButton, accediButton;
+    TextView disclaimer, accedi_TV;
+    Button registratiButton;
     ImageView logoIMG;
     final Context context= this;
     FirebaseAnalytics mFirebaseAnalytics;
@@ -60,12 +60,12 @@ public class RegistrazioneActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Log.d("Test", "Cliccato");
-                PopupController.mostraPopup(getString(R.string.disclaimer),getString(R.string.termini), context);
+                PopupController.mostraPopup("Disclaimer!",getString(R.string.termini), context);
             }
         });
 
         registratiButton=findViewById(R.id.button_registrati);
-        accediButton=findViewById(R.id.button_login);
+        accedi_TV=findViewById(R.id.accedi_TV);
         logoIMG=findViewById(R.id.imageView2);
 
         //Glide.with(this).load(R.drawable.logo).into(logoIMG);
@@ -95,7 +95,7 @@ public class RegistrazioneActivity extends AppCompatActivity {
             }
         });
 
-        accediButton.setOnClickListener(new View.OnClickListener() {
+        accedi_TV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, LoginActivity.class);

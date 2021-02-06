@@ -12,6 +12,8 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserCodeDel
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.ForgotPasswordContinuation;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.ForgotPasswordHandler;
 import com.example.moviestar.View.login.LoginActivity;
+import com.example.moviestar.View.profilo.ChangePasswordActivity;
+import com.example.moviestar.View.profilo.EditProfiloActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -86,6 +88,7 @@ public class ForgotPasswordController {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             PopupController.mostraPopup("Password aggiornata", "Password aggiornata con successo!", mContext);
+                            ChangePasswordActivity.emptyFields();
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {

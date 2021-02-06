@@ -12,17 +12,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.moviestar.Controllers.ForgotPasswordController;
+import com.example.moviestar.Controllers.PopupController;
 import com.example.moviestar.R;
 
 public class ChangePasswordActivity extends AppCompatActivity {
     Context mContext=this;
+    static EditText editTextNewPass;
+    static EditText editTextNewPass2;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.changepassword);
         getIntent();
 
-        final EditText editTextNewPass=findViewById(R.id.cp_newpass);
+        editTextNewPass = findViewById(R.id.cp_newpass);
+        editTextNewPass2 = findViewById(R.id.cp_newpass2);
         ImageView img = findViewById(R.id.imageView4);
         Glide.with(mContext).load("https://i.ibb.co/zVhNTdy/logo.png").into(img);
 
@@ -30,9 +36,17 @@ public class ChangePasswordActivity extends AppCompatActivity {
         changePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               ForgotPasswordController.changePassword(editTextNewPass,  mContext);
-
+                if(editTextNewPass.getText().toString().trim().equals(editTextNewPass2.getText().toString().trim())){
+                    ForgotPasswordController.changePassword(editTextNewPass,  mContext);
+                }else{
+                    PopupController.mostraPopup("Errore", "Le due password devono corrispondere!",mContext);
+                }
             }
         });
+    }
+
+    public static void emptyFields(){
+        editTextNewPass.setText("");
+        editTextNewPass2.setText("");
     }
 }

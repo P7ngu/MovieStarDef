@@ -29,7 +29,7 @@
     <string name="leggi_commenti">leggi commenti</string>
     <string name="rimuovi_alla_lista_dei_film_visti">Rimuovi alla lista dei film visti</string>
     <string name="rimuovi_dalla_lista_dei_film_preferiti">Rimuovi dalla lista dei film preferiti</string>
-    <string name="link_scaduto">Il link inviato è scaduto? Inserisci il tuo indirizzo email e clicca sul pulsante per riceverne un altro!</string>
+    <string name="forgot_password">Inserisci il tuo indirizzo email e clicca sul pulsante per ricevere il codice via mail e reimpostare la password</string>
     <string name="inserisci_la_tua_email">Inserisci la tua email</string>
     <string name="invia_nuovo_link_via_email">Invia nuovo link via email</string>
     <string name="accedi_ora">accedi ora</string>
@@ -43,9 +43,9 @@
     <string name="password_dimenticata_clicca_qui_per_ripristinarla">Password dimenticata? Clicca qui per ripristinarla</string>
     <string name="aggiungi_alla_lista_dei_film_da_vedere">Aggiungi alla lista dei film da vedere</string>
     <string name="conferma_password">Conferma Password</string>
-    <string name="nome_utente">Nome Utente</string>
+    <string name="nome_utente">Username(non modificabile)</string>
     <string name="email_da_verificare">Email (da verificare)</string>
-    <string name="disclaimer">Disclaimer</string>
+    <string name="disclaimer">Cliccando su REGISTRATI accetti i Termini e le Condizioni d\'uso di Movie Star</string>
     <string name="deve_contenere_almeno_4_caratteri">Deve contenere almeno 4 caratteri</string>
     <string name="deve_contenere_almeno_6_caratteri">Deve contenere almeno 6 caratteri</string>
     <string name="accedi">Accedi</string>
@@ -55,4 +55,7 @@
     <string name="hai_dimenticato_la_password_reimpostala_ora">Hai dimenticato la password? Reimpostala ora</string>
     <string name="ecco_il_tuo_id_utente">Ecco il tuo ID utente</string>
     <string name="share">SHARE</string>
+    <string name="le_due_password_devono_corrispondere">Le due password devono corrispondere</string>
+    <string name="conferma_la_tua_nuova_password">Conferma la tua nuova password</string>
+    <string name="hai_gi_un_account_clicca_qui_per_accedere">Hai già un account? Clicca qui per accedere</string>
 </resources>

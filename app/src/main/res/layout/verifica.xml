@@ -7,8 +7,8 @@
     android:background="#1a1a1a">
 
     <LinearLayout
-        android:layout_width="294dp"
-        android:layout_height="517dp"
+        android:layout_width="310dp"
+        android:layout_height="573dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,13 +21,15 @@
             android:id="@+id/imageView3"
             android:layout_width="match_parent"
             android:layout_height="123dp"
+            android:layout_gravity="center"
             android:layout_marginBottom="50dp"
             app:srcCompat="@drawable/ic_home_black_24dp" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="294dp"
-            android:layout_height="94dp"
+            android:layout_height="102dp"
+            android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/la_verifica_avviene_tramite_email_usa_l_apposito_pulsante_se_il_link_ricevuto_scaduto"
             android:textColor="#FF8F00"
@@ -41,16 +43,18 @@
 
             <Button
                 android:id="@+id/button_sendnewcode_verification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="204dp"
+                android:layout_height="71dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:text="@string/richiedi_nuovo_codice" />
 
             <Button
                 android:id="@+id/button_accedi_verification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="114dp"
+                android:layout_height="71dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -61,7 +65,9 @@
             android:id="@+id/textView_forgotpassword_verification"
             android:layout_width="match_parent"
             android:layout_height="62dp"
+            android:layout_gravity="center"
             android:layout_marginTop="20dp"
+            android:gravity="center"
             android:text="@string/hai_dimenticato_la_password_reimpostala_ora"
             android:textColor="#0277BD"
             android:textSize="18sp" />
