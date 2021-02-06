@@ -29,37 +29,41 @@ public class PopupController {
     }
 
     public static void mostraPopupDiConfermaOAnnulla(String titolo, String messaggio, Context myContext, String classe, String path, String idObject){
-        AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
-        boolean risultato;
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
+            boolean risultato;
 
-        builder.setPositiveButton("Continua", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                if(classe.equals("rimuovifilm"))
-                RimuoviFilmDaListaController.onClickPositiveButton(myContext, path, idObject);
-                else if(classe.equals("rimuoviamico"))
-                    RimuoviAmicoController.onClickPositiveButton(myContext, path, idObject);
+            builder.setPositiveButton("Continua", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    if (classe.equals("rimuovifilm"))
+                        RimuoviFilmDaListaController.onClickPositiveButton(myContext, path, idObject);
+                    else if (classe.equals("rimuoviamico"))
+                        RimuoviAmicoController.onClickPositiveButton(myContext, path, idObject);
 //                else if(classe.equals("spoiler"))
 //                    RecensioniFilmController.onClickPositiveButton(idObject, myContext);
 
 
-            }
-        });
-        builder.setNegativeButton("Annulla azione", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                if(classe.equals("rimuovifilm"))
-                RimuoviFilmDaListaController.onClickNegativeButton(myContext);
-                else if(classe.equals("rimuoviamico"))
-                    RimuoviAmicoController.onClickNegativeButton(myContext);
-                else if(classe.equals("spoiler"))
-                    RecensioniFilmController.onClickNegativeButton(myContext);
-                // User cancelled the dialog
-            }
-        });
+                }
+            });
+            builder.setNegativeButton("Annulla azione", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    if (classe.equals("rimuovifilm"))
+                        RimuoviFilmDaListaController.onClickNegativeButton(myContext);
+                    else if (classe.equals("rimuoviamico"))
+                        RimuoviAmicoController.onClickNegativeButton(myContext);
+                    else if (classe.equals("spoiler"))
+                        RecensioniFilmController.onClickNegativeButton(myContext);
+                    // User cancelled the dialog
+                }
+            });
 
-        AlertDialog dialog = builder.create();
-        dialog.setTitle(titolo);
-        dialog.setMessage(messaggio);
-        dialog.show();
+            AlertDialog dialog = builder.create();
+            dialog.setTitle(titolo);
+            dialog.setMessage(messaggio);
+            dialog.show();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static void mostraPopupDiConfermaOAnnulla(String titolo, String messaggio, Context myContext, String classe, String path, String idObject, Film filmCliccato){

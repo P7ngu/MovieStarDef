@@ -352,7 +352,7 @@ public class UtenteDAO {
                                 String idUtente = document.getData().get("userID").toString();
                                 String username = document.getData().get("username").toString();
                                 Utente utenteTemp = new Utente(idUtente, username);
-
+                                if(!currentUser.checkPresenzaListaAmici(idUtente))
                                 if (utenteTemp != null) userList.add(utenteTemp);
                             }
 

@@ -31,9 +31,11 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -47,6 +49,7 @@ public class LoginActivity extends AppCompatActivity  {
     TextView forgotPassword;
     Button accediButton,  registratiButton;
     ImageView logo;
+    private FirebaseAuth mAuth;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -81,8 +84,37 @@ public class LoginActivity extends AppCompatActivity  {
                 // a listener.
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                 handleSignInResult(task);
+                try {
+                    // Google Sign In was successful, authenticate with Firebase
+                    GoogleSignInAccount account = task.getResult(ApiException.class);
+                    firebaseAuthWithGoogle(account.getIdToken());
+                } catch (ApiException e) {
+                    // Google Sign In failed, update UI appropriately
+
+                    // ...
+                }
             }
         }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                        } else {
+                            // If sign in fails, display a message to the user.
+
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
 
 
     @Override
@@ -92,6 +124,7 @@ public class LoginActivity extends AppCompatActivity  {
         Intent intent = getIntent();
 
         firebaseAuth=FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -149,8 +182,8 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
     private void signIn() {
-        //Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        //startActivityForResult(signInIntent, 123);
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, 123);
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -158,10 +191,15 @@ public class LoginActivity extends AppCompatActivity  {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             // Signed in successfully, show authenticated UI.
             MainActivity.setUserLogged(true);
+            MainActivity.setIsUserVerified(true);
+            VerificaController.setUserVerifiedByGoogle(true);
             Intent intent = new Intent(mContext, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             mContext.startActivity(intent);
+            MainActivity.setUserLogged(true);
+            MainActivity.setIsUserVerified(true);
+
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.

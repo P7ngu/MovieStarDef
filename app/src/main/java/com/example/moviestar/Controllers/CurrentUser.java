@@ -24,6 +24,14 @@ public class CurrentUser extends Application {
         return "";
     }
 
+    public static boolean checkPresenzaListaAmici(String idCercato){
+        for(int i=0; i< listaAmici.size(); i++){
+            if(listaAmici.get(i).getIdUtente().equals(idCercato))
+                return true;
+        }
+        return false;
+    }
+
     public static ArrayList<Utente> getUserList_DB() {
         return userList_DB;
     }

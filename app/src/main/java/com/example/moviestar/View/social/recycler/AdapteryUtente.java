@@ -55,20 +55,24 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
         try {
             UtenteDAO.getUtentiByID(mData.get(position).getIdUtente());
         } finally {
-           if(tipologiaSchermata.equals("ricerca")|| tipologiaSchermata.equals("richieste"))
-               tempList = CurrentUser.getInstance().getListaUtenti();
-           else {
-               tempList=CurrentUser.getInstance().getListaAmici();
+            if (tipologiaSchermata.equals("ricerca") || tipologiaSchermata.equals("richieste"))
+                tempList = CurrentUser.getInstance().getListaUtenti();
+            else {
+                tempList = CurrentUser.getInstance().getListaAmici();
 
-           }
+            }
         }
 
-        holder.nomeutentemostrato.setText(mData.get(position).getNomeUtenteMostrato()+" #"+mData.get(position).getIdUtente());
+        holder.nomeutentemostrato.setText(mData.get(position).getNomeUtenteMostrato() + " #" + mData.get(position).getIdUtente());
 
-        if(tempList!=null && tempList.size()>0) {
-            //String nomeUtente= UtenteDAO.getNameUserById(mData.get(position).getIdUtente());
-            //holder.nomeutentemostrato.setText(nomeUtente+" #"+mData.get(position).getIdUtente());
-            Glide.with(mContext).load("https://i.ibb.co/7tbJ1Sv/user.png").into(holder.img);
+        try {
+            if (tempList != null && tempList.size() > 0) {
+                //String nomeUtente= UtenteDAO.getNameUserById(mData.get(position).getIdUtente());
+                //holder.nomeutentemostrato.setText(nomeUtente+" #"+mData.get(position).getIdUtente());
+                Glide.with(mContext).load("https://i.ibb.co/7tbJ1Sv/user.png").into(holder.img);
+            }
+        } catch(Exception e) {
+        e.printStackTrace();
         }
 
 
@@ -112,22 +116,31 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
                   if(tipologiaSchermata.equals("ricerca"))  RichiesteAmicoController.sendRichiestaAmico
                           (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
                   else RispondiRichiestaAmicoController.accettaRichiestaAmico(mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
+                    //removeAt(getAdapterPosition());
                 }
             });
 
             ImageButton  respingiRichiestaAmicoButton = itemView.findViewById(R.id.delete_imageButton);
+           // if(tipologiaSchermata.equals("ricerca")) respingiRichiestaAmicoButton.setVisibility(0);
             if(tipologiaSchermata.equals("ricerca") || tipologiaSchermata.equals("richieste"))
                 respingiRichiestaAmicoButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(tipologiaSchermata.equals("ricerca"))  RispondiRichiestaAmicoController.respingiRichiestaAmico
-                            (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
-                    else if(tipologiaSchermata.equals("richieste")) RispondiRichiestaAmicoController.respingiRichiestaAmico
-                            (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
-                    else {
-                        RimuoviAmicoController.eliminaAmicoDaListaAmici
-                                (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
-                       removeAt(getAdapterPosition());
+                    try {
+                        if (tipologiaSchermata.equals("ricerca"))
+                            RispondiRichiestaAmicoController.respingiRichiestaAmico
+                                    (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
+                        else if (tipologiaSchermata.equals("richieste"))
+                            RispondiRichiestaAmicoController.respingiRichiestaAmico
+                                    (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
+                        else {
+                            RimuoviAmicoController.eliminaAmicoDaListaAmici
+                                    (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
+                            //removeAt(getAdapterPosition());
+                        }
+                        removeAt(getAdapterPosition());
+                    } catch (Exception e){
+                        e.printStackTrace();
                     }
                 }
             });
