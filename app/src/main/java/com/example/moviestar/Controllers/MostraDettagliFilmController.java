@@ -31,7 +31,7 @@ public class MostraDettagliFilmController {
     static boolean flag=false;
 
 
-    public static void openFilm(Film filmCliccato, Context context){
+    public static Intent openFilm(Film filmCliccato, Context context){
         Intent intent;
         LoginController.loadCurrentUserDetails();
        if (CurrentUser.getInstance().daVedereContainsFilm(filmCliccato)) {
@@ -57,6 +57,7 @@ public class MostraDettagliFilmController {
         intent.putExtra("FilmId", filmCliccato.getId());
         intent.putExtra("FilmOverview", filmCliccato.getOverview());
         context.startActivity(intent);
+        return intent;
     }
 
     public static boolean checkFilmPresenteListaDB (String filmId, String path, Context mContext){

@@ -42,6 +42,9 @@ public class UtenteDAO {
     private static FirebaseUser user;
     private FirebaseFirestore db =FirebaseFirestore.getInstance();
 
+    private static int i=-1;
+    private static String[] names = new String[100];
+
     public static void logout_Firebase() {
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
@@ -50,6 +53,60 @@ public class UtenteDAO {
         }
     }
 
+
+    public static void getUserList_DB(){
+        CurrentUser currentUser = CurrentUser.getInstance();
+        String userId = currentUser.getUserId();
+        String path="Users";
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference userList = db.collection(path);
+        ArrayList<Utente> usersList = new ArrayList<>();
+
+        db.collection(path)
+                //.whereEqualTo("userID", idDaCercare)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String idUtente = document.getData().get("userID").toString();
+                                String nomeUtente = document.getData().get("username").toString();
+                                Utente utenteTemp = new Utente(idUtente, nomeUtente);
+                                if (utenteTemp != null){
+                                    usersList.add(utenteTemp);
+                                    currentUser.setUserList_DB(usersList);
+                                }
+                            }
+                        } else Log.d("testFirebase", "Error getting documents: ", task.getException());
+                    }
+                });
+    }
+
+    public static String getNameUserById(String idDaCercare){
+        String path="Users";
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        CollectionReference users = db.collection("Users");
+        i++;
+
+        db.collection("Users")
+                .whereEqualTo("userID", idDaCercare)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                names[i]=(document.get("username").toString());
+
+                                }
+                            }
+                    }
+                });
+        Log.d("Testing_name1", names[i]);
+        return names[i];
+
+    }
 
     public static void eliminaAmicoDaListaAmici_Firebase(String idUtenteDaEliminare, Context mContext){
         CurrentUser currentUser = CurrentUser.getInstance();
@@ -118,6 +175,7 @@ public class UtenteDAO {
         CurrentUser currentUser = CurrentUser.getInstance();
         String userId = currentUser.getUserId();
         String path="ListaAmici";
+        Log.d("Testing_name", " 22");
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference listaAmici = db.collection(path);
@@ -131,9 +189,10 @@ public class UtenteDAO {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                //data = document.getData();
                                 String idUtente = document.getData().get("userID_ricevente").toString();
-                                Utente utenteTemp = new Utente(idUtente);
+                                String nomeUtente=document.getData().get("username_ricevente").toString();
+                                Log.d("Testing_name", nomeUtente);
+                                Utente utenteTemp = new Utente(idUtente, nomeUtente);
                                 if (utenteTemp != null) {
                                     //getUtentiByID(idUtente);
                                     amiciList.add(utenteTemp);
@@ -309,12 +368,18 @@ public class UtenteDAO {
     public static void sendRichiestaAmico_Firebase(String idUtenteDaAggiungere, Context mContext) {
         CurrentUser currentUser = CurrentUser.getInstance();
         String userId = currentUser.getUserId();
+        String userName=currentUser.getUsername();
+
+        String nomeDaAggiungere=currentUser.getUsernameById_userlist_DB(idUtenteDaAggiungere);
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference richiesteamico = db.collection("RichiesteAmico");
 
         Map<String, Object> data4 = new HashMap<>();
         data4.put("userID_ricevente", idUtenteDaAggiungere);
+        data4.put("nome_ricevente", nomeDaAggiungere);
         data4.put("userID_mandante", userId);
+        data4.put("nome_mandante", userName);
         richiesteamico.document(userId + idUtenteDaAggiungere).set(data4);
 
         LoginController.loadCurrentUserDetails();
@@ -341,8 +406,8 @@ public class UtenteDAO {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //data = document.getData();
                                 String idUtente = document.getData().get("userID_mandante").toString();
-                                //String username = document.getData().get("username").toString();
-                                Utente utenteTemp = new Utente(idUtente);
+                                String username = document.getData().get("nome_mandante").toString();
+                                Utente utenteTemp = new Utente(idUtente, username);
 
                                 if (utenteTemp != null) userList.add(utenteTemp);
                             }
@@ -357,20 +422,22 @@ public class UtenteDAO {
     public static void accettaRichiestaAmico_Firebase(String idUtenteDaAggiungere, Context mContext) {
         CurrentUser currentUser = CurrentUser.getInstance();
         String userId=currentUser.getUserId();
-
+        String username_trovato = currentUser.getUsernameById_userlist_DB(idUtenteDaAggiungere);
         FirebaseFirestore db=FirebaseFirestore.getInstance();
         CollectionReference richiesteamico = db.collection("ListaAmici");
 
         Map<String, Object> data4 = new HashMap<>();
-       // data4.put("username_mandante", currentUser.getUsername());
+        data4.put("username_mandante", currentUser.getUsername());
         data4.put("userID_ricevente", idUtenteDaAggiungere);
         data4.put("userID_mandante", userId);
+        data4.put("username_ricevente", username_trovato);
         richiesteamico.document(userId+idUtenteDaAggiungere).set(data4);
 
         Map<String, Object> data5 = new HashMap<>();
-       // data5.put("username_ricevente", currentUser.getUsername());
+        data5.put("username_ricevente", currentUser.getUsername());
         data5.put("userID_ricevente", userId);
         data5.put("userID_mandante", idUtenteDaAggiungere);
+        data5.put("username_mandante", username_trovato);
         richiesteamico.document(idUtenteDaAggiungere+userId).set(data5);
 
         removeRichiestaAmico_Firebase(idUtenteDaAggiungere, mContext);

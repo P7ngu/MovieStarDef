@@ -127,6 +127,7 @@ public class LoginController {
             loadListaFilmFromDB("FilmPreferiti");
             loadListaFilmFromDB("FilmDaVedere");
             loadListaAmiciFromDB();
+            UtenteDAO.getUserList_DB();
         } catch (Exception e){
             e.printStackTrace();
         }

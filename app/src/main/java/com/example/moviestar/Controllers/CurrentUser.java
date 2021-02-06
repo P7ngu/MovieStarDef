@@ -14,6 +14,23 @@ public class CurrentUser extends Application {
     private static ArrayList<Utente> listaAmici;
     private static ArrayList<Utente> listaUtenti;
     private static ArrayList<Utente> listaRichiesteAmico;
+    private static ArrayList<Utente> userList_DB;
+
+    public static String getUsernameById_userlist_DB(String id_daCercare){
+        for(int i=0; i< userList_DB.size(); i++){
+            if(userList_DB.get(i).getIdUtente().equals(id_daCercare))
+                return userList_DB.get(i).getNomeUtenteMostrato();
+        }
+        return "";
+    }
+
+    public static ArrayList<Utente> getUserList_DB() {
+        return userList_DB;
+    }
+
+    public static void setUserList_DB(ArrayList<Utente> userList_DB) {
+        CurrentUser.userList_DB = userList_DB;
+    }
 
     public static ArrayList<Utente> getListaRichiesteAmico() {
         return listaRichiesteAmico;
