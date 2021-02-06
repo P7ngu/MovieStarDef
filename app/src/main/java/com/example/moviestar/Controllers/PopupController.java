@@ -10,17 +10,21 @@ import com.example.moviestar.Model.Film;
 public class PopupController {
 
     public static void mostraPopup(String titolo, String messaggio, Context myContext){
-        AlertDialog alertDialog = new AlertDialog.Builder(myContext).create(); //Read Update
-        alertDialog.setTitle(titolo);
-        alertDialog.setMessage(messaggio);
+        try {
+            AlertDialog alertDialog = new AlertDialog.Builder(myContext).create(); //Read Update
+            alertDialog.setTitle(titolo);
+            alertDialog.setMessage(messaggio);
 
-        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // here you can add functions
-            }
-        });
+            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // here you can add functions
+                }
+            });
 
-        alertDialog.show();
+            alertDialog.show();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
