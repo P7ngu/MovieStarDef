@@ -37,7 +37,8 @@
         app:layout_constraintStart_toEndOf="@+id/friends_imgv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.023"
+        android:autofillHints="" />
 
     <ImageButton
         android:id="@+id/search_user_button"
@@ -50,7 +51,8 @@
         app:layout_constraintHorizontal_bias="0.914"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.02" />
+        app:layout_constraintVertical_bias="0.02"
+        android:contentDescription="@string/invia_ricerca_tra_utenti" />
 
     <ImageView
         android:id="@+id/friends_imgv"
@@ -62,7 +64,8 @@
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.023"
+        android:contentDescription="@string/apri_lista_amici" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

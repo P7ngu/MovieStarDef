@@ -68,14 +68,16 @@
             android:id="@+id/imageView_utente_propic_profilo"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            tools:src="@tools:sample/avatars" />
+            tools:src="@tools:sample/avatars"
+            android:contentDescription="@string/immagine_profilo" />
 
         <ImageButton
             android:id="@+id/imageButton_editprofilo_profilo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:src="@android:drawable/ic_menu_edit" />
+            android:src="@android:drawable/ic_menu_edit"
+            android:contentDescription="@string/edit_profilo" />
 
         <TextView
             android:id="@+id/textView_nomeutente_profilo"

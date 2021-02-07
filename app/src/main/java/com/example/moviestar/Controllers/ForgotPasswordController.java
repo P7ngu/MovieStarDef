@@ -104,4 +104,16 @@ public class ForgotPasswordController {
     private static boolean checkPasswordIsValid(String passwordDaCheckare) {
         return (passwordDaCheckare.length()>5);
     }
+
+    public static boolean checkCampiPasswordPerCambiaPassword(String password1, String password2, Context mContext){
+        if(password1.length()>0 && password2.length()>0){
+            if(password1.length()>5 && password2.length()>5)
+                if(password1.equals(password2))
+                    return true;
+        } if(password1.length()==0 || password2.length()==0) PopupController.mostraPopup("Errore", "Compilare entrambi i campi!", mContext);
+        else if(password1.length()<6 || password2.length()<6) PopupController.mostraPopup("Errore", "Numero minimo di caratteri: 6.", mContext);
+        else if(!password1.equals(password2)) PopupController.mostraPopup("Errore", "Le password devono corrispondere!", mContext);
+        return false;
     }
+}
+

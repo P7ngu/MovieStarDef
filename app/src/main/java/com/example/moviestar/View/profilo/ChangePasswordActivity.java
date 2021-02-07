@@ -36,14 +36,17 @@ public class ChangePasswordActivity extends AppCompatActivity {
         changePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(editTextNewPass.getText().toString().trim().equals(editTextNewPass2.getText().toString().trim())){
+                //if(editTextNewPass.getText().toString().trim().equals(editTextNewPass2.getText().toString().trim())){
+                if(ForgotPasswordController.checkCampiPasswordPerCambiaPassword(editTextNewPass.getText().toString().trim(), editTextNewPass2.getText().toString().trim(), mContext))
                     ForgotPasswordController.changePassword(editTextNewPass,  mContext);
-                }else{
-                    PopupController.mostraPopup("Errore", "Le due password devono corrispondere!",mContext);
+                else{
+                    //PopupController.mostraPopup("Errore", "Le due password devono corrispondere!",mContext);
                 }
             }
         });
     }
+
+
 
     public static void emptyFields(){
         editTextNewPass.setText("");

@@ -16,7 +16,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        android:contentDescription="@string/avatar_utente" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -69,7 +70,8 @@
         app:layout_constraintStart_toEndOf="@+id/imageView_film"
         app:layout_constraintTop_toBottomOf="@+id/richiesta_textview"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:drawable/ic_delete" />
+        app:srcCompat="@android:drawable/ic_delete"
+        android:contentDescription="@string/elimina_richiesta" />
 
     <ImageButton
         android:id="@+id/add_imageButton"
@@ -80,6 +82,7 @@
         app:layout_constraintStart_toEndOf="@+id/delete_imageButton"
         app:layout_constraintTop_toBottomOf="@+id/richiesta_textview"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:contentDescription="@string/accetta_richiesta" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

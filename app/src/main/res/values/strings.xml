@@ -59,4 +59,22 @@
     <string name="conferma_la_tua_nuova_password">Conferma la tua nuova password</string>
     <string name="hai_gi_un_account_clicca_qui_per_accedere">Hai già un account? Clicca qui per accedere</string>
     <string name="lista_amici">Lista Amici</string>
+    <string name="profilo">Profilo</string>
+    <string name="inserisci_qui_il_tuo_commento">Inserisci qui il tuo commento...</string>
+    <string name="immagine_profilo">Immagine profilo</string>
+    <string name="elimina_amico">Elimina amico</string>
+    <string name="copertina_film">Copertina film</string>
+    <string name="stellina_voto_3">Stellina voto 3</string>
+    <string name="stellina_voto_1">Stellina voto 1</string>
+    <string name="stellina_voto_2">Stellina voto 2</string>
+    <string name="stellina_voto_4">Stellina voto 4</string>
+    <string name="stellina_voto_5">Stellina voto 5</string>
+    <string name="invia_ricerca">Invia ricerca</string>
+    <string name="edit_profilo">Edit profilo</string>
+    <string name="apri_lista_amici">Apri lista amici</string>
+    <string name="invia_ricerca_tra_utenti">Invia ricerca tra utenti</string>
+    <string name="logo_applicazione">Logo applicazione</string>
+    <string name="avatar_utente">Avatar utente</string>
+    <string name="elimina_richiesta">Elimina richiesta</string>
+    <string name="accetta_richiesta">Accetta richiesta</string>
 </resources>

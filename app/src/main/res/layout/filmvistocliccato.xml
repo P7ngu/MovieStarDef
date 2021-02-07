@@ -76,35 +76,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@android:drawable/btn_star_big_off" />
+                app:srcCompat="@android:drawable/btn_star_big_off"
+                android:contentDescription="@string/stellina_voto_1" />
 
             <ImageView
                 android:id="@+id/star_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@android:drawable/btn_star_big_off" />
+                app:srcCompat="@android:drawable/btn_star_big_off"
+                android:contentDescription="@string/stellina_voto_2"/>
 
             <ImageView
                 android:id="@+id/star_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@android:drawable/btn_star_big_off" />
+                app:srcCompat="@android:drawable/btn_star_big_off"
+                android:contentDescription="@string/stellina_voto_3" />
 
             <ImageView
                 android:id="@+id/star_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@android:drawable/btn_star_big_off" />
+                app:srcCompat="@android:drawable/btn_star_big_off"
+                android:contentDescription="@string/stellina_voto_4"/>
 
             <ImageView
                 android:id="@+id/star_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@android:drawable/btn_star_big_off" />
+                app:srcCompat="@android:drawable/btn_star_big_off"
+                android:contentDescription="@string/stellina_voto_5" />
         </LinearLayout>
 
         <Button
