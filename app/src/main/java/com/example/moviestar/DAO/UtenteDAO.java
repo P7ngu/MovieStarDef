@@ -141,7 +141,7 @@ public class UtenteDAO {
         String idFilm, title, overview, fotoPath, voto;
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference filmPreferiti = db.collection(path);
+        CollectionReference film = db.collection(path);
         ArrayList<Film> filmList = new ArrayList<>();
 
         db.collection(path)
@@ -280,7 +280,7 @@ public class UtenteDAO {
         flag=false;
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference filmPreferiti = db.collection(path);
+        CollectionReference film = db.collection(path);
         ArrayList<Film> filmList = new ArrayList<>();
 
         db.collection(path)
@@ -305,7 +305,7 @@ public class UtenteDAO {
         String path="Users";
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference listaAmici = db.collection(path);
+        CollectionReference listaUtenti = db.collection(path);
         ArrayList<Utente> userList = new ArrayList<>();
 
         db.collection(path)
@@ -332,16 +332,54 @@ public class UtenteDAO {
     }
 
     public static void cercaUtenteByNome(String nome) {
+        if(nome.length()>27) cercaUtenteById(nome);
+        else {
+            CurrentUser currentUser = CurrentUser.getInstance();
+            String userId = currentUser.getUserId();
+            String path = "Users";
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            CollectionReference listaUtenti = db.collection(path);
+            ArrayList<Utente> userList = new ArrayList<>();
+
+            db.collection(path)
+                    .whereEqualTo("username", nome)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    //data = document.getData();
+                                    String idUtente = document.getData().get("userID").toString();
+                                    String username = document.getData().get("username").toString();
+                                    Utente utenteTemp = new Utente(idUtente, username);
+                                    if (!currentUser.checkPresenzaListaAmici(idUtente))
+                                        if (utenteTemp != null) userList.add(utenteTemp);
+                                }
+
+                                SocialFragment.PutDataIntoRecyclerView(userList, "ricerca");
+                            } else
+                                Log.d("testFirebase", "Error getting documents: ", task.getException());
+                            currentUser.setListaUtenti(userList);
+
+                        }
+                    });
+            SocialFragment.PutDataIntoRecyclerView(userList, "ricerca");
+        }
+    }
+
+    public static void cercaUtenteById(String idDaCercare) {
         CurrentUser currentUser = CurrentUser.getInstance();
         String userId = currentUser.getUserId();
         String path="Users";
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference listaAmici = db.collection(path);
+        CollectionReference listaUtenti = db.collection(path);
         ArrayList<Utente> userList = new ArrayList<>();
 
         db.collection(path)
-                .whereEqualTo("username", nome)
+                .whereEqualTo("userID", idDaCercare)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -353,7 +391,7 @@ public class UtenteDAO {
                                 String username = document.getData().get("username").toString();
                                 Utente utenteTemp = new Utente(idUtente, username);
                                 if(!currentUser.checkPresenzaListaAmici(idUtente))
-                                if (utenteTemp != null) userList.add(utenteTemp);
+                                    if (utenteTemp != null) userList.add(utenteTemp);
                             }
 
                             SocialFragment.PutDataIntoRecyclerView(userList, "ricerca");
@@ -382,7 +420,7 @@ public class UtenteDAO {
         data4.put("nome_mandante", userName);
         richiesteamico.document(userId + idUtenteDaAggiungere).set(data4);
 
-        LoginController.loadCurrentUserDetails();
+       // LoginController.loadCurrentUserDetails();
         PopupController.mostraPopup("Richiesta inviata", "Richiesta di collegamento inviata con successo", mContext);
 
     }

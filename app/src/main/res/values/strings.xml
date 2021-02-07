@@ -58,4 +58,5 @@
     <string name="le_due_password_devono_corrispondere">Le due password devono corrispondere</string>
     <string name="conferma_la_tua_nuova_password">Conferma la tua nuova password</string>
     <string name="hai_gi_un_account_clicca_qui_per_accedere">Hai già un account? Clicca qui per accedere</string>
+    <string name="lista_amici">Lista Amici</string>
 </resources>

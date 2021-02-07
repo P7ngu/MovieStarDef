@@ -28,6 +28,7 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
     private static Context mContext;
     private static List<Utente> mData;
     private static String tipologiaSchermata;
+    private ImageButton  respingiRichiestaAmicoButton;
 
     public AdapteryUtente(Context mContext, List<Utente> mData, String tipologiaSchermata) {
         this.mContext = mContext;
@@ -55,12 +56,12 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
         try {
             UtenteDAO.getUtentiByID(mData.get(position).getIdUtente());
         } finally {
-            if (tipologiaSchermata.equals("ricerca") || tipologiaSchermata.equals("richieste"))
+            if (tipologiaSchermata.equals("ricerca") || tipologiaSchermata.equals("richieste")) {
                 tempList = CurrentUser.getInstance().getListaUtenti();
-            else {
+            }else {
                 tempList = CurrentUser.getInstance().getListaAmici();
-
             }
+            if(tipologiaSchermata.equals("ricerca"))   respingiRichiestaAmicoButton.setVisibility(View.INVISIBLE);
         }
 
         holder.nomeutentemostrato.setText(mData.get(position).getNomeUtenteMostrato() + " #" + mData.get(position).getIdUtente());
@@ -113,14 +114,22 @@ public class AdapteryUtente extends RecyclerView.Adapter<AdapteryUtente.MyViewHo
             if(tipologiaSchermata.equals("ricerca") || tipologiaSchermata.equals("richieste")) addToListaAmiciButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                  if(tipologiaSchermata.equals("ricerca"))  RichiesteAmicoController.sendRichiestaAmico
-                          (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
-                  else RispondiRichiestaAmicoController.accettaRichiestaAmico(mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
-                    //removeAt(getAdapterPosition());
+                    try {
+                        if (tipologiaSchermata.equals("ricerca")) {
+                            RichiesteAmicoController.sendRichiestaAmico
+                                    (mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
+                        }
+                        else
+                            RispondiRichiestaAmicoController.accettaRichiestaAmico(mData.get(getAdapterPosition()).getIdUtente().toString(), mContext);
+                        removeAt(getAdapterPosition());
+                    } catch (Exception e){
+                        Log.d("Test345", tipologiaSchermata+"");
+                        e.printStackTrace();
+                    }
                 }
             });
 
-            ImageButton  respingiRichiestaAmicoButton = itemView.findViewById(R.id.delete_imageButton);
+            respingiRichiestaAmicoButton = itemView.findViewById(R.id.delete_imageButton);
            // if(tipologiaSchermata.equals("ricerca")) respingiRichiestaAmicoButton.setVisibility(0);
             if(tipologiaSchermata.equals("ricerca") || tipologiaSchermata.equals("richieste"))
                 respingiRichiestaAmicoButton.setOnClickListener(new View.OnClickListener() {

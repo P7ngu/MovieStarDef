@@ -40,13 +40,7 @@ public class ListaAmiciActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.recycler_view_listaamici);
 
         //searchbutton
-        searchButton = findViewById(R.id.search_user_button_listaamici);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //RICERCA UTENTI
-            }
-        });
+        
         try {
             UtenteList = new ArrayList<>();
             LoginController.loadListaAmiciFromDB();
