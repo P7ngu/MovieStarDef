@@ -43,7 +43,7 @@ public class RimuoviFilmDaListaController {
         if (pathListaDaCuiRimuovere.equals("FilmVisti")) {
             try {
                 MostraDettagliFilmVistoCliccatoActivity.removeFromVistiSuccess(mContext);
-                MostraDettagliFilmVistoCliccatoPreferitoActivity.removePreferitoFromVistiSuccess(mContext);
+                //MostraDettagliFilmVistoCliccatoPreferitoActivity.removePreferitoFromVistiSuccess(mContext);
             } catch (Exception e){
 
             }

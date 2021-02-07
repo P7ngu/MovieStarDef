@@ -332,7 +332,7 @@ public class UtenteDAO {
     }
 
     public static void cercaUtenteByNome(String nome) {
-        if(nome.length()>27) cercaUtenteById(nome);
+        if(nome.length()>18) cercaUtenteById(nome);
         else {
             CurrentUser currentUser = CurrentUser.getInstance();
             String userId = currentUser.getUserId();
@@ -532,6 +532,20 @@ public class UtenteDAO {
                         PopupController.mostraPopup("Errore", idUtenteDaRespingere+" non rimosso.", mContext);
                     }
                 });
+    }
+
+    public static void insertGoogleUser_Firebase(String displayName, String id) {
+        CurrentUser currentUser = CurrentUser.getInstance();
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        CollectionReference utenti = db.collection("Users");
+
+        Map<String, Object> data4 = new HashMap<>();
+        data4.put("username", displayName);
+        data4.put("userID", id);
+        utenti.document(id+displayName).set(data4);
+
+        //LoginController.loadCurrentUserDetails();
+
     }
 
     public String getImageURI() {
